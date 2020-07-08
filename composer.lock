@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5ac7407dc851b5e4eb9c002f1ba28c68",
+    "content-hash": "35b1b5ad82996e7e37bbb701b4aad609",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -407,6 +407,56 @@
                 "trusted proxy"
             ],
             "time": "2020-06-23T01:36:47+00:00"
+        },
+        {
+            "name": "joycezhang/laravellib",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Joycezhangw/laravel-lib.git",
+                "reference": "080884de4114b5f99447ec9c10523730ef6b5f8c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Joycezhangw/laravel-lib/zipball/080884de4114b5f99447ec9c10523730ef6b5f8c",
+                "reference": "080884de4114b5f99447ec9c10523730ef6b5f8c",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "php": ">=7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "JoyceZ\\LaravelLib\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "joycezhangw",
+                    "email": "zhangwei762@163.com"
+                }
+            ],
+            "description": "一个php工具包，基于laravel:^5.0.*",
+            "keywords": [
+                "laravel",
+                "miniprogram",
+                "poster"
+            ],
+            "time": "2020-07-07T09:08:59+00:00"
         },
         {
             "name": "laravel/framework",
@@ -6090,7 +6140,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "joycezhang/laravellib": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
