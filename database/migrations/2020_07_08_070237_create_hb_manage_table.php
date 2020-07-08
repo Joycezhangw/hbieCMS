@@ -18,7 +18,7 @@ class CreateHbManageTable extends Migration
             $table->string('username',50)->default('')->comment('管理员登录名');
             $table->string('nickname',50)->default('')->comment('昵称');
             $table->string('realname',60)->default('')->comment('真实姓名');
-            $table->char('password',32)->default('')->comment('密码');
+            $table->string('password')->default('')->comment('密码');
             $table->string('manage_avatar',256)->default('')->comment('头像');
             $table->rememberToken();
             $table->unsignedInteger('reg_date')->default(0)->comment('注册时间');
