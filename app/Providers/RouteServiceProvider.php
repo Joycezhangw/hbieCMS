@@ -46,7 +46,18 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
+        $this->mapWebManageRoutes();
+
         //
+    }
+
+    /**
+     * 后台管理路由
+     */
+    protected function mapWebManageRoutes(){
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/manage.php'));
     }
 
     /**
