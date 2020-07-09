@@ -25,7 +25,8 @@ class CreateUcMemberTable extends Migration
             $table->string('user_avatar')->default('')->comment('头像');
             $table->unsignedTinyInteger('user_state')->default(1)->comment('用户状态[1:正常,0:停用]');
             $table->bigInteger('reg_ip')->default(0)->comment('注册ip');
-            $table->enum('user_type', ['system', 'special', 'member'])->index('idx_member_user_type')->comment('用户类型');
+            $table->unsignedTinyInteger('is_super')->default(0)->comment('是否超级管理员[1 是 0 否]');
+            $table->enum('user_type', ['system', 'special', 'member'])->index('idx_member_user_type')->default('member')->comment('用户类型');
             $table->unsignedInteger('reg_date')->default(0)->comment('注册时间');
             $table->bigInteger('last_login_ip')->default(0)->comment('上次登录的IP(程序转换成数值类型)');
             $table->unsignedInteger('last_login_time')->default(0)->comment('上次登录时间');
