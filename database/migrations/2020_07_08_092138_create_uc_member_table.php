@@ -37,6 +37,7 @@ class CreateUcMemberTable extends Migration
         });
         //表注释
         \Illuminate\Support\Facades\DB::statement("ALTER TABLE `uc_member` comment '用户'");
+        \Illuminate\Support\Facades\DB::statement("ALTER TABLE `uc_member` AUTO_INCREMENT=100001");
     }
 
     /**

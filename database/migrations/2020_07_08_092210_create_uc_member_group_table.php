@@ -25,6 +25,7 @@ class CreateUcMemberGroupTable extends Migration
         });
         //表注释
         \Illuminate\Support\Facades\DB::statement("ALTER TABLE `uc_member_group` comment '用户组'");
+        \Illuminate\Support\Facades\DB::statement("ALTER TABLE `uc_member_group` AUTO_INCREMENT=10001");
     }
 
     /**

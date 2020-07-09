@@ -31,6 +31,7 @@ class CreateHbManageModuleTable extends Migration
         });
         //表注释
         \Illuminate\Support\Facades\DB::statement("ALTER TABLE `hb_manage_module` comment '后台权限模块'");
+        \Illuminate\Support\Facades\DB::statement("ALTER TABLE `hb_manage_module` AUTO_INCREMENT=10001");
     }
 
     /**

@@ -25,6 +25,7 @@ class CreateUcMemberIdentityTable extends Migration
         });
         //表注释
         \Illuminate\Support\Facades\DB::statement("ALTER TABLE `uc_member_identity` comment '用户拥有身份'");
+        \Illuminate\Support\Facades\DB::statement("ALTER TABLE `uc_member_identity` AUTO_INCREMENT=10001");
     }
 
     /**

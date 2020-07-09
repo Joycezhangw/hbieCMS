@@ -22,6 +22,7 @@ class CreateSysAppTable extends Migration
         });
         //表注释
         \Illuminate\Support\Facades\DB::statement("ALTER TABLE `sys_app` comment '内部应用信息'");
+        \Illuminate\Support\Facades\DB::statement("ALTER TABLE `sys_app` AUTO_INCREMENT=100001");
     }
 
     /**

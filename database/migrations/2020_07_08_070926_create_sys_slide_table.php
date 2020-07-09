@@ -25,6 +25,7 @@ class CreateSysSlideTable extends Migration
         });
         //表注释
         \Illuminate\Support\Facades\DB::statement("ALTER TABLE `sys_slide` comment '幻灯片'");
+        \Illuminate\Support\Facades\DB::statement("ALTER TABLE `sys_slide` AUTO_INCREMENT=10001");
     }
 
     /**

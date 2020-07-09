@@ -25,6 +25,7 @@ class CreateSysAlbumTable extends Migration
         });
         //表注释
         \Illuminate\Support\Facades\DB::statement("ALTER TABLE `sys_album` comment '附件专辑'");
+        \Illuminate\Support\Facades\DB::statement("ALTER TABLE `sys_album` AUTO_INCREMENT=10001");
     }
 
     /**

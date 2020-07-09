@@ -27,6 +27,7 @@ class CreateUcMemberExtendTable extends Migration
         });
         //表注释
         \Illuminate\Support\Facades\DB::statement("ALTER TABLE `uc_member_extend` comment '用户第三方授权登录扩展'");
+        \Illuminate\Support\Facades\DB::statement("ALTER TABLE `uc_member_extend` AUTO_INCREMENT=10001");
     }
 
     /**
