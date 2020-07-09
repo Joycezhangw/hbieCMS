@@ -16,17 +16,39 @@ use JoyceZ\LaravelLib\Helpers\ResultHelper;
 
 class Login extends Controller
 {
-    public function index()
+    /**
+     * 登录页面
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index(Request $request)
     {
         return view('manage.login.index');
     }
 
+    /**
+     * 登录
+     * @param Request $request
+     * @param IManage $manageRepo
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
     public function login(Request $request, IManage $manageRepo)
     {
         $username = $request->post('username');
         $password = $request->post('password');
         $captcha = $request->post('captcha');
         return response($manageRepo->doLogin($username, $password, $captcha, $request->ip()));
+    }
+
+    /**
+     * 退出登录
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function logout(Request $request)
+    {
+        Auth::guard('admin')->logout();
+        $request->session()->invalidate();
+        return redirect('manage/login');
     }
 
     /**

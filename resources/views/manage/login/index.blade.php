@@ -77,9 +77,9 @@
                 url: '{{route("manage.login")}}',
                 data: data.field,
                 success: function (res) {
-                    if (res.code == 0) {
+                    if (res.code === 200) {
                         layer.msg('登录成功', {anim: 5, time: 500}, function () {
-                            window.location = '';
+                            window.location = '{{route("manage.index")}}';
                         });
                     } else {
                         layer.msg(res.message);

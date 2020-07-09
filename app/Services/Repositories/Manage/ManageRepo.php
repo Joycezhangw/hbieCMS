@@ -7,8 +7,8 @@ namespace App\Services\Repositories\Manage;
 use App\Services\Models\Manage\Manage;
 use App\Services\Repositories\Manage\Interfaces\IManage;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use JoyceZ\LaravelLib\Helpers\ResultHelper;
+use JoyceZ\LaravelLib\Helpers\StrHelper;
 use JoyceZ\LaravelLib\Repositories\BaseRepository;
 
 class ManageRepo extends BaseRepository implements IManage
@@ -19,6 +19,15 @@ class ManageRepo extends BaseRepository implements IManage
         parent::__construct($model);
     }
 
+    /**
+     * 管理员登录
+     * @param string $username 登录名
+     * @param string $password 密码
+     * @param string $captcha  验证码
+     * @param string $clientIp 客户端ip
+     * @return array
+     * @throws \Exception
+     */
     public function doLogin(string $username, string $password, string $captcha, string $clientIp): array
     {
         $getCaptcha = cache('adminCaptcha');
@@ -34,23 +43,15 @@ class ManageRepo extends BaseRepository implements IManage
         $loginResult = Auth::guard('admin')->attempt(['username' => $username, 'password' => $password]);
         if ($loginResult) {
             $user = Auth::guard('admin')->user();
-            dd($user);
-            if (intval($user['status']) !== 1) {
+            if (intval($user['manage_status']) !== 1) {
+                //被禁用用户，直接退出登录
+                Auth::guard('admin')->logout();
                 return ResultHelper::returnFormat('用户被禁用！', -1);
             }
             // 更新登录信息
-            $data['last_login_ip'] = $clientIp;
+            $data['last_login_ip'] = StrHelper::ip2long($clientIp);
             $data['last_login_time'] = time();
             $this->model->where('manage_id', $user->manage_id)->update($data);
-
-//            $result['id'] = $user->id;
-//            $result['username'] = $user->username;
-//            $result['nickname'] = $user->nickname;
-//            $result['token'] = Str::random(950);
-//
-//            // 将认证信息写入缓存，这里用hack方法做后台api登录认证
-//            cache([$result['token'] => $result], 60 * 60 * 3);
-
             return ResultHelper::returnFormat('登录成功！', 200);
         } else {
 
