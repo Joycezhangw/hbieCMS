@@ -22,6 +22,11 @@ class CreateHbManageHasRoleTable extends Migration
                 ->on('hb_manage_role')
                 ->onDelete('cascade');
 
+            $table->foreign('manage_id')
+                ->references('manage_id')
+                ->on('hb_manage')
+                ->onDelete('cascade');
+
             $table->primary(['role_id',  'manage_id'],
                 'manage_has_role_primary');
         });
