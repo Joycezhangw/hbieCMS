@@ -79,7 +79,7 @@
                 success: function (res) {
                     if (res.code === 200) {
                         layer.msg('登录成功', {anim: 5, time: 500}, function () {
-                            window.location = '{{route("manage.index")}}';
+                            window.location = '{{route("manage.index.index")}}';
                         });
                     } else {
                         layer.msg(res.message);
