@@ -60,7 +60,7 @@
                             <li class="layui-nav-item layui-nav-itemed @if($item['module_route']===$current_route) layui-this @endif">
                                 @if(count($item['children'])<=0)
                                     <a class="layui-menu-tips"
-                                       href="{{$item['module_route']}}">{{$item['module_name']}}</a>
+                                       href="{{route($item['module_route'])}}">{{$item['module_name']}}</a>
                                 @else
                                     <a class="layui-menu-tips" href="javascript:;">{{$item['module_name']}}<span
                                             class="layui-nav-more"></span></a>
@@ -89,7 +89,7 @@
                 </div>
             @endif
         @endif
-        <div class="hb-body-content {if($sidebar)}{if(count($sidebar['children'])<=0)}crumbs_no_exit{/if}{/if}">
+        <div class="hb-body-content @if($sidebar) @if(count($sidebar['children'])<=0) crumbs_no_exit @endif @endif">
             <div class="hb-body">
                 @yield('content')
             </div>
