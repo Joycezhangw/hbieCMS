@@ -35,6 +35,7 @@ class Channel extends Model
         'channel_name',
         'channel_short_name',
         'pid',
+        'channel_sort',
         'channel_desc',
         'created_at',
         'updated_at'
