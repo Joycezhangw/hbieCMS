@@ -57,7 +57,7 @@
                     <span class="hb-side-title">{{$sidebar['module_name']}}</span>
                     <ul class="layui-nav layui-nav-tree">
                         @foreach($sidebar['children'] as $key=>$item)
-                            <li class="layui-nav-item layui-nav-itemed {if($item['module_route']===$current_route)}layui-this{/if}">
+                            <li class="layui-nav-item layui-nav-itemed @if($item['module_route']===$current_route) layui-this @endif">
                                 @if(count($item['children'])<=0)
                                     <a class="layui-menu-tips"
                                        href="{{$item['module_route']}}">{{$item['module_name']}}</a>
