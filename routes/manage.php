@@ -45,6 +45,7 @@ Route::group([
         $router->get('channel/edit/{id}', 'Channel@edit')->name('manage.channel.edit');
         $router->post('channel/store', 'Channel@store')->name('manage.channel.store');
         $router->post('channel/update/{id}', 'Channel@update')->name('manage.channel.update');
+        $router->post('channel/modifySort', 'Channel@modifySort')->name('manage.channel.modifySort');
         $router->post('channel/destroy/{id}', 'Channel@destroy')->name('manage.channel.destroy');
 
         //内容管理
