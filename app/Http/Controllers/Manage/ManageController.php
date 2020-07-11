@@ -81,9 +81,11 @@ class ManageController extends Controller
     private function getCrumbs(array $array)
     {
         $str = '';
+        $i = 0;
         if ($array) {
             foreach ($array as $item) {
-                $route = trim($item['module_route']) === '' ? 'javascript:;' : route($item['module_route']);
+                $i++;
+                $route = $i === count($array) ? 'javascript:;' : (trim($item['module_route']) === '' ? 'javascript:;' : route($item['module_route']));
                 $str .= '<a href="' . $route . '">' . $item['module_name'] . '</a><span lay-separator="">&gt;</span>';
             }
             //替换掉最后一个出现的标签
