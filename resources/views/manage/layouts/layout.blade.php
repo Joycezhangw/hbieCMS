@@ -106,6 +106,7 @@
 <script type="text/javascript" src="/static/ac/lib/layui/layui.js"></script>
 <script type="text/javascript" src="/static/ac/hbie.js"></script>
 <script>
+    layui.use(['layer', 'upload', 'element'], function() {});
     layui.use('element', function () {
         var element = layui.element;
         element.render('breadcrumb');
