@@ -35,7 +35,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">排序：</label>
             <div class="layui-input-block">
-                <input name="sort" type="number" value="0" placeholder="请输入排序" lay-verify="num"
+                <input name="channel_sort" type="number" value="0" placeholder="请输入排序" lay-verify="num"
                        class="layui-input hb-len-short" autocomplete="off">
             </div>
             <div class="hb-word-aux">
@@ -45,24 +45,67 @@
         <div class="layui-form-item">
             <label class="layui-form-label">栏目描述：</label>
             <div class="layui-input-block hb-len-long">
-                <textarea name="description" placeholder="请输入栏目描述" class="layui-textarea"></textarea>
+                <textarea name="channel_desc" placeholder="请输入栏目描述" class="layui-textarea"></textarea>
             </div>
             <div class="hb-word-aux">
                 <p>栏目描述最多不超过500个字符</p>
             </div>
         </div>
+        <div class="hb-form-row">
+            <input type="hidden" name="pid" id="pid" value="0">
+            {{ csrf_field() }}
+            <button class="layui-btn hb-bg-color" lay-submit="" lay-filter="save">保存</button>
+            <button type="reset" class="layui-btn layui-btn-primary" onclick="back()">返回</button>
+        </div>
     </form>
 @endsection
 @section('javascript')
     <script>
-        layui.use('form', function(){
-            var form = layui.form;
+        $(function () {
+            layui.use('form', function () {
+                var form = layui.form;
+                var repeat_flag = false;//防重复标识
+                /**
+                 * 表单验证
+                 */
+                form.verify({
+                    num: function (value) {
+                        if (value === '') {
+                            return;
+                        }
+                        if (value % 1 !== 0) {
+                            return '排序数值必须为整数';
+                        }
+                        if (value < 0) {
+                            return '排序数值必须为大于0';
+                        }
+                    }
+                });
 
-            //监听提交
-            form.on('submit(formDemo)', function(data){
-                layer.msg(JSON.stringify(data.field));
-                return false;
+                //监听提交
+                form.on('submit(save)', function (data) {
+                    if (repeat_flag) return false;
+                    repeat_flag = true;
+                    $.ajax({
+                        url: "{{route('manage.channel.store')}}",
+                        data: data.field,
+                        dataType: 'json',
+                        type: 'post',
+                        success: function (data) {
+                            layer.msg(data.message);
+                            if (data.code === 200) {
+                                location.href = "{{route('manage.channel.index')}}";
+                            } else {
+                                repeat_flag = false;
+                            }
+                        }
+                    });
+                    return false;
+                });
             });
         });
+        function back() {
+            location.href = "{{route('manage.channel.index')}}";
+        }
     </script>
 @endsection
