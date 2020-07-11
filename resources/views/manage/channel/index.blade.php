@@ -34,6 +34,7 @@
             <tbody>
             @if(!$channels->isEmpty())
                 @foreach($channels as $key => $channel)
+                    <tr>
                     <td></td>
                     <td>{{$channel->channel_name}}</td>
                     <td>{{$channel->channel_short_name}}</td>
@@ -48,6 +49,7 @@
                             <a href="{{route('manage.channel.edit',$channel->channel_id)}}" class="layui-btn">编辑</a>
                         </div>
                     </td>
+                    </tr>
                 @endforeach
             @else
                 <tr>

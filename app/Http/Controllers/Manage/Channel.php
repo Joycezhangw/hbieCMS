@@ -29,10 +29,36 @@ class Channel extends ManageController
      */
     public function store(Request $request, IChannel $channelRepo)
     {
-        if ($channelRepo->doCreate($request->all())) {
+        $params = $request->all();
+        $params['is_show'] = isset($params['is_show']) ? 1 : 0;
+        if ($channelRepo->doCreate($params)) {
             return ResultHelper::returnFormat('添加栏目成功', 200);
         } else {
             return ResultHelper::returnFormat('网络繁忙，请稍后再试', -1);
+        }
+    }
+
+    public function edit(int $id, IChannel $channelRepo)
+    {
+        $channel = $channelRepo->getByPkId($id);
+        if ($channel) {
+            return $this->view(compact('channel'));
+        } else {
+            return redirect()->route('manage.channel.index');
+        }
+    }
+
+    public function update(Request $request, int $id, IChannel $channelRepo)
+    {
+        $channel = $channelRepo->getByPkId($id);
+        if ($channel) {
+            $params = $request->all();
+            $params['is_show'] = isset($params['is_show']) ? 1 : 0;
+            unset($params['_token']);
+            $channelRepo->doUpdateByPkId($params, $id);
+            return ResultHelper::returnFormat('更新栏目成功', 200);
+        } else {
+            return ResultHelper::returnFormat('该栏目不存在，请稍后再试', -1);
         }
     }
 
@@ -43,11 +69,11 @@ class Channel extends ManageController
      */
     public function modifySort(Request $request, IChannel $channelRepo)
     {
-        $channelId=$request->post('channel_id');
-        $channel_sort=$request->post('channel_sort');
-        if($channelRepo->doUpdateFieldByPkId($channelId,'channel_sort',$channel_sort)){
+        $channelId = $request->post('channel_id');
+        $channel_sort = $request->post('channel_sort');
+        if ($channelRepo->doUpdateFieldByPkId($channelId, 'channel_sort', $channel_sort)) {
             return ResultHelper::returnFormat('修改排序成功', 200);
-        }else{
+        } else {
             return ResultHelper::returnFormat('网络繁忙，请稍后再试', -1);
         }
 

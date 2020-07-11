@@ -5,7 +5,7 @@
             <label class="layui-form-label"><span class="required">*</span>栏目名称：</label>
             <div class="layui-input-block hb-len-long">
                 <input name="channel_name" type="text" placeholder="请输入栏目名称" maxlength="30" lay-verify="required"
-                       class="layui-input" autocomplete="off">
+                       class="layui-input" autocomplete="off" value="{{$channel->channel_name}}">
             </div>
             <div class="hb-word-aux">
                 <p>栏目名称最长不超过30个字符</p>
@@ -15,7 +15,7 @@
             <label class="layui-form-label">简称：</label>
             <div class="layui-input-block hb-len-long">
                 <input name="channel_short_name" type="text" placeholder="请输入简称" maxlength="20" class="layui-input"
-                       autocomplete="off">
+                       autocomplete="off" value="{{$channel->channel_short_name}}">
             </div>
             <div class="hb-word-aux">
                 <p>栏目名过长设置简称方便显示，字数设置为不超过20个字符</p>
@@ -24,7 +24,8 @@
         <div class="layui-form-item">
             <label class="layui-form-label">是否显示：</label>
             <div class="layui-input-block">
-                <input type="checkbox" name="is_show" lay-skin="switch" value="1" checked>
+                <input type="checkbox" name="is_show" lay-skin="switch" value="{{$channel->is_show}}"
+                       @if(intval($channel->is_show)===1) checked @endif>
             </div>
             <div class="hb-word-aux">
                 <p>用于控制前台是否展示</p>
@@ -33,7 +34,8 @@
         <div class="layui-form-item">
             <label class="layui-form-label">排序：</label>
             <div class="layui-input-block">
-                <input name="channel_sort" type="number" value="0" placeholder="请输入排序" lay-verify="num"
+                <input name="channel_sort" type="number" value="{{$channel->channel_sort}}" placeholder="请输入排序"
+                       lay-verify="num"
                        class="layui-input hb-len-short" autocomplete="off">
             </div>
             <div class="hb-word-aux">
@@ -43,7 +45,8 @@
         <div class="layui-form-item">
             <label class="layui-form-label">栏目描述：</label>
             <div class="layui-input-block hb-len-long">
-                <textarea name="channel_desc" placeholder="请输入栏目描述" class="layui-textarea"></textarea>
+                <textarea name="channel_desc" placeholder="请输入栏目描述"
+                          class="layui-textarea">{{$channel->channel_desc}}</textarea>
             </div>
             <div class="hb-word-aux">
                 <p>栏目描述最多不超过500个字符</p>
@@ -59,7 +62,7 @@
 @endsection
 @section('javascript')
     <script>
-        var saveUrl="{{route('manage.channel.store')}}",indexUrl="{{route('manage.channel.index')}}";
+        var saveUrl="{{route('manage.channel.update',$channel->channel_id)}}",indexUrl="{{route('manage.channel.index')}}";
     </script>
     <script type="text/javascript" src="/static/ac/modules/save_channel.js"></script>
 @endsection
