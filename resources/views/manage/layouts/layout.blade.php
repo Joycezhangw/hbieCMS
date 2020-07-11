@@ -6,12 +6,12 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="csrf-token" content="{{csrf_token()}}">
     <title>{{$title_name}}</title>
-    <link type="text/css" rel="stylesheet" href="/static/ext/layui/css/layui.css"/>
+    <link type="text/css" rel="stylesheet" href="/static/ac/lib/layui/css/layui.css"/>
     <link type="text/css" rel="stylesheet" href="/static/manage/css/common.css"/>
 @yield('stylesheet')
 <!-- [if lt IE 9]-->
-    <script type="text/javascript" src="/static/js/lib/html5shiv.min.js"></script>
-    <script type="text/javascript" src="/static/js/lib/respond.min.js"></script>
+    <script type="text/javascript" src="/static/ac/lib/html5shiv.min.js"></script>
+    <script type="text/javascript" src="/static/ac/lib/respond.min.js"></script>
     <!-- [endif] -->
 </head>
 <body>
@@ -102,8 +102,9 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="/static/js/jquery.min.js"></script>
-<script type="text/javascript" src="/static/ext/layui/layui.js"></script>
+<script type="text/javascript" src="/static/ac/lib/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/static/ac/lib/layui/layui.js"></script>
+<script type="text/javascript" src="/static/ac/hbie.js"></script>
 <script>
     layui.use('element', function () {
         var element = layui.element;

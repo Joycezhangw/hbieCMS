@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>马尾留学生创业园</title>
-    <link type="text/css" rel="stylesheet" href="/static/ext/layui/css/layui.css"/>
+    <link type="text/css" rel="stylesheet" href="/static/ac/lib/layui/css/layui.css"/>
     <link type="text/css" rel="stylesheet" href="/static/manage/css/common.css"/>
     <link type="text/css" rel="stylesheet" href="/static/manage/css/login.css"/>
 </head>
@@ -59,8 +59,8 @@
         <p>技术支持<a href="javascript:;">&nbsp;&nbsp;福建瀚邦信息工程有限公司</a></p>
     </div>
 </div>
-<script type="text/javascript" src="/static/js/jquery.min.js"></script>
-<script type="text/javascript" src="/static/ext/layui/layui.js"></script>
+<script type="text/javascript" src="/static/ac/lib/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/static/ac/lib/layui/layui.js"></script>
 <script type="text/javascript">
     var form, LOGIN_REPEAT_FLAG = false;
     layui.use('form', function () {
