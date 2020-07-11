@@ -39,12 +39,14 @@
                     <td>{{$channel->channel_short_name}}</td>
                     <td>{{intval($channel->is_show)===1?'是':'否'}}</td>
                     <td>
-                        <input type="number" class="layui-input hb-len-short" value=" {{$channel->channel_sort}}"
+                        <input type="number" class="layui-input hb-len-short" value="{{$channel->channel_sort}}"
                                onchange="editSort('{{$channel->channel_id}}')"
-                               id="category_sort{{$channel->channel_id}}">
+                               id="channel_sort{{$channel->channel_id}}">
                     </td>
                     <td>
-                        <a href="" class="layui-btn">编辑</a>
+                        <div class="hb-table-btn">
+                            <a href="{{route('manage.channel.edit',$channel->channel_id)}}" class="layui-btn">编辑</a>
+                        </div>
                     </td>
                 @endforeach
             @else
@@ -62,26 +64,27 @@
 @section('javascript')
     <script>
         // 监听单元格编辑
-        function editSort(category_id) {
-            var sort = $("#category_sort"+category_id).val();
+        function editSort(channel_id) {
+            var sort = $("#channel_sort" + channel_id).val();
 
             if (!new RegExp("^-?[1-9]\\d*$").test(sort)) {
                 layer.msg("排序号只能是整数");
                 return;
             }
-            if(sort<0){
+            if (sort < 0) {
                 layer.msg("排序号必须大于0");
-                return ;
+                return;
             }
             $.ajax({
                 type: 'POST',
-                url: '',
+                url: '{{route("manage.channel.modifySort")}}',
                 data: {
-                    sort: sort,
-                    category_id: category_id
+                    _token:"{{csrf_token()}}",
+                    channel_sort: sort,
+                    channel_id: channel_id
                 },
                 dataType: 'JSON',
-                success: function(res) {
+                success: function (res) {
                     layer.msg(res.message);
                     if (res.code == 0) {
                         table.reload();
