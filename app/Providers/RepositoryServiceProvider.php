@@ -4,7 +4,9 @@
 namespace App\Providers;
 
 
+use App\Services\Repositories\CMS\ArticleRepo;
 use App\Services\Repositories\CMS\ChannelRepo;
+use App\Services\Repositories\CMS\Interfaces\IArticle;
 use App\Services\Repositories\CMS\Interfaces\IChannel;
 use App\Services\Repositories\Manage\Interfaces\IManage;
 use App\Services\Repositories\Manage\Interfaces\IManageModule;
@@ -23,8 +25,9 @@ class RepositoryServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->bind(IManage::class,ManageRepo::class);
-        $this->app->bind(IManageModule::class,ManageModuleRepo::class);
-        $this->app->bind(IChannel::class,ChannelRepo::class);
+        $this->app->bind(IManage::class,ManageRepo::class);//管理员
+        $this->app->bind(IManageModule::class,ManageModuleRepo::class);//管理员权限模块
+        $this->app->bind(IChannel::class,ChannelRepo::class);//内容栏目
+        $this->app->bind(IArticle::class,ArticleRepo::class);//内容
     }
 }
