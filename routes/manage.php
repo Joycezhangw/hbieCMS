@@ -51,10 +51,12 @@ Route::group([
         //内容管理
         $router->get('article/index', 'Article@index')->name('manage.article.index');
         $router->get('article/create', 'Article@create')->name('manage.article.create');
-        $router->get('article/edit/{id}', 'Article@edit')->name('manage.article.edit');
+        $router->get('article/edit', 'Article@edit')->name('manage.article.edit');
         $router->post('article/store', 'Article@store')->name('manage.article.store');
         $router->post('article/update/{id}', 'Article@update')->name('manage.article.update');
         $router->post('article/destroy/{id}', 'Article@destroy')->name('manage.article.destroy');
+
+        $router->post('upload/upload', 'Upload@doUpload')->name('manage/upload/upload');
 
     });
 });
