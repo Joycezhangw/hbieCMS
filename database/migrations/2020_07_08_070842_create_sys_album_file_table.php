@@ -17,7 +17,9 @@ class CreateSysAlbumFileTable extends Migration
             $table->bigIncrements('file_id');
             $table->unsignedBigInteger('album_id')->index('idx_album_id')->default(0)->comment('专辑id');
             $table->string('file_name')->default('')->comment('图片名称');
+            $table->string('original_name')->default('')->comment('原始命名');
             $table->string('file_path')->default('')->comment('图片物理路径');
+            $table->string('file_md5')->default('')->comment('md5唯一标识');
             $table->unsignedDecimal('file_width')->default(0)->comment('图片宽度');
             $table->unsignedDecimal('file_height')->default(0)->comment('图片高度');
             $table->unsignedInteger('file_size')->default(0)->comment('文件长度');
