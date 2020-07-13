@@ -5,14 +5,12 @@ namespace App\Http\Controllers\Manage;
 
 
 use App\Http\Controllers\Controller;
-use App\Services\Models\Manage\Manage;
 use App\Services\Repositories\Manage\Interfaces\IManage;
 use Gregwar\Captcha\CaptchaBuilder;
 use Gregwar\Captcha\PhraseBuilder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use JoyceZ\LaravelLib\Helpers\ResultHelper;
 
 class Login extends Controller
 {
