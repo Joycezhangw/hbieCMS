@@ -6,8 +6,6 @@ namespace App\Http\Controllers\Manage;
 
 use App\Services\Repositories\System\Interfaces\IAlbumFile;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class Upload extends ManageController
 {
