@@ -70,4 +70,45 @@
             return ""
         }
     };
+    HBIE.table={
+        Table:function (options) {
+            if (!options) return;
+            var _self = this;
+            options.parseData = options.parseData || function (data) {
+                return {
+                    "code": data.code,
+                    "msg": data.message,
+                    "count": data.data.total,
+                    "data": data.data.list
+                };
+            };
+            options.request = options.request || {
+                limitName: 'page_size' //每页数据量的参数名，默认：limit
+            };
+            if (options.page === undefined) {
+                options.page = {
+                    layout: ['count', 'limit', 'prev', 'page', 'next'],
+                    limit: 10
+                };
+            }
+            options.defaultToolbar = options.defaultToolbar || [];//'filter', 'print', 'exports'
+            options.toolbar = options.toolbar || "";//头工具栏事件
+            options.skin = options.skin || 'line';
+            options.size = options.size || 'lg';
+            options.async = (options.async !== undefined) ? options.async : true;
+            options.done = function (res, curr, count) {
+                if (options.callback) options.callback(res, curr, count);
+            };
+            layui.use('table', function () {
+                _self._table = layui.table;
+                _self._table.render(options);
+            });
+            this.filter = options.filter || options.elem.replace(/#/g, "");
+            this.elem = options.elem;
+            //获取当前选中的数据
+            this.checkStatus = function () {
+                return this._table.checkStatus(_self.elem.replace(/#/g, ""));
+            };
+        }
+    }
 })();
