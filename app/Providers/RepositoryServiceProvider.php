@@ -12,6 +12,8 @@ use App\Services\Repositories\Manage\Interfaces\IManage;
 use App\Services\Repositories\Manage\Interfaces\IManageModule;
 use App\Services\Repositories\Manage\ManageModuleRepo;
 use App\Services\Repositories\Manage\ManageRepo;
+use App\Services\Repositories\System\AlbumFileRepo;
+use App\Services\Repositories\System\Interfaces\IAlbumFile;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -29,5 +31,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(IManageModule::class,ManageModuleRepo::class);//管理员权限模块
         $this->app->bind(IChannel::class,ChannelRepo::class);//内容栏目
         $this->app->bind(IArticle::class,ArticleRepo::class);//内容
+        $this->app->bind(IAlbumFile::class,AlbumFileRepo::class);//附件
     }
 }
