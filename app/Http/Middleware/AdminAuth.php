@@ -24,6 +24,9 @@ class AdminAuth
                 return redirect()->guest('manage/login');
             }
         }
+        $admin=Auth::guard('admin')->user();
+        $admin->roles;
+        $request->admin = $admin->toArray();
         return $next($request);
     }
 }
