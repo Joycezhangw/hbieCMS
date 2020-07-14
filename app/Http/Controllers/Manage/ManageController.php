@@ -7,7 +7,9 @@ namespace App\Http\Controllers\Manage;
 use App\Http\Controllers\Controller;
 use App\Services\Repositories\Manage\Interfaces\IManageModule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use JoyceZ\LaravelLib\Helpers\DateHelper;
 use JoyceZ\LaravelLib\Helpers\FiltersHelper;
 use JoyceZ\LaravelLib\Helpers\LaravelHelper;
 use JoyceZ\LaravelLib\Helpers\StrHelper;
@@ -92,6 +94,43 @@ class ManageController extends Controller
             return StrHelper::lreplace('<span lay-separator="">&gt;</span>', '', $str);
         }
         return $str;
+    }
+
+    /**
+     * 格式化返回视图内容
+     * @param array $params
+     * @param bool $isContent
+     * @return array
+     */
+    protected function formatReturnDataByOneDim(array $params, $isContent = false)
+    {
+        if (isset($params['created_at'])) {
+            $params['created_at_txt'] = DateHelper::formatParseTime((int)$params['created_at']);
+        }
+        if (isset($params['updated_at'])) {
+            $params['updated_at_txt'] = DateHelper::formatParseTime((int)$params['updated_at']);
+        }
+        if (isset($params['post_pic'])) {
+            $params['post_pic_url'] = asset(Storage::url($params['post_pic']));
+        }
+        if (isset($params['post_tags'])) {
+            $params['post_tags_arr'] = explode(',', $params['post_tags']);
+        }
+        return $params;
+    }
+
+    /**
+     * 格式化返回视图列表内容
+     * @param array $params
+     * @return array
+     */
+    protected function formatReturnDataByManyDim(array $params)
+    {
+        $data = [];
+        foreach ($params as $item) {
+            $data[] = $this->formatReturnDataByOneDim($item);
+        }
+        return $data;
     }
 
 }
