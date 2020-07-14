@@ -66,6 +66,7 @@ class Channel extends ManageController
      * 修改排序
      * @param Request $request
      * @param IChannel $channelRepo
+     * @return array|mixed
      */
     public function modifySort(Request $request, IChannel $channelRepo)
     {
