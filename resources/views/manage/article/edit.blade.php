@@ -59,7 +59,7 @@
                 </div>
             </div>
             <div class="hb-word-aux">
-                <p>建议图片尺寸：650px * 450px。图片格式：jpg、png、jpeg。</p>
+                <p>建议图片尺寸：650px * 366px。统一比例为：16:9。图片格式：jpg、png、jpeg。</p>
             </div>
         </div>
         <div class="layui-form-item">
