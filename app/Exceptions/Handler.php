@@ -61,6 +61,7 @@ class Handler extends ExceptionHandler
             if ($exception->getStatusCode() == 403) {
                 return response()->view('errors.' . '403', compact('message'), 403);
             }
+            //自定义HTTP业务逻辑错误代码，
             if ($exception->getStatusCode() == 490) {
                 return response()->view('errors.' . '490', compact('message'), 490);
             }
