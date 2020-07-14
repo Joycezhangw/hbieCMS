@@ -61,9 +61,6 @@
     <script type="text/html" id="is_home_rec">
         @{{ d.is_home_rec ===1 ?'是':'否' }}
     </script>
-    <script type="text/html" id="post_status">
-        @{{ d.post_status ===1 ?'是':'否' }}
-    </script>
     <script type="text/html" id="post_pic">
         <div class="hb-img-box" id="article_img_@{{ d.post_id }}">
             <img layer-src="" src="@{{ d.post_pic_url }}" layer-index="0">
@@ -96,10 +93,11 @@
                 id: 'article_list',
                 url: '{{route('manage.article.index')}}',
                 cols: [[
+                    {field: 'post_id', width: '5%', title: '内容ID'},
                     {field: 'post_title', width: '18%', title: '内容标题'},
-                    {field: 'post_pic_url', width: '20%', title: '封面图', templet: '#post_pic'},
+                    {field: 'post_pic_url', width: '10%', title: '封面图', templet: '#post_pic'},
                     {
-                        field: 'post_status', width: '10%', title: '是否显示', templet: function (data) {
+                        field: 'post_status', width: '6%', title: '是否显示', templet: function (data) {
                             var str = '', status = parseInt(data.post_status);
                             if (status === 1) {
                                 str = '是';
@@ -114,7 +112,6 @@
                     {title: '操作', width: '15%', unresize: 'false', toolbar: '#operation'}
                 ]]
             });
-            console.log(table)
             /**
              * 监听工具栏操作
              */

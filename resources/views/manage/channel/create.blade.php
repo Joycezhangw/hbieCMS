@@ -61,5 +61,5 @@
     <script>
         var saveUrl="{{route('manage.channel.store')}}",indexUrl="{{route('manage.channel.index')}}";
     </script>
-    <script type="text/javascript" src="/static/ac/modules/save_channel.js"></script>
+    <script type="text/javascript" src="/static/manage/js/save_channel.js"></script>
 @endsection

@@ -94,5 +94,5 @@
         var SAVE_URL = "{{route('manage.article.store')}}", INDEX_URL = "{{route('manage.article.index')}}",
             HB_TAGS = [], HB_UPLOAD_URL = "{{route('manage/upload/upload')}}", CSRF_TOKEN = "{{csrf_token()}}";
     </script>
-    <script type="text/javascript" src="/static/ac/modules/save_article.js"></script>
+    <script type="text/javascript" src="/static/manage/js/save_article.js"></script>
 @endsection
