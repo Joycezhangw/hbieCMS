@@ -68,6 +68,9 @@
                 return escape(str)
             }
             return ""
+        },
+        random: function (len) {
+            return Number(Math.random().toString().substr(3, len) + Date.now()).toString(36);
         }
     };
     HBIE.Table = function (options) {
@@ -118,6 +121,7 @@
         options.size = options.size || 'lg';
         options.async = (options.async !== undefined) ? options.async : true;
         options.done = function (res, curr, count) {
+            HBIE.image.loadImgMagnify();
             if (options.callback) options.callback(res, curr, count);
         };
         layui.use('table', function () {
@@ -141,5 +145,71 @@
                 clearInterval(interval);
             }
         }, 50);
+    };
+    HBIE.image = {
+        IMG_COUNT : 0,
+        IMG_MAX_RECURSIVE_COUNT:6,
+        loadImgMagnify: function () {
+            setTimeout(function () {
+                try {
+                    if (layer) {
+                        $("img[src!=''][layer-src]").each(function () {
+                            var id = HBIE.image.getImgId($(this).parent());
+                            layer.photos({
+                                photos: "#" + id,
+                                anim: 5
+                            });
+                            HBIE.image.IMG_COUNT = 0;
+                        });
+                    }
+                } catch (e) {
+
+                }
+            }, 200);
+        },
+        getImgId:function (obj) {
+            HBIE.image.IMG_COUNT++;
+            var id = obj.attr("id");
+            if (id === undefined && HBIE.image.IMG_COUNT < HBIE.image.IMG_MAX_RECURSIVE_COUNT) {
+                id = HBIE.image.getImgId(obj.parent());
+            }
+            if (id === undefined) {
+                id = HBIE.string.random(10);
+                obj.attr("id", id);
+            }
+            return id;
+        }
+    };
+    HBIE.date={
+        DEFAULT_TIME_FORMAT:'YYYY-MM-DD h:m:s',
+        formatParseTime:function (timestamp, format = '') {
+            format = format ==='' ? HBIE.date.DEFAULT_TIME_FORMAT : format;
+            if (timestamp > 0) {
+                var date = new Date();
+                date.setTime(timestamp * 1000);
+                var y = date.getFullYear();
+                var m = date.getMonth() + 1;
+                m = m < 10 ? ('0' + m) : m;
+                var d = date.getDate();
+                d = d < 10 ? ('0' + d) : d;
+                var h = date.getHours();
+                h = h < 10 ? ('0' + h) : h;
+                var minute = date.getMinutes();
+                var second = date.getSeconds();
+                minute = minute < 10 ? ('0' + minute) : minute;
+                second = second < 10 ? ('0' + second) : second;
+                var time = '';
+                time += format.indexOf('Y') > -1 ? y : '';
+                time += format.indexOf('M') > -1 ? '-' + m : '';
+                time += format.indexOf('D') > -1 ? '-' + d : '';
+                time += format.indexOf('h') > -1 ? ' ' + h : '';
+                time += format.indexOf('m') > -1 ? ':' + minute : '';
+                time += format.indexOf('s') > -1 ? ':' + second : '';
+                return time;
+            } else {
+                return "";
+            }
+        }
     }
+
 })();
