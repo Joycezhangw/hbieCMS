@@ -66,7 +66,7 @@ class ArticleRepo extends BaseRepository implements IArticle
             if (isset($params['post_tags'])) {
                 if ($params['post_tags']) {
                     foreach ($params['post_tags'] as $tag) {
-                        Tag::doUpdateTag($tag, $postId);
+                        Tag::doSaveTag($tag, $postId);
                     }
                 }
             }
@@ -91,7 +91,7 @@ class ArticleRepo extends BaseRepository implements IArticle
             if (isset($params['post_tags'])) {
                 if ($params['post_tags']) {
                     foreach ($params['post_tags'] as $tag) {
-                        Tag::doUpdateTag($tag, $articleId);
+                        Tag::doSaveTag($tag, $articleId);
                     }
                 }
             }
