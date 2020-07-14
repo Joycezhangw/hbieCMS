@@ -38,4 +38,21 @@ class Tag extends Model
         'created_at',
         'updated_at'
     ];
+
+    /**
+     * 创建标签
+     * @param string $name
+     * @param int $iid
+     */
+    public static function doSaveTag(string $name,int $iid)
+    {
+        $tag = Tag::firstOrCreate(['tag_name' => $name]);
+        if ($tag) {
+            $tag_id = $tag->tag_id;
+            if (!PostTag::where(['tag_id' => $tag_id, 'post_id' => $iid])->first()) {
+                $tag->increment('post_num');
+            }
+            PostTag::firstOrCreate(['tag_id' => $tag_id, 'post_id' => $iid]);
+        }
+    }
 }
