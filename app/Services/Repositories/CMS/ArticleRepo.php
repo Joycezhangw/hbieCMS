@@ -32,7 +32,7 @@ class ArticleRepo extends BaseRepository implements IArticle
             }
             if (isset($params['created_time']) && $params['created_time'] != '') {
                 $date = explode('至', $params['created_time']);
-                $query->orWhere('created_at', '>=', strtotime(trim($date[0])))->orWhere('created_at', '<=', strtotime(trim($date[1])));
+                $query->where('created_at', '>=', strtotime(trim($date[0])))->where('created_at', '<=', strtotime(trim($date[1])));
             }
             if (isset($params['channel_id']) && intval($params['channel_id']) > 0) {
                 $query->where('channel_id', $params['channel_id']);
@@ -75,6 +75,12 @@ class ArticleRepo extends BaseRepository implements IArticle
         return ResultHelper::returnFormat('网络繁忙，请稍后再试!', -1);
     }
 
+    /**
+     * 更新内容
+     * @param int $articleId
+     * @param array $params
+     * @return array
+     */
     public function doUpdateArticle(int $articleId, array $params): array
     {
         $post = $this->doUpdateByPkId([
