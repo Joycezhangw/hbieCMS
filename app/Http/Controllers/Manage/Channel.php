@@ -71,7 +71,7 @@ class Channel extends ManageController
     {
         $channelId = $request->post('channel_id');
         $channel_sort = $request->post('channel_sort');
-        if ($channelRepo->doUpdateFieldByPkId($channelId, 'channel_sort', $channel_sort)) {
+        if ($channelRepo->doUpdateFieldByPkId((int)$channelId, 'channel_sort', $channel_sort)) {
             return ResultHelper::returnFormat('修改排序成功', 200);
         } else {
             return ResultHelper::returnFormat('网络繁忙，请稍后再试', -1);
