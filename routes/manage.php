@@ -56,7 +56,19 @@ Route::group([
         $router->post('article/update/{id}', 'Article@update')->name('manage.article.update');
         $router->post('article/destroy/{id}', 'Article@destroy')->name('manage.article.destroy');
 
+        //幻灯片
+        $router->get('slide/index', 'Slide@index')->name('manage.slide.index');
+        $router->get('slide/create', 'Slide@create')->name('manage.slide.create');
+        $router->get('slide/edit', 'Slide@edit')->name('manage.slide.edit');
+        $router->post('slide/store', 'Slide@store')->name('manage.slide.store');
+        $router->post('slide/update/{id}', 'Slide@update')->name('manage.slide.update');
+        $router->post('slide/modifySort', 'Slide@modifySort')->name('manage.slide.modifySort');
+        $router->post('slide/destroy/{id}', 'Slide@destroy')->name('manage.slide.destroy');
+
+        //上传附件
         $router->post('upload/upload', 'Upload@doUpload')->name('manage/upload/upload');
+
+
 
     });
 });
