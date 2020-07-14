@@ -24,10 +24,10 @@
                         </div>
                     </div>
                     <div class="layui-inline">
-                        <label class="layui-form-label">内容标题：</label>
+                        <label class="layui-form-label">栏目：</label>
                         <div class="layui-input-inline">
                             <div class="layui-input-inline">
-                                <select name="quiz">
+                                <select name="channel_id">
                                     <option value="">请选择栏目</option>
                                     @foreach($channels as $channel)
                                         <option value="{{$channel->channel_id}}">{{$channel->channel_name}}</option>
@@ -48,20 +48,39 @@
                     </div>
                 </div>
                 <div class="hb-form-row">
-                    <button class="layui-btn hb-bg-color" lay-submit="" lay-filter="search_website">筛选</button>
+                    <button class="layui-btn hb-bg-color" lay-submit="" lay-filter="article-list">筛选
+                    </button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </form>
         </div>
     </div>
-    <div class="cms-channel">
-
+    <div class="article-box">
+        <table id="article_list" lay-filter="article_list" lay-size="lg"></table>
     </div>
+    <script type="text/html" id="is_home_rec">
+        @{{ d.is_home_rec ===1 ?'是':'否' }}
+    </script>
+    <script type="text/html" id="post_status">
+        @{{ d.post_status ===1 ?'是':'否' }}
+    </script>
+    <script type="text/html" id="post_pic">
+        <div class="hb-img-box" id="article_img_@{{ d.post_id }}">
+            <img layer-src="" src="@{{ d.post_pic_url }}" layer-index="0">
+        </div>
+    </script>
+    <!-- 工具栏操作 -->
+    <script type="text/html" id="operation">
+        <div class="hb-table-btn">
+            <a href="javascript:;" class="layui-btn" lay-event="edit">修改</a>
+        </div>
+    </script>
 @endsection
 @section('javascript')
     <script>
+
         layui.use(['form', 'laydate'], function () {
-            var table, table_website,
+            var table,
                 form = layui.form,
                 laydate = layui.laydate;
             form.render();
@@ -70,233 +89,56 @@
             laydate.render({
                 elem: '#created_time',
                 type: 'datetime',
-                range: true
+                range: '至'
+            });
+            table = new HBIE.Table({
+                elem: '#article_list',
+                id: 'article_list',
+                url: '{{route('manage.article.index')}}',
+                cols: [[
+                    {field: 'post_title', width: '18%', title: '内容标题'},
+                    {field: 'post_pic_url', width: '20%', title: '封面图', templet: '#post_pic'},
+                    {
+                        field: 'post_status', width: '10%', title: '是否显示', templet: function (data) {
+                            var str = '', status = parseInt(data.post_status);
+                            if (status === 1) {
+                                str = '是';
+                            } else if (status === 0) {
+                                str = '否';
+                            }
+                            return str;
+                        }
+                    },
+                    {field: 'is_home_rec', width: '10%', title: '是否推荐首页', templet: '#is_home_rec'},
+                    {field: 'created_at_txt', width: '18%', title: '发布时间'},
+                    {title: '操作', width: '15%', unresize: 'false', toolbar: '#operation'}
+                ]]
+            });
+            console.log(table)
+            /**
+             * 监听工具栏操作
+             */
+            table.tool(function (obj) {
+                var data = obj.data;
+                switch (obj.event) {
+                    case 'edit': //编辑
+                        location.href = '{{route("manage.article.edit")}}?id=' + data.post_id;
+                        break;
+                }
             });
 
-            {{--/**--}}
-            {{-- * 渲染表格--}}
-            {{-- */--}}
-            {{--table = new Table({--}}
-            {{--    elem: '#shop_list',--}}
-            {{--    url: ns.url("admin/shop/lists"),--}}
-            {{--    cols: [--}}
-            {{--        [{--}}
-            {{--            field: 'site_name',--}}
-            {{--            title: '店铺名称',--}}
-            {{--            width: '12%',--}}
-            {{--            unresize: 'false',--}}
-            {{--            // templet: '<div><div class="layui-elip">店铺名称：{{d.site_name}}<div class="layui-elip">卖家账号：{{d.username}}</div>'--}}
-            {{--        }, {--}}
-            {{--            field: 'username',--}}
-            {{--            title: '商家账号',--}}
-            {{--            width: '8%',--}}
-            {{--            unresize: 'false'--}}
-            {{--        }, {--}}
-            {{--            field: 'group_name',--}}
-            {{--            title: '开店套餐',--}}
-            {{--            width: '10%',--}}
-            {{--            unresize: 'false'--}}
-            {{--        }, {--}}
-            {{--            field: 'category_name',--}}
-            {{--            title: '主营行业',--}}
-            {{--            width: '8%',--}}
-            {{--            unresize: 'false'--}}
-            {{--        }, {--}}
-            {{--            field: 'is_own',--}}
-            {{--            title: '是否自营',--}}
-            {{--            width: '8%',--}}
-            {{--            unresize: 'false',--}}
-            {{--            templet: '#is_own'--}}
-            {{--        }, {--}}
-            {{--            field: 'cert_id',--}}
-            {{--            title: '店铺认证',--}}
-            {{--            width: '8%',--}}
-            {{--            unresize: 'false',--}}
-            {{--            templet: function(data) {--}}
-            {{--                return data.cert_id == 0 ? '<span style="color: red">未认证</span>' : '<span style="color: green">已认证</span>';--}}
-            {{--            }--}}
-            {{--        }, {--}}
-            {{--            field: 'shop_status',--}}
-            {{--            title: '店铺状态',--}}
-            {{--            width: '8%',--}}
-            {{--            templet: '#status',--}}
-            {{--            unresize: 'false'--}}
-            {{--        }, {--}}
-            {{--            field: 'create_time',--}}
-            {{--            title: '入驻时间',--}}
-            {{--            width: '12%',--}}
-            {{--            unresize: 'false',--}}
-            {{--            templet: function(data) {--}}
-            {{--                return ns.time_to_date(data.create_time);--}}
-            {{--            }--}}
-            {{--        }, {--}}
-            {{--            field: 'expire_time',--}}
-            {{--            title: '到期时间',--}}
-            {{--            width: '12%',--}}
-            {{--            unresize: 'false',--}}
-            {{--            templet: function(data) {--}}
-            {{--                return ns.time_to_date(data.expire_time);--}}
-            {{--            }--}}
-            {{--        }, {--}}
-            {{--            title: '操作',--}}
-            {{--            width: '12%',--}}
-            {{--            toolbar: '#operation',--}}
-            {{--            unresize: 'false'--}}
-            {{--        }]--}}
-            {{--    ]--}}
-            {{--});--}}
-
-            {{--// 有城市分站--}}
-            {{--table_website = new Table({--}}
-            {{--    elem: '#shop_website_list',--}}
-            {{--    url: ns.url("city://admin/shop/lists"),--}}
-            {{--    cols: [--}}
-            {{--        [{--}}
-            {{--            field: 'site_name',--}}
-            {{--            title: '店铺名称',--}}
-            {{--            width: '12%',--}}
-            {{--            unresize: 'false',--}}
-            {{--        }, {--}}
-            {{--            field: 'username',--}}
-            {{--            title: '商家账号',--}}
-            {{--            width: '8%',--}}
-            {{--            unresize: 'false'--}}
-            {{--        }, {--}}
-            {{--            field: 'group_name',--}}
-            {{--            title: '开店套餐',--}}
-            {{--            width: '10%',--}}
-            {{--            unresize: 'false'--}}
-            {{--        }, {--}}
-            {{--            field: 'category_name',--}}
-            {{--            title: '主营行业',--}}
-            {{--            width: '8%',--}}
-            {{--            unresize: 'false'--}}
-            {{--        }, {--}}
-            {{--            field: 'is_own',--}}
-            {{--            title: '是否自营',--}}
-            {{--            width: '8%',--}}
-            {{--            unresize: 'false',--}}
-            {{--            templet: '#is_own'--}}
-            {{--        }, {--}}
-            {{--            field: 'site_area_name',--}}
-            {{--            title: '城市分站',--}}
-            {{--            width: '8%',--}}
-            {{--            unresize: 'false',--}}
-            {{--            templet: function(data) {--}}
-            {{--                return data.site_area_name == '全国' ? '--' : data.site_area_name;--}}
-            {{--            }--}}
-            {{--        }, {--}}
-            {{--            field: 'cert_id',--}}
-            {{--            title: '店铺认证',--}}
-            {{--            width: '7%',--}}
-            {{--            unresize: 'false',--}}
-            {{--            templet: function(data) {--}}
-            {{--                return data.cert_id == 0 ? '<span style="color: red">未认证</span>' : '<span style="color: green">已认证</span>';--}}
-            {{--            }--}}
-            {{--        }, {--}}
-            {{--            field: 'shop_status',--}}
-            {{--            title: '店铺状态',--}}
-            {{--            width: '7%',--}}
-            {{--            templet: '#status',--}}
-            {{--            unresize: 'false'--}}
-            {{--        }, {--}}
-            {{--            field: 'create_time',--}}
-            {{--            title: '入驻时间',--}}
-            {{--            width: '10%',--}}
-            {{--            unresize: 'false',--}}
-            {{--            templet: function(data) {--}}
-            {{--                return ns.time_to_date(data.create_time);--}}
-            {{--            }--}}
-            {{--        }, {--}}
-            {{--            field: 'expire_time',--}}
-            {{--            title: '到期时间',--}}
-            {{--            width: '10%',--}}
-            {{--            unresize: 'false',--}}
-            {{--            templet: function(data) {--}}
-            {{--                return ns.time_to_date(data.expire_time);--}}
-            {{--            }--}}
-            {{--        }, {--}}
-            {{--            title: '操作',--}}
-            {{--            width: '10%',--}}
-            {{--            toolbar: '#operation',--}}
-            {{--            unresize: 'false'--}}
-            {{--        }]--}}
-            {{--    ]--}}
-            {{--});--}}
-
-
-            {{--/**--}}
-            {{-- * 搜索功能--}}
-            {{-- */--}}
-            {{--form.on('submit(search)', function(data) {--}}
-            {{--    table.reload({--}}
-            {{--        page: {--}}
-            {{--            curr: 1--}}
-            {{--        },--}}
-            {{--        where: data.field--}}
-            {{--    });--}}
-            {{--    return false;--}}
-            {{--});--}}
-
-            {{--// 城市分站--}}
-            {{--form.on('submit(search_website)', function(data) {--}}
-            {{--    table_website.reload({--}}
-            {{--        page: {--}}
-            {{--            curr: 1--}}
-            {{--        },--}}
-            {{--        where: data.field--}}
-            {{--    });--}}
-            {{--    return false;--}}
-            {{--});--}}
-
-
-            {{--//批量导出--}}
-            {{--form.on('submit(export)', function(data){--}}
-            {{--    data.field.order_type = 1;--}}
-            {{--    location.href = ns.url("admin/shop/exportShop",data.field);--}}
-            {{--    return false;--}}
-            {{--});--}}
-
-            {{--/**--}}
-            {{-- * 监听工具栏操作--}}
-            {{-- */--}}
-            {{--table.tool(function(obj) {--}}
-            {{--    var data = obj.data,--}}
-            {{--        event = obj.event;--}}
-            {{--    switch (event) {--}}
-            {{--        case 'basic': //基本信息--}}
-            {{--            location.href = ns.url("admin/shop/basicInfo" + "?site_id=" + data.site_id);--}}
-            {{--            break;--}}
-            {{--        case 'identify': //认证信息--}}
-            {{--            location.href = ns.url("admin/shop/certInfo" + "?site_id=" + data.site_id)--}}
-            {{--            break;--}}
-            {{--        // case 'settlement': //结算信息--}}
-            {{--        // 	location.href = ns.url("admin/shop/settlementInfo" + "?site_id=" + data.site_id)--}}
-            {{--        // 	break;--}}
-            {{--        // case 'account': //账户信息--}}
-            {{--        // 	location.href = ns.url("admin/shop/accountInfo" + "?site_id=" + data.site_id)--}}
-            {{--        // 	break;--}}
-            {{--    }--}}
-            {{--});--}}
-
-            {{--table_website.tool(function(obj) {--}}
-            {{--    var data = obj.data,--}}
-            {{--        event = obj.event;--}}
-            {{--    switch (event) {--}}
-            {{--        case 'basic': //基本信息--}}
-            {{--            location.href = ns.url("admin/shop/basicInfo" + "?site_id=" + data.site_id);--}}
-            {{--            break;--}}
-            {{--        case 'identify': //认证信息--}}
-            {{--            location.href = ns.url("admin/shop/certInfo" + "?site_id=" + data.site_id)--}}
-            {{--            break;--}}
-            {{--        // case 'settlement': //结算信息--}}
-            {{--        // 	location.href = ns.url("admin/shop/settlementInfo" + "?site_id=" + data.site_id)--}}
-            {{--        // 	break;--}}
-            {{--        // case 'account': //账户信息--}}
-            {{--        // 	location.href = ns.url("admin/shop/accountInfo" + "?site_id=" + data.site_id)--}}
-            {{--        // 	break;--}}
-            {{--    }--}}
-            {{--});--}}
+            /**
+             * 搜索功能
+             */
+            form.on('submit(article-list)', function (data) {
+                table._table.reload('article_list', {
+                    page: {
+                        curr: 1
+                    },
+                    where: data.field
+                });
+                return false;
+            });
         });
     </script>
 @endsection
