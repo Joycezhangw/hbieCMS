@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Manage;
 
 
 use App\Services\Repositories\System\Interfaces\ISlide;
+use App\Utility\Format;
 use JoyceZ\LaravelLib\Helpers\ResultHelper;
 use Illuminate\Http\Request;
 
@@ -21,7 +22,7 @@ class Slide extends ManageController
                 }
             }
             $ret = $slideRepo->getSlidePageList($request->all());
-            $list = $this->formatReturnDataByManyDim($ret['data']);
+            $list = Format::formatReturnDataByManyDim($ret['data']);
             return ResultHelper::returnFormat('success', 200, ['total' => $ret['total'], 'list' => $list]);
         } else {
             return $this->view();
@@ -57,7 +58,7 @@ class Slide extends ManageController
         if (!$slideData) {
             abort(490, '内容不存在');
         }
-        $slide = $this->formatReturnDataByOneDim($slideData->toArray());
+        $slide = Format::formatReturnDataByOneDim($slideData->toArray());
         return $this->view(compact('slide'));
     }
 
