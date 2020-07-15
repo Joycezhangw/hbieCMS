@@ -55,7 +55,7 @@ class ManageModuleTableSeeder extends Seeder
         DB::insert("INSERT INTO `hb_manage_module` VALUES ('10041', '基础设置', 'manage', '', '', '10018', '2', '', '1', '0', '', '', '1594367111', '1594367111');");
         DB::insert("INSERT INTO `hb_manage_module` VALUES ('10042', '幻灯片管理', 'manage', 'Slide', 'index', '10041', '3', 'manage.slide.index', '1', '0', '', '', '1594367111', '1594367111');");
         DB::insert("INSERT INTO `hb_manage_module` VALUES ('10043', '创建幻灯片', 'manage', 'Slide', 'create', '10042', '4', 'manage.slide.create', '0', '0', '', '', '1594367111', '1594367111');");
-        DB::insert("INSERT INTO `hb_manage_module` VALUES ('10044', '修改幻灯片', 'manage', 'Slide', 'edit', '10042', '4', 'manage.adminRule.edit', '0', '0', '', '', '1594367111', '1594367111');");
+        DB::insert("INSERT INTO `hb_manage_module` VALUES ('10044', '修改幻灯片', 'manage', 'Slide', 'edit', '10042', '4', 'manage.slide.edit', '0', '0', '', '', '1594367111', '1594367111');");
         DB::insert("INSERT INTO `hb_manage_module` VALUES ('10045', '提交幻灯片', 'manage', 'Slide', 'store', '10042', '4', 'manage.slide.store', '0', '0', '', '', '1594367111', '1594367111');");
         DB::insert("INSERT INTO `hb_manage_module` VALUES ('10046', '更新幻灯片', 'manage', 'Slide', 'update', '10042', '4', 'manage.slide.update', '0', '0', '', '', '1594367111', '1594367111');");
         DB::insert("INSERT INTO `hb_manage_module` VALUES ('10047', '幻灯片排序', 'manage', 'Slide', 'modifySort', '10042', '4', 'manage.slide.modifySort', '0', '0', '', '', '1594367111', '1594367111');");
