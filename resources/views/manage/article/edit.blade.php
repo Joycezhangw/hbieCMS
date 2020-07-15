@@ -24,6 +24,17 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label class="layui-form-label">来源：</label>
+            <div class="layui-input-block hb-len-long">
+                <input name="post_source" type="text" placeholder="请输入内容来源"  maxlength="128"
+                       lay-verify="required" value="{{$article['post_source']}}"
+                       class="layui-input" autocomplete="off">
+            </div>
+            <div class="hb-word-aux">
+                <p>内容来源，比如：福建留学人员创业园</p>
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label">是否显示：</label>
             <div class="layui-input-block">
                 <input type="checkbox" name="post_status" lay-skin="switch" value="1" @if(intval($article['post_status'])===1) checked  @endif >

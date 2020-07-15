@@ -95,6 +95,7 @@
                 cols: [[
                     {field: 'post_id', width: '5%', title: '内容ID'},
                     {field: 'post_title', width: '18%', title: '内容标题'},
+                    {field: 'post_source', width: '18%', title: '来源'},
                     {field: 'post_pic_url', width: '10%', title: '封面图', templet: '#post_pic'},
                     {
                         field: 'post_status', width: '6%', title: '是否显示', templet: function (data) {

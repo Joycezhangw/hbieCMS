@@ -41,6 +41,7 @@ class Post extends Model
         'manage_username',
         'author_uid',
         'author_username',
+        'post_source',
         'post_tags',
         'post_pic',
         'post_desc',

@@ -23,6 +23,7 @@ class CreateHbCmsPostTable extends Migration
             $table->string('manage_username',60)->default('')->comment('管理员发布者名');
             $table->unsignedBigInteger('author_uid')->default(0)->comment('作者用户id');
             $table->string('author_username',60)->default('')->comment('作者用户名,后期合并管理员和用户可用');
+            $table->string('post_source',128)->default('')->comment('来源');
             $table->string('post_tags',1512)->default('')->comment('TAG标签值,利于搜索,值之间用应用逗号隔开');
             $table->string('post_pic')->default('')->comment('文章封面图片');
             $table->string('post_desc',512)->default('')->comment('简短的文章描述');
