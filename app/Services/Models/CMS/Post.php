@@ -49,6 +49,7 @@ class Post extends Model
         'post_view',
         'post_view',
         'post_fav',
+        'post_comment',
         'is_comment',
         'is_guest',
         'is_home_rec',

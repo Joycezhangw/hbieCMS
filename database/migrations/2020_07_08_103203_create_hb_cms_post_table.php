@@ -30,6 +30,7 @@ class CreateHbCmsPostTable extends Migration
             $table->unsignedInteger('post_dislike')->default(0)->comment('点踩数量');
             $table->unsignedInteger('post_view')->default(0)->comment('查看数量');
             $table->unsignedInteger('post_fav')->default(0)->comment('收藏数量');
+            $table->unsignedInteger('post_comment')->default(0)->comment('评论数量');
             $table->unsignedTinyInteger('is_comment')->default(1)->comment('是否允许评论[1 是 0 否]');
             $table->unsignedTinyInteger('is_guest')->default(1)->comment('是否访客可见[1 是 0 否]');
             $table->unsignedTinyInteger('is_home_rec')->default(0)->comment('是否推荐首页[1 是 0 否]');
