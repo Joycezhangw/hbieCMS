@@ -108,8 +108,19 @@
                             return str;
                         }
                     },
+                    {
+                        field: 'is_hot', width: '6%', title: '是否热点', templet: function (data) {
+                            var str = '', status = parseInt(data.is_hot);
+                            if (status === 1) {
+                                str = '是';
+                            } else if (status === 0) {
+                                str = '否';
+                            }
+                            return str;
+                        }
+                    },
                     {field: 'is_home_rec', width: '10%', title: '是否推荐首页', templet: '#is_home_rec'},
-                    {field: 'created_at_txt', width: '18%', title: '发布时间'},
+                    {field: 'created_at_txt', width: '10%', title: '发布时间'},
                     {title: '操作', width: '15%', unresize: 'false', toolbar: '#operation'}
                 ]]
             });

@@ -4,10 +4,12 @@ declare (strict_types=1);
 namespace App\Services\Repositories\CMS;
 
 
+use App\Services\Models\CMS\Channel;
 use App\Services\Models\CMS\Post;
 use App\Services\Models\CMS\PostData;
 use App\Services\Models\CMS\Tag;
 use App\Services\Repositories\CMS\Interfaces\IArticle;
+use App\Utility\Format;
 use JoyceZ\LaravelLib\Helpers\FiltersHelper;
 use JoyceZ\LaravelLib\Helpers\ResultHelper;
 use JoyceZ\LaravelLib\Repositories\BaseRepository;
@@ -53,11 +55,13 @@ class ArticleRepo extends BaseRepository implements IArticle
             'post_title' => FiltersHelper::stringFilter($params['post_title']),
             'manage_id' => $adminUser['manage_id'],
             'manage_username' => $adminUser['username'],
+            'post_source' => FiltersHelper::stringFilter($params['post_source']),
             'channel_id' => intval($params['channel_id']),
             'post_tags' => $params['post_tags'] ? implode(',', $params['post_tags']) : '',
             'post_pic' => $params['post_pic'],
             'post_status' => $params['post_status'],
             'is_home_rec' => $params['is_home_rec'],
+            'is_hot' => $params['is_hot'],
             'post_desc' => FiltersHelper::stringFilter($params['post_desc'])
         ]);
         if ($post) {
@@ -85,13 +89,15 @@ class ArticleRepo extends BaseRepository implements IArticle
     {
         $post = $this->doUpdateByPkId([
             'post_title' => FiltersHelper::stringFilter($params['post_title']),
+            'post_source' => FiltersHelper::stringFilter($params['post_source']),
             'channel_id' => intval($params['channel_id']),
             'post_tags' => $params['post_tags'] ? implode(',', $params['post_tags']) : '',
             'post_pic' => $params['post_pic'],
             'post_status' => $params['post_status'],
             'is_home_rec' => $params['is_home_rec'],
+            'is_hot' => $params['is_hot'],
             'post_desc' => FiltersHelper::stringFilter($params['post_desc'])
-        ],$articleId);
+        ], $articleId);
         if ($post) {
             PostData::updateOrCreate(['post_id' => $articleId], ['content' => FiltersHelper::stringFilter($params['content'])]);
             if (isset($params['post_tags'])) {
@@ -104,6 +110,35 @@ class ArticleRepo extends BaseRepository implements IArticle
             return ResultHelper::returnFormat('修改内容成功', 200);
         }
         return ResultHelper::returnFormat('网络繁忙，请稍后再试!', -1);
+    }
+
+    /**
+     * 获取小程序端首页数据集合
+     * @return array
+     */
+    public function getHomeListData(): array
+    {
+        $channels = Channel::where('is_show', 1)->orderBy('channel_sort', 'asc')->get(['channel_id', 'channel_name', 'channel_short_name']);
+        if (!$channels) {
+            return [];
+        }
+        $channelIds = [];
+        foreach ($channels as $channel) {
+            $channelIds[] = $channel->channel_id;
+        }
+        $posts = $this->model->whereIn('channel_id', $channelIds)
+            ->where(['is_home_rec' => 1, 'post_status' => 1])
+            ->orderBy('created_at', 'desc')
+            ->get(['post_id', 'post_title', 'channel_id', 'manage_username', 'author_username','is_hot', 'post_source','post_tags', 'post_pic', 'post_desc', 'post_like', 'post_dislike', 'post_comment','post_view', 'post_fav', 'created_at']);
+        $articles = [];
+        foreach ($posts as $post) {
+            $articles[$post->channel_id][] = Format::formatReturnDataByOneDim($post->toArray());
+        }
+
+        foreach ($channels as $channel) {
+            $channel->articles = isset($articles[$channel->channel_id]) ? $articles[$channel->channel_id] : [];
+        }
+        return $channels->toArray();
     }
 
 

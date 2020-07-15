@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Router;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,11 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::group([
+    'namespace' => 'Api'
+], function (Router $router) {
+    $router->get('/index', 'Index@index');
+    $router->get('article/detail', 'Article@detail');
 });

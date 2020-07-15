@@ -32,4 +32,10 @@ interface IArticle extends BaseInterface
      */
     public function doUpdateArticle(int $articleId, array $params): array;
 
+    /**
+     * 获取小程序端首页数据集合
+     * @return array
+     */
+    public function getHomeListData(): array;
+
 }
