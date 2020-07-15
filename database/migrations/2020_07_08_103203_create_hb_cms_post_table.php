@@ -36,6 +36,7 @@ class CreateHbCmsPostTable extends Migration
             $table->unsignedTinyInteger('is_guest')->default(1)->comment('是否访客可见[1 是 0 否]');
             $table->unsignedTinyInteger('is_home_rec')->default(0)->comment('是否推荐首页[1 是 0 否]');
             $table->unsignedTinyInteger('post_status')->default(1)->comment('状态。可选值：0 隐藏 1 显示');
+            $table->unsignedTinyInteger('is_hot')->default(0)->comment('热点。可选值：0 否 1 是');
             $table->unsignedInteger('deleted_at')->default(0)->comment('删除时间[0表示没有删除]');
             $table->unsignedInteger('created_at')->default(0)->comment('创建时间');
             $table->unsignedInteger('updated_at')->default(0)->comment('更新时间');

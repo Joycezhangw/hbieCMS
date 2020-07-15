@@ -53,6 +53,15 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label class="layui-form-label">是否热点：</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="is_hot" lay-skin="switch" value="0">
+            </div>
+            <div class="hb-word-aux">
+                <p>用于小程序端标题前面显示热点字样</p>
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label"><span class="required">*</span>内容封面图片：</label>
             <div class="layui-input-block">
                 <input type="hidden" name="post_pic" value="" lay-verify="post_pic">

@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Manage;
 
 use App\Services\Repositories\CMS\Interfaces\IArticle;
 use App\Services\Repositories\CMS\Interfaces\IChannel;
+use App\Utility\Format;
 use Illuminate\Http\Request;
 use JoyceZ\LaravelLib\Helpers\ResultHelper;
 
@@ -28,7 +29,7 @@ class Article extends ManageController
                 }
             }
             $ret = $articleRepo->getArticlePageLists($request->all());
-            $list = $this->formatReturnDataByManyDim($ret['data']);
+            $list = Format::formatReturnDataByManyDim($ret['data']);
             return ResultHelper::returnFormat('success', 200, ['total' => $ret['total'], 'list' => $list]);
         } else {
             $channels = $channelRepo->all();
@@ -58,6 +59,7 @@ class Article extends ManageController
         $params = $request->all();
         $params['is_show'] = isset($params['is_show']) ? 1 : 0;
         $params['is_home_rec'] = isset($params['is_home_rec']) ? 1 : 0;
+        $params['is_hot'] = isset($params['is_hot']) ? 1 : 0;
         return $articleRepo->doCreateArticle($params, $request->admin);
     }
 
@@ -76,7 +78,7 @@ class Article extends ManageController
         }
         $channels = $channelRepo->all();
         $articleData->content;
-        $article = $this->formatReturnDataByOneDim($articleData->toArray());
+        $article = Format::formatReturnDataByOneDim($articleData->toArray());
         return $this->view(compact('article', 'channels'));
     }
 
@@ -89,6 +91,7 @@ class Article extends ManageController
         $params = $request->all();
         $params['is_show'] = isset($params['is_show']) ? 1 : 0;
         $params['is_home_rec'] = isset($params['is_home_rec']) ? 1 : 0;
+        $params['is_hot'] = isset($params['is_hot']) ? 1 : 0;
         $ret = $articleRepo->doUpdateArticle($id, $params);
         return $ret;
     }

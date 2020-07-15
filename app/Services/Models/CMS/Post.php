@@ -54,6 +54,7 @@ class Post extends Model
         'is_comment',
         'is_guest',
         'is_home_rec',
+        'is_hot',
         'post_status',
         'deleted_at',
         'created_at',
