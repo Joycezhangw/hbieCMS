@@ -17,7 +17,7 @@ layui.define(['layer', 'form'], function (exports) {
             that.config = {
                 //默认工具bar
                 tool: [
-                    'strong', 'italic', 'underline', 'del', 'fontSize','|', 'left', 'center', 'right', '|', 'link', 'unlink', 'face', 'image'
+                    'strong', 'italic', 'underline', 'del', 'fontSize', '|', 'left', 'center', 'right','|','clear', '|', 'link', 'unlink', 'face', 'image'
                 ], hideTool: [], height: 280 //默认高
             };
         };
@@ -260,10 +260,7 @@ layui.define(['layer', 'form'], function (exports) {
         },
         //工具选中
         toolCheck = function (tools, othis) {
-            var iframeDOM = this.document
-                , CHECK = 'layedit-tool-active'
-                , container = getContainer(Range(iframeDOM))
-                , item = function (type) {
+            var iframeDOM = this.document, CHECK = 'layedit-tool-active', container = getContainer(Range(iframeDOM)), item = function (type) {
                 return tools.find('.layedit-tool-' + type)
             };
 
@@ -406,6 +403,10 @@ layui.define(['layer', 'form'], function (exports) {
                                 body.focus();
                             }, 10);
                         });
+                    },
+                    //清除格式
+                    removeFormat(range){
+                        iframeDOM.execCommand('removeFormat');
                     },
                     //插入代码
                     code: function (range) {
@@ -650,7 +651,7 @@ layui.define(['layer', 'form'], function (exports) {
             italic: '<i class="layui-icon layedit-tool-i" title="斜体" lay-command="italic" layedit-event="i">&#xe644;</i>',
             underline: '<i class="layui-icon layedit-tool-u" title="下划线" lay-command="underline" layedit-event="u">&#xe646;</i>',
             del: '<i class="layui-icon layedit-tool-d" title="删除线" lay-command="strikeThrough" layedit-event="d">&#xe64f;</i>',
-            fontSize: '<i class="simditor-icon simditor-icon-font" title="字号" layedit-event="fontSize"></i>',
+            fontSize: '<i class="simditor-icon simditor-icon-font" title="字体大小" layedit-event="fontSize"></i>',
             '|': '<span class="layedit-tool-mid"></span>',
             left: '<i class="layui-icon layedit-tool-left" title="左对齐" lay-command="justifyLeft" layedit-event="left">&#xe649;</i>',
             center: '<i class="layui-icon layedit-tool-center" title="居中对齐" lay-command="justifyCenter" layedit-event="center">&#xe647;</i>',
@@ -660,7 +661,8 @@ layui.define(['layer', 'form'], function (exports) {
             face: '<i class="layui-icon layedit-tool-face" title="表情" layedit-event="face">&#xe650;</i>',
             image: '<i class="layui-icon layedit-tool-image" title="图片" layedit-event="image">&#xe64a;<input type="file" name="file"></i>',
             code: '<i class="layui-icon layedit-tool-code" title="插入代码" layedit-event="code">&#xe64e;</i>',
-            help: '<i class="layui-icon layedit-tool-help" title="帮助" layedit-event="help">&#xe607;</i>'
+            help: '<i class="layui-icon layedit-tool-help" title="帮助" layedit-event="help">&#xe607;</i>',
+            clear:'<i class="layui-icon layui-icon-fonts-clear" title="清除格式" layedit-event="removeFormat"></i>'
         }
 
         , edit = new Edit();
