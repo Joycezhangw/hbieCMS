@@ -4,6 +4,7 @@
     font-weight: normal;
     font-style: normal;
 }
+
 .simditor-icon {
     display: inline-block;
     font: normal normal normal 14px/1 'Simditor';
@@ -146,4 +147,77 @@
 
 .simditor-icon-checklist:before {
     content: '\f01e';
+}
+
+.layui-layedit .layui-colorpicker-trigger-i {
+    display: none !important;
+}
+
+.layui-layedit .note-btn-group {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.hb-color-box {
+    float: left;
+    min-width: 160px;
+    padding: 10px;
+    margin: 2px 0 0;
+    font-size: 14px;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+}
+
+.hb-color-box .note-palette {
+    display: inline-block;
+    margin: 0
+}
+
+.hb-color-box .note-palette:first-child {
+    margin: 0 5px
+}
+
+.hb-color-box .note-palette .note-palette-title {
+    margin: 4px 7px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.hb-color-box .note-palette .note-color-reset {
+    width: 100%;
+    padding: 0 3px;
+    margin: 3px;
+    font-size: 11px;
+    cursor: pointer;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px
+}
+
+.hb-color-box .note-palette .note-color-row {
+    height: 20px
+}
+
+.hb-color-box .note-palette .note-color-reset:hover {
+    background: #eee
+}
+
+.hb-color-box .note-palette .note-color-row {
+    height: 20px;
+}
+
+.hb-color-box .note-palette .note-color-row .note-color-btn {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #fff;
+    cursor: pointer;
 }

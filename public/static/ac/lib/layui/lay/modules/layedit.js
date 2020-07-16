@@ -17,7 +17,7 @@ layui.define(['layer', 'form'], function (exports) {
             that.config = {
                 //默认工具bar
                 tool: [
-                    'strong', 'italic', 'underline', 'del', 'fontSize', '|', 'left', 'center', 'right','|','clear', '|', 'link', 'unlink', 'face', 'image'
+                    'strong', 'italic', 'underline', 'del', 'fontSize', 'fontColor', '|', 'left', 'center', 'right', '|', 'clear', '|', 'link', 'unlink', 'face', 'image'
                 ], hideTool: [], height: 280 //默认高
             };
         };
@@ -260,9 +260,10 @@ layui.define(['layer', 'form'], function (exports) {
         },
         //工具选中
         toolCheck = function (tools, othis) {
-            var iframeDOM = this.document, CHECK = 'layedit-tool-active', container = getContainer(Range(iframeDOM)), item = function (type) {
-                return tools.find('.layedit-tool-' + type)
-            };
+            var iframeDOM = this.document, CHECK = 'layedit-tool-active', container = getContainer(Range(iframeDOM)),
+                item = function (type) {
+                    return tools.find('.layedit-tool-' + type)
+                };
 
             if (othis) {
                 othis[othis.hasClass(CHECK) ? 'removeClass' : 'addClass'](CHECK);
@@ -375,6 +376,22 @@ layui.define(['layer', 'form'], function (exports) {
                             });
                         });
                     },
+                    fontColor(range) {
+                        var colors = [
+                            ['#000000', '#424242', '#636363', '#9C9C94', '#CEC6CE', '#EFEFEF', '#F7F7F7', '#FFFFFF'],
+                            ['#FF0000', '#FF9C00', '#FFFF00', '#00FF00', '#00FFFF', '#0000FF', '#9C00FF', '#FF00FF'],
+                            ['#F7C6CE', '#FFE7CE', '#FFEFC6', '#D6EFD6', '#CEDEE7', '#CEE7F7', '#D6D6E7', '#E7D6DE'],
+                            ['#E79C9C', '#FFC69C', '#FFE79C', '#B5D6A5', '#A5C6CE', '#9CC6EF', '#B5A5D6', '#D6A5BD'],
+                            ['#E76363', '#F7AD6B', '#FFD663', '#94BD7B', '#73A5AD', '#6BADDE', '#8C7BC6', '#C67BA5'],
+                            ['#CE0000', '#E79439', '#EFC631', '#6BA54A', '#4A7B8C', '#3984C6', '#634AA5', '#A54A7B'],
+                            ['#9C0000', '#B56308', '#BD9400', '#397B21', '#104A5A', '#085294', '#311873', '#731842'],
+                            ['#630000', '#7B3900', '#846300', '#295218', '#083139', '#003163', '#21104A', '#4A1031']
+                        ];
+                        fontColor.call(this, {colors: colors}, function (value) {
+                            console.log('forecolor',value)
+                            iframeDOM.execCommand('forecolor', false, value.color);
+                        });
+                    },
                     fontSize: function (range) {
                         var alt = set.fontSize || {
                             code: ["font-size:10px", "font-size:12px", "font-size:14px", "font-size:16px", "font-size:18px", "font-size:20px", "font-size:24px", "font-size:26px", "font-size:28px", "font-size:30px", "font-size:32px"],
@@ -405,7 +422,7 @@ layui.define(['layer', 'form'], function (exports) {
                         });
                     },
                     //清除格式
-                    removeFormat(range){
+                    removeFormat(range) {
                         iframeDOM.execCommand('removeFormat');
                     },
                     //插入代码
@@ -473,6 +490,7 @@ layui.define(['layer', 'form'], function (exports) {
                 toolCheck.call(iframeWin, tools);
                 layer.close(face.index);
                 layer.close(fontSize.index);
+                layer.close(fontColor.index);
             });
         },
         //超链接面板
@@ -564,6 +582,54 @@ layui.define(['layer', 'form'], function (exports) {
                 }
             });
         },
+        fontColor = function (options, callback) {
+            var contents = [];
+            for (var i = 0; i < options.colors.length; i++) {
+                var buttons = [];
+                for (var j = 0; j < options.colors[i].length; j++) {
+                    buttons.push([
+                        '<button type="button" class="note-color-btn"',
+                        'style="background-color:', options.colors[i][j], '" ',
+                        'data-value="', options.colors[i][j], '" ',
+                        'data-toggle="button" tabindex="-1"></button>'
+                    ].join(''));
+                }
+                contents.push('<div class="note-color-row">' + buttons.join('') + '</div>');
+            }
+            var content = ['<div class="hb-color-box">', '<div class="note-palette">',
+                '  <div>',
+                '    <div class="note-palette-title">字体颜色</div>',
+                '  </div>',
+                '  <div class="note-holder" data-event="backColor">' + contents.join('') + '</div>',
+                '</div>', '</div>'];
+            fontColor.hide = fontColor.hide || function (e) {
+                if ($(e.target).attr('layedit-event') !== 'fontColor') {
+                    layer.close(fontColor.index);
+                }
+            }
+            return fontColor.index = layer.tips(function () {
+
+                return content.join('');
+            }(), this, {
+                tips: 1
+                , time: 0
+                , skin: 'layui-box layui-util-face'
+                , maxWidth: 500
+                , success: function (layero, index) {
+                    layero.css({
+                        marginTop: -4
+                        , marginLeft: -10
+                    }).find('.note-color-row>button').on('click', function () {
+                        var color = $(this).data('value');
+                        callback && callback({
+                            color: color
+                        });
+                        layer.close(index);
+                    });
+                    $(document).off('click', fontColor.hide).on('click', fontColor.hide);
+                }
+            });
+        },
         //字号面板
         fontSize = function (options, callback) {
             fontSize.hide = fontSize.hide || function (e) {
@@ -652,6 +718,7 @@ layui.define(['layer', 'form'], function (exports) {
             underline: '<i class="layui-icon layedit-tool-u" title="下划线" lay-command="underline" layedit-event="u">&#xe646;</i>',
             del: '<i class="layui-icon layedit-tool-d" title="删除线" lay-command="strikeThrough" layedit-event="d">&#xe64f;</i>',
             fontSize: '<i class="simditor-icon simditor-icon-font" title="字体大小" layedit-event="fontSize"></i>',
+            fontColor: '<i class="simditor-icon simditor-icon-tint" title="字体颜色" layedit-event="fontColor"></i>',
             '|': '<span class="layedit-tool-mid"></span>',
             left: '<i class="layui-icon layedit-tool-left" title="左对齐" lay-command="justifyLeft" layedit-event="left">&#xe649;</i>',
             center: '<i class="layui-icon layedit-tool-center" title="居中对齐" lay-command="justifyCenter" layedit-event="center">&#xe647;</i>',
@@ -662,7 +729,7 @@ layui.define(['layer', 'form'], function (exports) {
             image: '<i class="layui-icon layedit-tool-image" title="图片" layedit-event="image">&#xe64a;<input type="file" name="file"></i>',
             code: '<i class="layui-icon layedit-tool-code" title="插入代码" layedit-event="code">&#xe64e;</i>',
             help: '<i class="layui-icon layedit-tool-help" title="帮助" layedit-event="help">&#xe607;</i>',
-            clear:'<i class="layui-icon layui-icon-fonts-clear" title="清除格式" layedit-event="removeFormat"></i>'
+            clear: '<i class="layui-icon layui-icon-fonts-clear" title="清除格式" layedit-event="removeFormat"></i>'
         }
 
         , edit = new Edit();
