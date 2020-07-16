@@ -143,8 +143,12 @@ layui.define(['layer', 'form'], function (exports) {
 
                 hotkey.apply(that, [iframeWin, iframe, textArea, set]); //快捷键处理
                 toolActive.call(that, iframeWin, editor, set); //触发工具
-
+                body.on('click','img',function(){
+                    editImg($(this))
+                })
             });
+
+
         },
         ////获得iframe窗口对象
         getWin = function (index) {
@@ -257,6 +261,7 @@ layui.define(['layer', 'form'], function (exports) {
                 range.deleteContents();
                 range.insertNode(elem);
             }
+
         },
         //工具选中
         toolCheck = function (tools, othis) {
@@ -310,9 +315,7 @@ layui.define(['layer', 'form'], function (exports) {
         },
         //触发工具
         toolActive = function (iframeWin, editor, set) {
-            var iframeDOM = iframeWin.document
-                , body = $(iframeDOM.body)
-                , toolEvent = {
+            var iframeDOM = iframeWin.document, body = $(iframeDOM.body), toolEvent = {
                     //超链接
                     link: function (range) {
                         var container = getContainer(range)
@@ -376,6 +379,7 @@ layui.define(['layer', 'form'], function (exports) {
                             });
                         });
                     },
+                    //字体颜色
                     fontColor(range) {
                         var colors = [
                             ['#000000', '#424242', '#636363', '#9C9C94', '#CEC6CE', '#EFEFEF', '#F7F7F7', '#FFFFFF'],
@@ -392,6 +396,7 @@ layui.define(['layer', 'form'], function (exports) {
                             iframeDOM.execCommand('forecolor', false, value.color);
                         });
                     },
+                    //字号
                     fontSize: function (range) {
                         var alt = set.fontSize || {
                             code: ["font-size:10px", "font-size:12px", "font-size:14px", "font-size:16px", "font-size:18px", "font-size:20px", "font-size:24px", "font-size:26px", "font-size:28px", "font-size:30px", "font-size:32px"],
@@ -453,12 +458,8 @@ layui.define(['layer', 'form'], function (exports) {
                         , command = othis.attr('lay-command');
 
                     if (othis.hasClass(ABLED)) return;
-
                     body.focus();
-
-                    var range = Range(iframeDOM)
-                        , container = range.commonAncestorContainer
-
+                    var range = Range(iframeDOM), container = range.commonAncestorContainer;
                     if (command) {
                         iframeDOM.execCommand(command);
                         if (/justifyLeft|justifyCenter|justifyRight/.test(command)) {
@@ -492,6 +493,55 @@ layui.define(['layer', 'form'], function (exports) {
                 layer.close(fontSize.index);
                 layer.close(fontColor.index);
             });
+        },
+        //编辑图片
+        editImg=function(elem){
+            var body=this,index=layer.open({
+                type:1,
+                id:'LAY_layedit_img',
+                area:'350px',
+                shade:0.05,
+                shadeClose:true,
+                moveType:1,
+                title:'编辑图片',
+                skin: 'layui-layer-msg',
+                content:[
+                    '<ul class="layui-form" style="padding: 0px;">',
+                    '<li class="layui-form-item">',
+                    '<label class="layui-form-label" style="width: 70px;">图片宽度</label>',
+                    '<div class="layui-input-block" style="margin-left: 90px">',
+                    '<input name="imgW"  value="" autofocus="true" placeholder="px" autocomplete="off" class="layui-input">',
+                    '</div>',
+                    '</li>',
+                    '<li class="layui-form-item">',
+                    '<label class="layui-form-label" style="width: 70px;">图片高度</label>',
+                    '<div class="layui-input-block" style="margin-left: 90px">',
+                    '<input name="imgH"  value="" autofocus="true" placeholder="px" autocomplete="off" class="layui-input">',
+                    '</div>',
+                    '</li>',
+                    '<li class="layui-form-item" style="text-align: center;">',
+                    '<button type="button" lay-submit lay-filter="layedit-img-yes" class="layui-btn"> 确定 </button>',
+                    '<button style="margin-left: 20px;" type="button" class="layui-btn layui-btn-primary"> 取消 </button>',
+                    '</ul>'].join(''),
+                success: function (layero, index) {
+                    var eventFilter = 'submit(layedit-img-yes)';
+                    layero.find('.layui-btn-primary').on('click', function () {
+                        layer.close(index);
+                    });
+                    form.on(eventFilter, function (data) {
+                        var imgW=parseFloat(data.field.imgW),imgH=parseFloat(data.field.imgH);
+                        if(!isNaN(imgW)){
+                            elem.css("width", imgW)
+                        }
+                        if(!isNaN(imgH)){
+                            elem.css("height", imgH)
+                        }
+                        layer.close(editImg.index);
+                        // callback && callback(data.field);
+                    });
+                }
+            });
+            editImg.index = index;
         },
         //超链接面板
         link = function (options, callback) {
