@@ -20,12 +20,11 @@ class CreateSysAlbumFileTable extends Migration
             $table->string('original_name')->default('')->comment('原始命名');
             $table->string('file_path')->default('')->comment('图片物理路径');
             $table->string('file_md5')->default('')->comment('md5唯一标识');
-            $table->unsignedDecimal('file_width')->default(0)->comment('图片宽度');
-            $table->unsignedDecimal('file_height')->default(0)->comment('图片高度');
-            $table->unsignedInteger('file_size')->default(0)->comment('文件长度');
+            $table->unsignedInteger('file_size')->default(0)->comment('文件大小');
             $table->string('file_ext', 10)->default('')->comment('文件扩展类型');
             $table->enum('file_type', ['image', 'video', 'doc'])->default('image')->index('idx_album_file_type')->comment('文件类型。可选值：image(图片)，video(视频)，doc(文档)');
             $table->string('mime_type', 128)->default('')->comment('文件mime类型');
+            $table->string('file_ip',45)->default('')->comment('ip 地址');
             $table->unsignedInteger('created_at')->default(0)->comment('创建时间');
             $table->unsignedInteger('updated_at')->default(0)->comment('更新时间');
         });

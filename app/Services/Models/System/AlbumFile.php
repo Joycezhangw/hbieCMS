@@ -38,12 +38,11 @@ class AlbumFile extends Model
         'file_md5',
         'file_name',
         'file_path',
-        'file_width',
-        'file_height',
         'file_size',
         'file_ext',
         'file_type',
         'original_name',
+        'file_ip',
         'mime_type',
         'created_at',
         'updated_at'

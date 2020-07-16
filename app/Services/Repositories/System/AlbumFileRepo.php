@@ -43,23 +43,22 @@ class AlbumFileRepo extends BaseRepository implements IAlbumFile
             $url = Storage::url($path);
             // 获取文件大小
             $size = Storage::size($path);
-            if ($file_type === 'image') {
-                $imgSize = getimagesize(storage_path() . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . $path);
-            } else {
-                $imgSize = [0, 0];
-            }
+//            if ($file_type === 'image') {
+//                $imgSize = getimagesize(storage_path() . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . $path);
+//            } else {
+//                $imgSize = [0, 0];
+//            }
             // 插入数据库
             $picture = $this->doCreate([
                 'album_id' => $request->album_id ? $request->album_id : 10001,
                 'file_md5' => $md5,
                 'file_name' => $name,
                 'original_name' => $name,
-                'file_width' => $imgSize[0],
-                'file_height' => $imgSize[1],
                 'file_path' => $path,
                 'file_size' => $size,
                 'file_type' => $file_type,
                 'mime_type' => $mimeType,
+                'file_ip' => $request->ip(),
                 'file_ext' => $ext
             ]);
             $fileId = $picture->file_id;
@@ -72,7 +71,7 @@ class AlbumFileRepo extends BaseRepository implements IAlbumFile
                 // 获取文件url，用于外部访问
                 $url = Storage::url($hasFile->file_path);
             }
-            $path=$hasFile->file_path;
+            $path = $hasFile->file_path;
             $size = $hasFile->file_size;
         }
 
