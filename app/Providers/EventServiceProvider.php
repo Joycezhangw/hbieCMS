@@ -18,7 +18,7 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        'App\Events\ManageAction' => [
+        'App\Events\ManageAction' => [//后台操作监听器
             'App\Events\Listeners\ManageActionLog',
         ],
     ];
