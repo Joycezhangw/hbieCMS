@@ -38,10 +38,15 @@ class ManageController extends Controller
         $menuParent = TreeHelper::getParents($moduleList['authList'], $route['module_id'], 'module_id');
 
         //判断当前路由是否是菜单路由，如果是菜单路由，则选中当前路由，如果不是，则获取上级路由。且路由不能超过4级
+        $parent = TreeHelper::getParent($moduleList['authList'], $route['module_id'], 'module_id');
         if (intval($route['is_menu']) === 1) {
+            //上级菜单id，展示折叠效果
+            $parent_module_id=isset($parent[0]) ? $parent[0]['module_id']:0;
             $currentRoute = $current_route;
         } else {
-            $parent = TreeHelper::getParent($moduleList['authList'], $route['module_id'], 'module_id');
+            //如果当前权限不是菜单路由，那么需要获取更上面一层，以得到菜单栏折叠效果
+            $parentP = TreeHelper::getParent($moduleList['authList'], $parent[0]['module_id'], 'module_id');
+            $parent_module_id=isset($parentP[0]) ? $parentP[0]['module_id']:0;
             $currentRoute = count($parent) > 0 ? $parent[0]['module_route'] : $current_route;
         }
 
@@ -49,6 +54,7 @@ class ManageController extends Controller
             'admin_user' => $user,
             'current_route' => $currentRoute,//获取当前路由，用于定位菜单选中状态
             'current_route_pid' => isset($menuParent[0]) ? $menuParent[0]['module_id'] : 0,//获取最顶级父路由id，用户标识顶级菜单状态
+            'parent_module_id' =>  $parent_module_id,//上级折叠效果
             'title_name' => $route['module_name'] . '-' . '马尾留学生创业园',//网页title
             'menu_list' => $menu_list,//导航菜单
             'sidebar' => isset($menu_list[$menuParent[0]['module_id']]) ? $menu_list[$menuParent[0]['module_id']] : [],//侧边栏导航菜单

@@ -8,6 +8,7 @@
     <title>{{$title_name}}</title>
     <link type="text/css" rel="stylesheet" href="/static/ac/lib/layui/css/layui.css"/>
     <link type="text/css" rel="stylesheet" href="/static/manage/css/common.css"/>
+    <link type="text/css" rel="stylesheet" href="/static/css/simditor.css"/>
 @yield('stylesheet')
 <!-- [if lt IE 9]-->
     <script type="text/javascript" src="/static/ac/lib/html5shiv.min.js"></script>
@@ -57,7 +58,7 @@
                     <span class="hb-side-title">{{$sidebar['module_name']}}</span>
                     <ul class="layui-nav layui-nav-tree">
                         @foreach($sidebar['children'] as $key=>$item)
-                            <li class="layui-nav-item layui-nav-itemed @if($item['module_route']===$current_route) layui-this @endif">
+                            <li class="layui-nav-item @if($item['module_id']===$parent_module_id) layui-nav-itemed @endif @if($item['module_route']===$current_route) layui-this @endif">
                                 @if(count($item['children'])<=0)
                                     <a class="layui-menu-tips"
                                        href="{{route($item['module_route'])}}">{{$item['module_name']}}</a>
