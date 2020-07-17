@@ -105,6 +105,9 @@
                           placeholder="请输入详细内容"
                           class="layui-textarea">{!! $article['content']['content'] !!}</textarea>
             </div>
+            <div class="hb-word-aux">
+                <p>点击编辑框中的图片，可设置图片的宽高</p>
+            </div>
         </div>
         <div class="hb-form-row">
             {{ csrf_field() }}

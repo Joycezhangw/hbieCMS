@@ -25,10 +25,10 @@ $(function(){
             }
         });
         //建立编辑器
-        var layeditIndex = layedit.build('post_content', {
-            tool: [
-                'strong', 'italic', 'underline', 'del', '|', 'left', 'center', 'right', 'image'
-            ]
+        var layeditIndex = layedit.build('post_content',{
+            hideTool:['link', 'unlink', 'face'],
+            height:540,
+            width:600
         });
         //普通图片上传
         upload.render({
