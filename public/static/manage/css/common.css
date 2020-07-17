@@ -1810,3 +1810,34 @@ svg:not(:root) {
 .hb-empty-description {
     margin: 0;
 }
+
+.text-center {
+    text-align: center !important;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-content {
+    line-height: 1.6;
+}
+
+.text-green, .line-green, .lines-green {
+    color: #5FB878 !important;
+}
+
+.text-red, .line-red, .lines-red {
+    color: #FF5722 !important;
+}
+
+.text-blue {
+    color: #1E9FFF !important;
+}
+.hb-cursor__pointer{
+    cursor: pointer;
+}
