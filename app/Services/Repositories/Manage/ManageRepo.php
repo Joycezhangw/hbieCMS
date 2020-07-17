@@ -4,6 +4,7 @@ declare (strict_types=1);
 namespace App\Services\Repositories\Manage;
 
 
+use App\Events\ManageAction;
 use App\Services\Models\Manage\Manage;
 use App\Services\Repositories\Manage\Interfaces\IManage;
 use Illuminate\Support\Facades\Auth;
@@ -52,6 +53,8 @@ class ManageRepo extends BaseRepository implements IManage
             $data['last_login_ip'] = StrHelper::ip2long($clientIp);
             $data['last_login_time'] = time();
             $this->model->where('manage_id', $user->manage_id)->update($data);
+            // 监听登录，并记录日志
+            event(new ManageAction($user->manage_id, $user->username, request()->url(), '登录', [], $clientIp, request()->userAgent()));
             return ResultHelper::returnFormat('登录成功！', 200);
         } else {
 
