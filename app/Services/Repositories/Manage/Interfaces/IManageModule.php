@@ -29,4 +29,19 @@ interface IManageModule extends BaseInterface
      */
     public function getLastModuleByRoute(string $route): array;
 
+    /**
+     * 创建权限规则菜单
+     * @param array $params
+     * @return array
+     */
+    public function doCreateModule(array $params): array;
+
+    /**
+     * 根据id，更新权限规则
+     * @param int $moduleId
+     * @param array $params
+     * @return array
+     */
+    public function doUpdateModule(int $moduleId, array $params): array;
+
 }
