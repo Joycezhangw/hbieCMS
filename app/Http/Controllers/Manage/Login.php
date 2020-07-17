@@ -4,6 +4,7 @@ declare (strict_types=1);
 namespace App\Http\Controllers\Manage;
 
 
+use App\Events\ManageAction;
 use App\Http\Controllers\Controller;
 use App\Services\Repositories\Manage\Interfaces\IManage;
 use Gregwar\Captcha\CaptchaBuilder;
@@ -44,6 +45,9 @@ class Login extends Controller
      */
     public function logout(Request $request)
     {
+        $user = Auth::guard('admin')->user();
+        // 使用事件/监听器入库
+        event(new ManageAction($user->manage_id, $user->username, $request->url(), '退出登录', [], $request->getClientIp(), $request->userAgent()));
         Auth::guard('admin')->logout();
         $request->session()->invalidate();
         return redirect('manage/login');
