@@ -9,7 +9,9 @@ use App\Services\Repositories\CMS\ChannelRepo;
 use App\Services\Repositories\CMS\Interfaces\IArticle;
 use App\Services\Repositories\CMS\Interfaces\IChannel;
 use App\Services\Repositories\Manage\Interfaces\IManage;
+use App\Services\Repositories\Manage\Interfaces\IManageLog;
 use App\Services\Repositories\Manage\Interfaces\IManageModule;
+use App\Services\Repositories\Manage\ManageLogRepo;
 use App\Services\Repositories\Manage\ManageModuleRepo;
 use App\Services\Repositories\Manage\ManageRepo;
 use App\Services\Repositories\System\AlbumFileRepo;
@@ -35,5 +37,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(IArticle::class, ArticleRepo::class);//内容
         $this->app->bind(IAlbumFile::class, AlbumFileRepo::class);//附件
         $this->app->bind(ISlide::class, SlideRepo::class);//幻灯片
+        $this->app->bind(IManageLog::class, ManageLogRepo::class);//管理员日志
     }
 }
