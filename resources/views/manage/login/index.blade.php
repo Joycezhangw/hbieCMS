@@ -86,7 +86,9 @@
                         LOGIN_REPEAT_FLAG = false;
                         verificationCode();
                     }
-
+                },
+                error:function (err) {
+                    LOGIN_REPEAT_FLAG=false
                 }
             })
         });
