@@ -72,6 +72,18 @@
             <a href="javascript:;" class="layui-btn" lay-event="edit">修改</a>
         </div>
     </script>
+    <script type="text/html" id="switchShow">
+        <!-- 这里的 checked 的状态只是演示 -->
+        <input type="checkbox" name="sex" value="@{{d.post_id}}" lay-skin="switch" lay-text="是|否" data-field_name="post_status" lay-filter="UpdateStatus" @{{ d.post_status == 1 ? 'checked' : '' }}>
+    </script>
+    <script type="text/html" id="switchHot">
+        <!-- 这里的 checked 的状态只是演示 -->
+        <input type="checkbox" name="sex" value="@{{d.post_id}}" lay-skin="switch" lay-text="是|否" data-field_name="is_hot" lay-filter="UpdateStatus" @{{ d.is_hot == 1 ? 'checked' : '' }}>
+    </script>
+    <script type="text/html" id="switchHomeRec">
+        <!-- 这里的 checked 的状态只是演示 -->
+        <input type="checkbox" name="sex" value="@{{d.post_id}}" lay-skin="switch" lay-text="是|否" data-field_name="is_home_rec" lay-filter="UpdateStatus" @{{ d.is_home_rec == 1 ? 'checked' : '' }}>
+    </script>
 @endsection
 @section('javascript')
     <script>
@@ -98,28 +110,12 @@
                     {field: 'post_source', width: '18%', title: '来源'},
                     {field: 'post_pic_url', width: '10%', title: '封面图', templet: '#post_pic'},
                     {
-                        field: 'post_status', width: '6%', title: '是否显示', templet: function (data) {
-                            var str = '', status = parseInt(data.post_status);
-                            if (status === 1) {
-                                str = '是';
-                            } else if (status === 0) {
-                                str = '否';
-                            }
-                            return str;
-                        }
+                        field: 'post_status', width: '6%', title: '是否显示', templet:'#switchShow'
                     },
                     {
-                        field: 'is_hot', width: '6%', title: '是否热点', templet: function (data) {
-                            var str = '', status = parseInt(data.is_hot);
-                            if (status === 1) {
-                                str = '是';
-                            } else if (status === 0) {
-                                str = '否';
-                            }
-                            return str;
-                        }
+                        field: 'is_hot', width: '6%', title: '是否热点', templet: '#switchHot'
                     },
-                    {field: 'is_home_rec', width: '10%', title: '是否推荐首页', templet: '#is_home_rec'},
+                    {field: 'is_home_rec', width: '10%', title: '是否推荐首页', templet: '#switchHomeRec'},
                     {field: 'created_at_txt', width: '10%', title: '发布时间'},
                     {title: '操作', width: '15%', unresize: 'false', toolbar: '#operation'}
                 ]]
@@ -135,6 +131,33 @@
                         break;
                 }
             });
+            //监听性别操作
+            form.on('switch(UpdateStatus)', function(obj){
+                var id = this.value,that=$(this);
+
+                if (!new RegExp("^-?[1-9]\\d*$").test(id)) {
+                    layer.msg("参数错误");
+                    return;
+                }
+                if (id < 0) {
+                    layer.msg("参数值错误");
+                    return;
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '{{route("manage.article.modifyFiled")}}',
+                    data: {
+                        _token:"{{csrf_token()}}",
+                        id: id,
+                        field_name: that.data('field_name'),
+                        field_value:obj.elem.checked?1:0
+                    },
+                    dataType: 'JSON',
+                    success: function (res) {
+                        layer.tips(res.message,obj.othis);
+                    }
+                });
+            });
 
             /**
              * 搜索功能
@@ -148,6 +171,7 @@
                 });
                 return false;
             });
+
         });
     </script>
 @endsection
