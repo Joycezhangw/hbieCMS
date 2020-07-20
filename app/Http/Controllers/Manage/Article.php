@@ -63,6 +63,13 @@ class Article extends ManageController
         return $articleRepo->doCreateArticle($params, $request->admin);
     }
 
+    /**
+     * 修改内容页面
+     * @param Request $request
+     * @param IArticle $articleRepo
+     * @param IChannel $channelRepo
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function edit(Request $request, IArticle $articleRepo, IChannel $channelRepo)
     {
         $articleId = $request->get('id');
@@ -82,6 +89,13 @@ class Article extends ManageController
         return $this->view(compact('article', 'channels'));
     }
 
+    /**
+     * 更新内容数据
+     * @param Request $request
+     * @param int $id
+     * @param IArticle $articleRepo
+     * @return array|mixed
+     */
     public function update(Request $request, int $id, IArticle $articleRepo)
     {
         $article = $articleRepo->getByPkId($id);
@@ -94,6 +108,26 @@ class Article extends ManageController
         $params['is_hot'] = isset($params['is_hot']) ? 1 : 0;
         $ret = $articleRepo->doUpdateArticle($id, $params);
         return $ret;
+    }
+
+    /**
+     * 快捷修改指定表字段值
+     * @param Request $request
+     * @param IArticle $articleRepo
+     * @return array|mixed
+     */
+    public function modifyFiled(Request $request,IArticle $articleRepo){
+        $id = intval($request->post('id'));
+        if ($id <= 0) {
+            return ResultHelper::returnFormat('缺少必要的参数', -1);
+        }
+        $fieldName = (string)$request->post('field_name');
+        $fieldValue = $request->post('field_value');
+        $ret = $articleRepo->doUpdateFieldByPkId($id, $fieldName, $fieldValue);
+        if ($ret) {
+            return ResultHelper::returnFormat('修改成功', 200);
+        }
+        return ResultHelper::returnFormat('服务器繁忙，请稍后再试', -1);
     }
 
 }
