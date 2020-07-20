@@ -672,7 +672,7 @@
 .hb-single-filter-box .layui-input-inline {
     margin-left: 8px;
 }
-
+/*==========重置layui-table部分样式============*/
 .layui-table-view {
     border-width: 0;
     background-color: #fff;
@@ -694,9 +694,6 @@
     width: 100%;
 }
 
-.layui-table-view .layui-table td {
-    padding: 13px 0;
-}
 
 .layui-table-view .layui-table thead tr,
 .layui-table-view .layui-table tr:hover {
@@ -705,38 +702,6 @@
 
 .layui-table-view .layui-table thead span {
     font-weight: bold;
-}
-
-.layui-table-view .layui-table-cell {
-    height: auto;
-    line-height: 20px;
-}
-
-.layui-table-view .layui-table-cell .layui-form-switch {
-    margin-top: 0;
-}
-
-.layui-table-view .layui-table-cell .layui-form-switch i {
-    width: 22px;
-    height: 22px;
-    top: 0;
-    left: 0;
-    transition: 0.2s linear;
-    box-shadow: 0 2px 5px #999;
-    background-color: #fff;
-}
-
-.layui-table-view .layui-table-cell .layui-form-onswitch {
-    border-color: #4685FD;
-    background-color: #4685FD;
-}
-
-.layui-table-view .layui-table-cell .layui-form-onswitch i {
-    left: 100%;
-}
-
-.layui-table-view .layui-table-cell a:hover {
-    color: #4685FD;
 }
 
 .layui-table-view .layui-table-page {
@@ -778,20 +743,11 @@
 .layui-table-view .layui-laypage .layui-laypage-curr .layui-laypage-em {
     background-color: #4685FD;
 }
-
-.layui-table-view .layui-table[lay-size=lg] td .layui-table-cell {
-    height: auto;
-    line-height: 1.8;
+.layui-table-grid-down{
+    border-right-width: 1px;
 }
-
-td:last-child .layui-table-cell {
-    white-space: normal;
-}
-
-td:last-child .layui-table-cell .layui-btn {
-    height: inherit;
-    line-height: inherit;
-    margin-left: 5px;
+.layui-table-view .layui-table-cell a:hover{
+    color:#4685FD;
 }
 
 /* .layui-btns-box {
@@ -832,9 +788,6 @@ td:last-child .layui-table-cell .layui-btn {
     max-height: 100%;
 }
 
-.layui-table-grid-down {
-    display: none;
-}
 
 .hb-over-hide-second {
     overflow: hidden;
