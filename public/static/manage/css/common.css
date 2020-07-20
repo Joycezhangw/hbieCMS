@@ -865,9 +865,6 @@
 }
 
 .layui-table.hb-pithy-table tbody td {
-    padding: 13px 15px;
-    min-height: 40px;
-    line-height: 40px;
     border: 0;
 }
 
