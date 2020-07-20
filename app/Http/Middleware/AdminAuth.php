@@ -5,9 +5,18 @@ namespace App\Http\Middleware;
 use App\Events\ManageAction;
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use JoyceZ\LaravelLib\Helpers\LaravelHelper;
 
 class AdminAuth
 {
+    protected $routeAction = [
+        'destroy' => '删除数据',
+        'store' => '提交数据',
+        'update' => '更新数据',
+        'modifyFiled' => '快捷更新字段',
+        'modifySort' => '更新排序',
+    ];
+
     /**
      * Handle an incoming request.
      *
@@ -30,10 +39,12 @@ class AdminAuth
         $request->admin = $admin->toArray();
         //非 GET 请求，全部存到管理员日志当中
         if (!$request->isMethod('get')) {
-            $requestParams=$request->all();
+            $requestParams = $request->all();
+            $curAction = LaravelHelper::getTemplatePath();
+            $logTitle = $curAction ? (isset($this->routeAction[$curAction['method']]) ? $this->routeAction[$curAction['method']] : '后台操作') : '后台操作';
             unset($requestParams['_token']);
             // 使用事件/监听器入库
-            event(new ManageAction($admin->manage_id, $admin->username, $request->url(), '后台操作', $requestParams, $request->getClientIp(), $request->userAgent()));
+            event(new ManageAction($admin->manage_id, $admin->username, $request->path(), $logTitle, $requestParams, $request->getClientIp(), $request->userAgent()));
         }
         return $next($request);
     }
