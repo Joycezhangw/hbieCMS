@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Manage;
 
 use App\Services\Repositories\CMS\Interfaces\IChannel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use JoyceZ\LaravelLib\Helpers\ResultHelper;
 
 class Channel extends ManageController
@@ -21,6 +22,16 @@ class Channel extends ManageController
         return $this->view();
     }
 
+    // 表单验证规则
+    protected $rules = [
+        'channel_name' => 'required',
+    ];
+
+    protected $ruleMessage = [
+        'channel_name.required' => '请输入栏目名称',
+    ];
+
+
     /**
      * 提交数据
      * @param Request $request
@@ -30,6 +41,11 @@ class Channel extends ManageController
     public function store(Request $request, IChannel $channelRepo)
     {
         $params = $request->all();
+        // 进行验证
+        $validator = Validator::make($request->all(), $this->rules, $this->ruleMessage);
+        if ($validator->fails()) {
+            return ResultHelper::returnFormat($validator->getMessageBag()->first(), -1);
+        }
         $params['is_show'] = isset($params['is_show']) ? 1 : 0;
         if ($channelRepo->doCreate($params)) {
             return ResultHelper::returnFormat('添加栏目成功', 200);
@@ -50,9 +66,14 @@ class Channel extends ManageController
 
     public function update(Request $request, int $id, IChannel $channelRepo)
     {
+        $params = $request->all();
+        // 进行验证
+        $validator = Validator::make($request->all(), $this->rules, $this->ruleMessage);
+        if ($validator->fails()) {
+            return ResultHelper::returnFormat($validator->getMessageBag()->first(), -1);
+        }
         $channel = $channelRepo->getByPkId($id);
         if ($channel) {
-            $params = $request->all();
             $params['is_show'] = isset($params['is_show']) ? 1 : 0;
             unset($params['_token']);
             $channelRepo->doUpdateByPkId($params, $id);
@@ -78,5 +99,25 @@ class Channel extends ManageController
             return ResultHelper::returnFormat('网络繁忙，请稍后再试', -1);
         }
 
+    }
+
+    /**
+     * 快捷修改指定表字段值
+     * @param Request $request
+     * @param IChannel $channelRepo
+     * @return array|mixed
+     */
+    public function modifyFiled(Request $request,IChannel $channelRepo){
+        $id = intval($request->post('id'));
+        if ($id <= 0) {
+            return ResultHelper::returnFormat('缺少必要的参数', -1);
+        }
+        $fieldName = (string)$request->post('field_name');
+        $fieldValue = $request->post('field_value');
+        $ret = $channelRepo->doUpdateFieldByPkId($id, $fieldName, $fieldValue);
+        if ($ret) {
+            return ResultHelper::returnFormat('修改成功', 200);
+        }
+        return ResultHelper::returnFormat('服务器繁忙，请稍后再试', -1);
     }
 }
