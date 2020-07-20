@@ -11,9 +11,11 @@ use App\Services\Repositories\CMS\Interfaces\IChannel;
 use App\Services\Repositories\Manage\Interfaces\IManage;
 use App\Services\Repositories\Manage\Interfaces\IManageLog;
 use App\Services\Repositories\Manage\Interfaces\IManageModule;
+use App\Services\Repositories\Manage\Interfaces\IManageRole;
 use App\Services\Repositories\Manage\ManageLogRepo;
 use App\Services\Repositories\Manage\ManageModuleRepo;
 use App\Services\Repositories\Manage\ManageRepo;
+use App\Services\Repositories\Manage\ManageRoleRepo;
 use App\Services\Repositories\System\AlbumFileRepo;
 use App\Services\Repositories\System\Interfaces\IAlbumFile;
 use App\Services\Repositories\System\Interfaces\ISlide;
@@ -38,5 +40,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(IAlbumFile::class, AlbumFileRepo::class);//附件
         $this->app->bind(ISlide::class, SlideRepo::class);//幻灯片
         $this->app->bind(IManageLog::class, ManageLogRepo::class);//管理员日志
+        $this->app->bind(IManageRole::class, ManageRoleRepo::class);//管理员角色
     }
 }
