@@ -43,4 +43,22 @@ class ManageLog extends Model
         'created_at',
         'updated_at'
     ];
+
+    /**
+     * 注册ip地址
+     * @return string
+     */
+    public function getLogIpAttribute()
+    {
+        return long2ip($this->attributes['log_ip']);
+    }
+
+    /**
+     * 创建时间
+     * @return string
+     */
+    public function getCreatedAtAttribute()
+    {
+        return date('Y-m-d H:i:s',$this->attributes['created_at']);
+    }
 }
