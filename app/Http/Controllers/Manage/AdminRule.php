@@ -83,8 +83,6 @@ class AdminRule extends ManageController
 
     public function store(Request $request, IManageModule $manageModuleRepo)
     {
-
-
         // 进行验证
         $validator = Validator::make($request->all(), $this->rules, $this->ruleMessage);
 
