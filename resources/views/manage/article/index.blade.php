@@ -73,15 +73,15 @@
         </div>
     </script>
     <script type="text/html" id="switchShow">
-        <!-- 这里的 checked 的状态只是演示 -->
+        <!-- 是否显示 -->
         <input type="checkbox" name="sex" value="@{{d.post_id}}" lay-skin="switch" lay-text="是|否" data-field_name="post_status" lay-filter="UpdateStatus" @{{ d.post_status == 1 ? 'checked' : '' }}>
     </script>
     <script type="text/html" id="switchHot">
-        <!-- 这里的 checked 的状态只是演示 -->
+        <!-- 是否热门 -->
         <input type="checkbox" name="sex" value="@{{d.post_id}}" lay-skin="switch" lay-text="是|否" data-field_name="is_hot" lay-filter="UpdateStatus" @{{ d.is_hot == 1 ? 'checked' : '' }}>
     </script>
     <script type="text/html" id="switchHomeRec">
-        <!-- 这里的 checked 的状态只是演示 -->
+        <!-- 是否首页推荐 -->
         <input type="checkbox" name="sex" value="@{{d.post_id}}" lay-skin="switch" lay-text="是|否" data-field_name="is_home_rec" lay-filter="UpdateStatus" @{{ d.is_home_rec == 1 ? 'checked' : '' }}>
     </script>
 @endsection
