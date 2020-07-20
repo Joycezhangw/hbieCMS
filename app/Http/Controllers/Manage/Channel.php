@@ -56,12 +56,17 @@ class Channel extends ManageController
 
     public function edit(int $id, IChannel $channelRepo)
     {
-        $channel = $channelRepo->getByPkId($id);
-        if ($channel) {
-            return $this->view(compact('channel'));
-        } else {
-            return redirect()->route('manage.channel.index');
+        if (empty($id)) {
+            abort(490, '权限菜单编号错误');
         }
+        if (intval($id) <= 0) {
+            abort(490, '权限菜单编号错误');
+        }
+        $channel = $channelRepo->getByPkId($id);
+        if (!$channel) {
+            abort(490, '菜单不存在');
+        }
+        return $this->view(compact('channel'));
     }
 
     public function update(Request $request, int $id, IChannel $channelRepo)
@@ -107,7 +112,8 @@ class Channel extends ManageController
      * @param IChannel $channelRepo
      * @return array|mixed
      */
-    public function modifyFiled(Request $request,IChannel $channelRepo){
+    public function modifyFiled(Request $request, IChannel $channelRepo)
+    {
         $id = intval($request->post('id'));
         if ($id <= 0) {
             return ResultHelper::returnFormat('缺少必要的参数', -1);
