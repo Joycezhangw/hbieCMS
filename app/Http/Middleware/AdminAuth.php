@@ -15,6 +15,7 @@ class AdminAuth
         'update' => '更新数据',
         'modifyFiled' => '快捷更新字段',
         'modifySort' => '更新排序',
+        'resetPwd'=>'重置密码'
     ];
 
     /**
