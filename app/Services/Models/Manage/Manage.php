@@ -88,7 +88,7 @@ class Manage extends Authenticatable
      */
     public function getLastLoginTimeAttribute()
     {
-        return date('Y-m-d H:i:s', $this->attributes['last_login_time']);
+        return $this->attributes['last_login_time'] > 0 ? date('Y-m-d H:i:s', $this->attributes['last_login_time']) : '-';
     }
 
     /**
@@ -97,7 +97,7 @@ class Manage extends Authenticatable
      */
     public function getRegIpAttribute()
     {
-        return long2ip($this->attributes['reg_ip']);
+        return $this->attributes['reg_ip'] > 0 ? long2ip($this->attributes['reg_ip']) : '-';
     }
 
     /**
@@ -106,7 +106,7 @@ class Manage extends Authenticatable
      */
     public function getLastLoginIpAttribute()
     {
-        return long2ip($this->attributes['last_login_ip']);
+        return $this->attributes['last_login_ip'] > 0 ? long2ip($this->attributes['last_login_ip']) : '-';
     }
 
     /**
@@ -135,7 +135,7 @@ class Manage extends Authenticatable
      */
     public function roles()
     {
-        return $this->belongsToMany(ManageRole::class,'hb_manage_has_role','manage_id','role_id');
+        return $this->belongsToMany(ManageRole::class, 'hb_manage_has_role', 'manage_id', 'role_id');
     }
 
 }
