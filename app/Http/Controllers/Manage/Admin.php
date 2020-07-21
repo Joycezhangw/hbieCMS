@@ -144,7 +144,20 @@ class Admin extends ManageController
 
 
     //重置管理员密码为123456
-    public function resetPwd()
+    public function resetPwd(Request $request, IManage $manageRepo)
     {
+        $id = intval($request->post('id'));
+        if ($id <= 0) {
+            return ResultHelper::returnFormat('缺少必要的参数', -1);
+        }
+        $admin = $manageRepo->getByPkId($id);
+        if (!$admin) {
+            return ResultHelper::returnFormat('该用户不存在', -1);
+        }
+        $admin->password = bcrypt('123456');
+        if ($admin->save()) {
+            return ResultHelper::returnFormat('重置密码成功', 200);
+        }
+        return ResultHelper::returnFormat('服务器繁忙，请稍后再试', -1);
     }
 }

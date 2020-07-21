@@ -45,7 +45,8 @@
     </div>
     <script type="text/html" id="switchStatus">
         @{{# if(parseInt(d.is_super)<=0){ }}
-        <input type="checkbox" name="manage_status" value="@{{d.manage_id}}" title="启用" lay-filter="lock" data-field_name="manage_status" @{{ d.manage_status == 1 ? 'checked' : '' }}>
+        <input type="checkbox" name="manage_status" value="@{{d.manage_id}}" title="启用" lay-filter="lock"
+               data-field_name="manage_status" @{{ d.manage_status== 1 ? 'checked' : '' }}>
         @{{# }else{ }}
         <i class="layui-icon text-green layui-icon-ok "></i>
         @{{# } }}
@@ -89,7 +90,7 @@
                             return '<i class="layui-icon ' + iconClass + '"></i>'
                         }
                     },
-                    {field: 'manage_status', title: '是否启用',templet:'#switchStatus'},
+                    {field: 'manage_status', title: '是否启用', templet: '#switchStatus'},
                     {field: 'last_login_time', title: '最后登录时间'},
                     {field: 'last_login_ip', title: '最后登录IP'},
                     {field: 'reg_ip', title: '创建IP'},
@@ -104,14 +105,35 @@
                 var data = obj.data;
                 if (obj.event === 'edit') {
                     location.href = '{{route("manage.admin.edit")}}?id=' + data.manage_id;
-                }else if(obj.event==='reset'){
-
+                } else if (obj.event === 'reset') {
+                    layer.confirm('你真的要将用户“' + data.username + '”密码重置为：123456', function (index) {
+                        resetPwd(data)
+                        layer.close(index);
+                    });
                 }
             });
 
+            function resetPwd(data){
+                $.ajax({
+                    type: 'POST',
+                    url: '{{route("manage.admin.resetPwd")}}',
+                    data: {
+                        _token: "{{csrf_token()}}",
+                        id: data.manage_id,
+                    },
+                    dataType: 'JSON',
+                    success: function (res) {
+                        layer.msg(res.message);
+                        if (res.code == 200) {
+                            obj.del();
+                        }
+                    }
+                });
+            }
+
             //监听状态操作
-            form.on('checkbox(lock)', function(obj){
-                var id = this.value,that=$(this);
+            form.on('checkbox(lock)', function (obj) {
+                var id = this.value, that = $(this);
                 if (!new RegExp("^-?[1-9]\\d*$").test(id)) {
                     layer.msg("参数错误");
                     return;
@@ -124,14 +146,14 @@
                     type: 'POST',
                     url: '{{route("manage.admin.modifyFiled")}}',
                     data: {
-                        _token:"{{csrf_token()}}",
+                        _token: "{{csrf_token()}}",
                         id: id,
                         field_name: that.data('field_name'),
-                        field_value:obj.elem.checked?1:0
+                        field_value: obj.elem.checked ? 1 : 0
                     },
                     dataType: 'JSON',
                     success: function (res) {
-                        layer.tips(res.message,obj.othis);
+                        layer.tips(res.message, obj.othis);
                     }
                 });
             });
