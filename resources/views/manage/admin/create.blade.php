@@ -107,5 +107,8 @@
                 });
             })
         })
+        function back() {
+            location.href = INDEX_URL;
+        }
     </script>
 @endsection

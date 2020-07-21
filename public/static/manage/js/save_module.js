@@ -41,4 +41,7 @@ $(function () {
         });
 
     });
-})
+});
+function back() {
+    location.href = indexUrl;
+}

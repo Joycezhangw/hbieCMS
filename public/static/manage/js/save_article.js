@@ -135,3 +135,6 @@ $(function () {
         });
     })
 });
+function back() {
+    location.href = INDEX_URL;
+}
