@@ -50,10 +50,14 @@ class Admin extends ManageController
         }
         $admin = $manageRepo->getByPkId(intval($adminId));
         if (!$admin) {
-            abort(490, '内容不存在');
+            abort(490, '管理员不存在');
         }
-        $roles = $manageRoleRepo->all(['is_default' => 0], ['role_id', 'role_title']);
-        return $this->view(compact('roles', 'admin'));
+        $roles=[];
+        foreach($admin->roles as $role){
+            $roles[$role->role_id]=$role->toArray();
+        }
+        $rolesData = $manageRoleRepo->all(['is_default' => 0], ['role_id', 'role_title']);
+        return $this->view(compact('roles', 'admin','rolesData'));
     }
 
 
