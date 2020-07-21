@@ -38,6 +38,8 @@
             },
             write: /\{(\d{1,2})(?:\:([xodQqb]))?\}/g,
             isURL: /^(?:ht|f)tp(?:s)?\:\/\/(?:[\w\-\.]+)\.\w+/i,
+            isUserName:/^[a-zA-Z0-9_]{5,16}$/,
+            isRealName:/^[a-zA-Z\u4e00-\u9fa5]+$/,
             cut: /[\x00-\xFF]/,
             getRealLen: {
                 r0: /[^\x00-\xFF]/g,
@@ -60,6 +62,22 @@
         isURL: function (str) {
             return HBIE.string.RegExps.isURL.test(str)
         },
+        /**
+         * 用户名正则，5到16位（字母，数字，下划线）
+         * @param str
+         * @returns {boolean}
+         */
+        isUserName: function(str){
+            return HBIE.string.RegExps.isUserName.test(str)
+        },
+        /**
+         * 判断是否中文英文名
+         * @param str
+         * @returns {boolean}
+         */
+        isRealName: function (str) {
+            return HBIE.string.RegExps.isRealName.test(str)
+        },
         escapeURI: function (str) {
             if (window.encodeURIComponent) {
                 return encodeURIComponent(str)
@@ -73,6 +91,11 @@
             return Number(Math.random().toString().substr(3, len) + Date.now()).toString(36);
         }
     };
+    HBIE.validate={
+        rules:{
+
+        }
+    }
     HBIE.Table = function (options) {
         if (!options) return;
         var _self = this;
