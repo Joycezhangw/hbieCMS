@@ -57,7 +57,7 @@ class Admin extends ManageController
     }
 
 
-    public function store(Request $request,IManage $manageRepo)
+    public function store(Request $request, IManage $manageRepo)
     {
         // 表单验证规则
         $rules = [
@@ -119,6 +119,27 @@ class Admin extends ManageController
         } else {
             return ResultHelper::returnFormat('网络繁忙，请稍后再试', -1);
         }
+    }
+
+    /**
+     * 修改用户状态
+     * @param Request $request
+     * @param IManage $manageRepo
+     * @return array|mixed
+     */
+    public function modifyFiled(Request $request, IManage $manageRepo)
+    {
+        $id = intval($request->post('id'));
+        if ($id <= 0) {
+            return ResultHelper::returnFormat('缺少必要的参数', -1);
+        }
+        $fieldName = (string)$request->post('field_name');
+        $fieldValue = $request->post('field_value');
+        $ret = $manageRepo->doUpdateFieldByPkId($id, $fieldName, $fieldValue);
+        if ($ret) {
+            return ResultHelper::returnFormat('修改成功', 200);
+        }
+        return ResultHelper::returnFormat('服务器繁忙，请稍后再试', -1);
     }
 
 

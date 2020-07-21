@@ -45,7 +45,7 @@
     </div>
     <script type="text/html" id="switchStatus">
         @{{# if(parseInt(d.is_super)<=0){ }}
-        <input type="checkbox" name="manage_status" value="@{{d.manage_id}}" title="启用" lay-filter="UpdateStatus" data-field_name="manage_status" @{{ d.manage_status == 1 ? 'checked' : '' }}>
+        <input type="checkbox" name="manage_status" value="@{{d.manage_id}}" title="启用" lay-filter="lock" data-field_name="manage_status" @{{ d.manage_status == 1 ? 'checked' : '' }}>
         @{{# }else{ }}
         <i class="layui-icon text-green layui-icon-ok "></i>
         @{{# } }}
@@ -102,15 +102,16 @@
              */
             table.tool(function (obj) {
                 var data = obj.data;
-                if (obj.event === 'delete') {
+                if (obj.event === 'edit') {
+                    location.href = '{{route("manage.admin.edit")}}?id=' + data.manage_id;
+                }else if(obj.event==='reset'){
 
                 }
             });
 
-            //监听性别操作
-            form.on('switch(UpdateStatus)', function(obj){
+            //监听状态操作
+            form.on('checkbox(lock)', function(obj){
                 var id = this.value,that=$(this);
-
                 if (!new RegExp("^-?[1-9]\\d*$").test(id)) {
                     layer.msg("参数错误");
                     return;
