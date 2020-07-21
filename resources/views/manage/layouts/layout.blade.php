@@ -8,7 +8,6 @@
     <title>{{$title_name}}</title>
     <link type="text/css" rel="stylesheet" href="/static/ac/lib/layui/css/layui.css"/>
     <link type="text/css" rel="stylesheet" href="/static/manage/css/common.css"/>
-    <link type="text/css" rel="stylesheet" href="/static/css/simditor.css"/>
 @yield('stylesheet')
 <!-- [if lt IE 9]-->
     <script type="text/javascript" src="/static/ac/lib/html5shiv.min.js"></script>
