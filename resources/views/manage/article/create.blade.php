@@ -26,7 +26,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">来源：</label>
             <div class="layui-input-block hb-len-long">
-                <input name="post_source" type="text" placeholder="请输入内容来源"  maxlength="128"
+                <input name="post_source" type="text" placeholder="请输入内容来源" maxlength="128"
                        lay-verify="required"
                        class="layui-input" autocomplete="off">
             </div>
@@ -96,8 +96,8 @@
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label"><span class="required">*</span>详细内容：</label>
-            <div class="layui-input-block hb-len-long">
-                <textarea name="post_content" id="post_content" style="display: none" lay-verify="post_content"
+            <div class="layui-input-block">
+                <textarea name="post_content" id="post_content" lay-verify="post_content"
                           placeholder="请输入详细内容"
                           class="layui-textarea"></textarea>
             </div>
@@ -113,9 +113,11 @@
     </form>
 @endsection
 @section('javascript')
+    <script type="text/javascript" src="/static/ac/lib/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript" src="/static/ac/lib/tinymce/langs/zh_CN.js"></script>
     <script>
         var SAVE_URL = "{{route('manage.article.store')}}", INDEX_URL = "{{route('manage.article.index')}}",
             HB_TAGS = [], HB_UPLOAD_URL = "{{route('manage/upload/upload')}}", CSRF_TOKEN = "{{csrf_token()}}";
     </script>
-    <script type="text/javascript" src="/static/manage/js/save_article.js"></script>
+        <script type="text/javascript" src="/static/manage/js/save_article.js"></script>
 @endsection

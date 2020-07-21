@@ -1,4 +1,4 @@
-$(function(){
+$(function () {
     layui.config({
         base: '/static/ac/lib/layui/inputtag/',
     }).use(['inputTags'], function () {
@@ -11,25 +11,58 @@ $(function(){
             }
         })
     });
-    layui.use(['form', 'upload', 'layedit'], function () {
-        var form = layui.form, upload = layui.upload, layedit = layui.layedit,
-            repeat_flag = false;//防重复标识
-        layedit.set({
-            uploadImage: {
-                url: HB_UPLOAD_URL,
-                data: {
-                    file_type: 'image',
-                    folder: 'article',
-                    _token: CSRF_TOKEN
+    var tinyID = 'post_content';
+    tinymce.init({
+        selector: '#' + tinyID,
+        language: 'zh_CN',
+        menubar: false,
+        branding: false,
+        plugins: 'formatpainter image ',
+        toolbar1: 'code undo redo | formatpainter removeformat | fontsizeselect forecolor backcolor bold italic underline strikethrough',
+        toolbar2: 'alignleft aligncenter alignright alignjustify | image ',
+        width: 578,
+        height: 650, //编辑器高度
+        min_height: 400,
+        fontsize_formats: '12px 14px 16px 18px 24px 36px 48px 56px 72px',
+        image_dimensions: false,
+        convert_urls: false,
+        image_uploadtab: true,
+        automatic_uploads: true,
+        images_upload_handler: function (blobInfo, success, failure) {
+            var xhr, formData;
+
+            xhr = new XMLHttpRequest();
+            xhr.withCredentials = false;
+            xhr.open('POST', HB_UPLOAD_URL);
+
+            xhr.onload = function () {
+                var json;
+                if (xhr.status != 200) {
+                    failure('HTTP Error: ' + xhr.status);
+                    return;
                 }
-            }
-        });
-        //建立编辑器
-        var layeditIndex = layedit.build('post_content',{
-            hideTool:['link', 'unlink', 'face'],
-            height:540,
-            width:600
-        });
+                console.log(JSON.parse(xhr.responseText))
+                json = JSON.parse(xhr.responseText);
+                if (!json || typeof json.code != 'number') {
+                    failure('Invalid JSON: ' + xhr.responseText);
+                    return;
+                }
+                success(json.data.file_url);
+            };
+            formData = new FormData();
+            formData.append('file', blobInfo.blob(), blobInfo.filename());
+            formData.append('file_type', 'image');
+            formData.append('folder', 'article');
+            formData.append('_token', CSRF_TOKEN);
+            xhr.send(formData);
+        },
+        autosave_ask_before_unload: false,
+    });
+    function getContent(){
+        return tinyMCE.editors[tinyID].getContent();
+    }
+    layui.use(['form', 'upload'], function () {
+        var form = layui.form, upload = layui.upload, repeat_flag = false;//防重复标识
         //普通图片上传
         upload.render({
             elem: '#imgUploadCover',
@@ -71,7 +104,7 @@ $(function(){
                 }
             },
             post_content: function (value) {
-                var content = layedit.getContent(layeditIndex)
+                var content = getContent();
                 if (content.length < 1) {
                     return '请填写详细内容~';
                 }
@@ -79,7 +112,7 @@ $(function(){
         });
         form.on('submit(save)', function (data) {
             data.field.post_tags = HB_TAGS;
-            data.field.content = layedit.getContent(layeditIndex);
+            data.field.content = getContent();
             if (repeat_flag) return false;
             repeat_flag = true;
             $.ajax({
@@ -94,6 +127,8 @@ $(function(){
                     } else {
                         repeat_flag = false;
                     }
+                },error(err){
+                    repeat_flag = false;
                 }
             });
             return false;
