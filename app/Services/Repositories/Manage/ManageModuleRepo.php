@@ -4,7 +4,9 @@ declare (strict_types=1);
 namespace App\Services\Repositories\Manage;
 
 
+use App\Services\Models\Manage\Manage;
 use App\Services\Models\Manage\ManageModule;
+use App\Services\Models\Manage\ManageRole;
 use App\Services\Repositories\Manage\Interfaces\IManageModule;
 use JoyceZ\LaravelLib\Helpers\FiltersHelper;
 use JoyceZ\LaravelLib\Helpers\ResultHelper;
@@ -27,9 +29,25 @@ class ManageModuleRepo extends BaseRepository implements IManageModule
      */
     public function getModuleAuth(string $moduleName, array $member): array
     {
+        //超级管理员，获取全部权限菜单
         if (intval($member['is_super']) === 1) {
             $menuList = $this->all(['module' => $moduleName, 'is_menu' => 1])->toArray();
             $authList = $this->all(['module' => $moduleName])->toArray();
+        } else {//非超级管理员权限菜单
+            $rolesIds = [];
+            foreach ($member['roles'] as $role) {
+                $rolesIds[] = $role['role_id'];
+            }
+            $roles = ManageRole::whereIn('role_id', $rolesIds)->with('rules')->get();
+            $menuList = $authList = [];
+            foreach ($roles as $role) {
+                foreach ($role->rules as $rule) {
+                    if(intval($rule->is_menu)===1){
+                        $menuList[$rule->module_id] = $rule->toArray();
+                    }
+                    $authList[$rule->module_id] = $rule->toArray();
+                }
+            }
         }
         $sideBar = TreeHelper::listToTreeMulti($menuList, 0, 'module_id');
         return compact('sideBar', 'authList');
