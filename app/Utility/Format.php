@@ -32,8 +32,11 @@ class Format
         if (isset($params['post_pic'])) {
             $params['post_pic_url'] = asset(Storage::url($params['post_pic']));
         }
-        if(isset($params['slide_pic'])){
+        if (isset($params['slide_pic'])) {
             $params['slide_pic_url'] = asset(Storage::url($params['slide_pic']));
+        }
+        if (isset($params['file_path'])) {
+            $params['file_path_url'] = asset(Storage::url($params['file_path']));
         }
         if (isset($params['post_tags'])) {
             $params['post_tags_arr'] = explode(',', $params['post_tags']);
