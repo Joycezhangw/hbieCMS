@@ -21,6 +21,10 @@ class Format
             $params['created_at_txt'] = DateHelper::formatParseTime((int)$params['created_at']);
             $params['created_at_ago'] = DateHelper::formatDateLongAgo((int)$params['created_at']);
         }
+        if (isset($params['reg_date'])) {
+            $params['reg_date_txt'] = DateHelper::formatParseTime((int)$params['reg_date']);
+            $params['reg_date_ago'] = DateHelper::formatDateLongAgo((int)$params['reg_date']);
+        }
         if (isset($params['updated_at'])) {
             $params['updated_at_txt'] = DateHelper::formatParseTime((int)$params['updated_at']);
         }
