@@ -234,6 +234,9 @@
         .mod-photo-li.is_active .photo-active-box {
             display: block;
         }
+        .page{
+            float: right;
+        }
     </style>
     <!-- [if lt IE 9]-->
     <script type="text/javascript" src="/static/ac/lib/html5shiv.min.js"></script>
