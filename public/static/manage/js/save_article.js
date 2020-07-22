@@ -25,7 +25,7 @@ $(function () {
         min_height: 400,
         fontsize_formats: '12px 14px 16px 18px 24px 36px 48px 56px 72px',
         image_dimensions: false,
-        convert_urls: false,
+        convert_urls: false,//防止tinymce自动将图片地址处理成相对路径
         image_uploadtab: true,
         automatic_uploads: true,
         images_upload_handler: function (blobInfo, success, failure) {
