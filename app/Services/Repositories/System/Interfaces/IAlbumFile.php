@@ -16,4 +16,11 @@ interface IAlbumFile extends BaseInterface
      */
     public function doLocalUpload($request): array;
 
+    /**
+     * 附件列表
+     * @param array $params
+     * @return array
+     */
+    public function getPageLists(array $params): array;
+
 }

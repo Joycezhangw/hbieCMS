@@ -4,6 +4,7 @@ declare (strict_types=1);
 namespace App\Services\Repositories\System;
 
 
+use App\Services\Enums\System\AlbumFileTypeEnum;
 use App\Services\Models\System\AlbumFile;
 use App\Services\Repositories\System\Interfaces\IAlbumFile;
 use Illuminate\Support\Facades\Storage;
@@ -77,10 +78,34 @@ class AlbumFileRepo extends BaseRepository implements IAlbumFile
 
         $result['file_id'] = $fileId;
         $result['file_name'] = $name;
-        $result['file_url'] = asset($url);
+        $result['file_path_url'] = asset($url);
         $result['file_path'] = $path;
         $result['file_size'] = $size;
         return ResultHelper::returnFormat('上传成功', 200, $result);
+    }
+
+    /**
+     * 根据指定的条件，获取附件列表
+     * @param array $params
+     * @return array
+     */
+    public function getPageLists(array $params): array
+    {
+        $lists = $this->model->where(function ($query) use ($params) {
+            if (isset($params['search_text']) && $params['search_text'] != '') {
+                $query->where('file_name', 'like', '%' . $params['search_text'] . '%');
+            }
+            if (isset($params['created_time']) && $params['created_time'] != '') {
+                $date = explode('至', $params['created_time']);
+                $query->where('created_at', '>=', strtotime(trim($date[0])))->where('created_at', '<=', strtotime(trim($date[1])));
+            }
+            $query->where('file_type', isset($params['file_type']) ? (in_array($params['file_type'], AlbumFileTypeEnum::FILE_TYPE) ? $params['file_type'] : 'image') : 'image');
+            $query->where('album_id', $params['album_id']);
+        })
+            ->select(['file_id', 'file_name', 'file_path', 'file_ext', 'file_type', 'mime_type'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(isset($params['page_size']) ? $params['page_size'] : config('student.paginate.page_size'));
+        return $lists->toArray();
     }
 
 
