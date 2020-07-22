@@ -17,6 +17,8 @@ use App\Services\Repositories\Manage\ManageModuleRepo;
 use App\Services\Repositories\Manage\ManageRepo;
 use App\Services\Repositories\Manage\ManageRoleRepo;
 use App\Services\Repositories\System\AlbumFileRepo;
+use App\Services\Repositories\System\AlbumRepo;
+use App\Services\Repositories\System\Interfaces\IAlbum;
 use App\Services\Repositories\System\Interfaces\IAlbumFile;
 use App\Services\Repositories\System\Interfaces\ISlide;
 use App\Services\Repositories\System\SlideRepo;
@@ -38,6 +40,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(IChannel::class, ChannelRepo::class);//内容栏目
         $this->app->bind(IArticle::class, ArticleRepo::class);//内容
         $this->app->bind(IAlbumFile::class, AlbumFileRepo::class);//附件
+        $this->app->bind(IAlbum::class, AlbumRepo::class);//附件专辑
         $this->app->bind(ISlide::class, SlideRepo::class);//幻灯片
         $this->app->bind(IManageLog::class, ManageLogRepo::class);//管理员日志
         $this->app->bind(IManageRole::class, ManageRoleRepo::class);//管理员角色
