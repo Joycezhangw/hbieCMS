@@ -18,7 +18,9 @@ Route::group([
     ], function (Router $router) {
         $router->get('index', 'Index@index')->name('manage.index.index');
         //上传附件
-        $router->post('upload/upload', 'Upload@doUpload')->name('manage/upload/upload');
+        $router->post('upload/upload', 'Upload@doUpload')->name('manage.upload.upload');
+        $router->get('attachment/album', 'Attachment@album')->name('manage.attachment.album');
+        $router->get('attachment/albumFile', 'Attachment@albumFile')->name('manage.attachment.albumFile');
         //验证是否由权限
         $router->group([
             'middleware' => 'rbac.admin.permissiion',
