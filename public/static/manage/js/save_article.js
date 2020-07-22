@@ -17,9 +17,9 @@ $(function () {
         language: 'zh_CN',
         menubar: false,
         branding: false,
-        plugins: 'formatpainter image ',
+        plugins: 'formatpainter image filemanager',
         toolbar1: 'code undo redo | formatpainter removeformat | fontsizeselect forecolor backcolor bold italic underline strikethrough',
-        toolbar2: 'alignleft aligncenter alignright alignjustify | image ',
+        toolbar2: 'alignleft aligncenter alignright alignjustify | image filemanager',
         width: 578,
         height: 650, //编辑器高度
         min_height: 400,
@@ -28,6 +28,7 @@ $(function () {
         convert_urls: false,//防止tinymce自动将图片地址处理成相对路径
         image_uploadtab: true,
         automatic_uploads: true,
+        file_manager_url:FILE_MANAGER_URL,
         images_upload_handler: function (blobInfo, success, failure) {
             var xhr, formData;
 
@@ -47,7 +48,7 @@ $(function () {
                     failure('Invalid JSON: ' + xhr.responseText);
                     return;
                 }
-                success(json.data.file_url);
+                success(json.data.file_path_url);
             };
             formData = new FormData();
             formData.append('file', blobInfo.blob(), blobInfo.filename());
@@ -75,7 +76,7 @@ $(function () {
             done: function (res) {
                 console.log(res)
                 if (res.code === 200) {
-                    $("#imgUploadCover").html("<img src=" + res.data.file_url + " >");
+                    $("#imgUploadCover").html("<img src=" + res.data.file_path_url + " >");
                     $("input[name='post_pic']").val(res.data.file_path);
                 }
                 return layer.msg(res.message);

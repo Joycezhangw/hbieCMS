@@ -121,7 +121,7 @@
     <script type="text/javascript" src="/static/ac/lib/tinymce/langs/zh_CN.js"></script>
     <script>
         var SAVE_URL = "{{route('manage.article.update',$article['post_id'])}}", INDEX_URL = "{{route('manage.article.index')}}",
-            HB_TAGS = <?php echo json_encode($article['post_tags_arr']);?> , HB_UPLOAD_URL = "{{route('manage/upload/upload')}}", CSRF_TOKEN = "{{csrf_token()}}";
+            HB_TAGS = <?php echo json_encode($article['post_tags_arr']);?> , HB_UPLOAD_URL = "{{route('manage.upload.upload')}}", CSRF_TOKEN = "{{csrf_token()}}",FILE_MANAGER_URL="{!! route('manage.attachment.album',['file_type'=>'image','select_num'=>10]) !!}";
 
     </script>
     <script type="text/javascript" src="/static/manage/js/save_article.js"></script>
