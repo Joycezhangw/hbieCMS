@@ -16,7 +16,7 @@
 </head>
 <body>
 <div class="hb-logo">
-    <span>马尾留学生创业园</span>
+    <span>laravelCMS</span>
     <span>
 		&nbsp;
 	</span>
@@ -96,7 +96,7 @@
             <!-- 版权信息 -->
             <div class="hb-footer">
                 <div class="hb-footer-img">
-                    <a href="#">技术支持 福建瀚邦信息工程有限公司</a>
+                    <a href="#">技术支持 xxxxx</a>
                 </div>
             </div>
         </div>

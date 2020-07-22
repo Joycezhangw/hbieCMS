@@ -1,6 +1,6 @@
 <?php
 return [
-    'title' => '马尾留学生创业园',
+    'title' => 'laravelCMS',
     'posts_per_page' => 5,
     'paginate' => [
         'page_size' => 15

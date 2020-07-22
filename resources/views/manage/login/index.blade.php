@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>马尾留学生创业园</title>
+    <title>laravelCMS</title>
     <link type="text/css" rel="stylesheet" href="/static/ac/lib/layui/css/layui.css"/>
     <link type="text/css" rel="stylesheet" href="/static/manage/css/common.css"/>
     <link type="text/css" rel="stylesheet" href="/static/manage/css/login.css"/>
@@ -15,7 +15,7 @@
         <div class="apply-header-box">
             <div class="apply-header-title">
                 <a href="javascript:;">
-                    <span class="hb-text-color">马尾留学生创业园</span>
+                    <span class="hb-text-color">laravelCMS</span>
                 </a>
             </div>
             <span class="phone">&nbsp;</span>
@@ -56,7 +56,7 @@
     </div>
     <div class="hb-login-bottom">
         <a class="hb-footer-img" href="#"></a>
-        <p>技术支持<a href="javascript:;">&nbsp;&nbsp;福建瀚邦信息工程有限公司</a></p>
+        <p>技术支持<a href="javascript:;">&nbsp;xxxx</a></p>
     </div>
 </div>
 <script type="text/javascript" src="/static/ac/lib/jquery/jquery.min.js"></script>

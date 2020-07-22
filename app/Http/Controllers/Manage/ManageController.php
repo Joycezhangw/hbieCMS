@@ -55,7 +55,7 @@ class ManageController extends Controller
             'current_route' => $currentRoute,//获取当前路由，用于定位菜单选中状态
             'current_route_pid' => isset($menuParent[0]) ? $menuParent[0]['module_id'] : 0,//获取最顶级父路由id，用户标识顶级菜单状态
             'parent_module_id' =>  $parent_module_id,//上级折叠效果
-            'title_name' => $route['module_name'] . '-' . '马尾留学生创业园',//网页title
+            'title_name' => $route['module_name'] . '-' . 'laravelCMS',//网页title
             'menu_list' => $menu_list,//导航菜单
             'sidebar' => isset($menu_list[$menuParent[0]['module_id']]) ? $menu_list[$menuParent[0]['module_id']] : [],//侧边栏导航菜单
             'crumbs' => $this->getCrumbs($menuParent)//面包屑
