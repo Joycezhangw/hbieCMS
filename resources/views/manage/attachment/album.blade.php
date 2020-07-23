@@ -8,236 +8,7 @@
     <title>图片、视频、文档 - 专辑管理</title>
     <link type="text/css" rel="stylesheet" href="/static/ac/lib/layui/css/layui.css"/>
     <link type="text/css" rel="stylesheet" href="/static/manage/css/common.css"/>
-    <style>
-        .album-container {
-            display: flex;
-            flex-direction: row;
-            flex: 1;
-            flex-basis: auto;
-            box-sizing: border-box;
-            min-width: 0;
-            height: 100vh;
-        }
-
-        .album-container.is-vertical {
-            flex-direction: column;
-        }
-
-        .album-aside, .album-header {
-            box-sizing: border-box;
-            flex-shrink: 0;
-        }
-
-        .album-aside, .album-main {
-            overflow: auto;
-        }
-
-        .album-footer, .album-main {
-            box-sizing: border-box;
-        }
-
-        .album-footer, .album-header {
-            color: #333;
-            line-height: 60px;
-            height: 60px;
-            padding: 0 20px;
-        }
-
-        .album-aside {
-            width: 200px;
-            background-color: rgb(238, 241, 246);
-            color: #333;
-        }
-
-        .album-main {
-            display: block;
-            flex: 1;
-            flex-basis: auto;
-            padding: 20px;
-        }
-
-        .layui-nav {
-            border-right: 1px solid #e6e6e6;
-            list-style: none;
-            position: relative;
-            margin: 0;
-            padding-left: 0;
-            background-color: #fff;
-            color: #333;
-        }
-
-        .layui-nav .layui-nav-item a {
-            color: #333;
-        }
-
-        .layui-nav .layui-nav-more {
-            content: '';
-            width: 0;
-            height: 0;
-            border-style: solid dashed dashed;
-            border-color: #333 transparent transparent;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all .2s;
-            -webkit-transition: all .2s;
-            position: absolute;
-            top: 50%;
-            right: 3px;
-            margin-top: -3px;
-            border-width: 6px;
-            border-top-color: #333;
-        }
-
-        .layui-nav .layui-nav-mored, .layui-nav-itemed > a .layui-nav-more {
-            margin-top: -9px;
-            border-style: dashed dashed solid;
-            border-color: transparent transparent #333;
-        }
-
-        .layui-nav-itemed > a, .layui-nav-tree .layui-nav-title a, .layui-nav-tree .layui-nav-title a:hover {
-            color: #333 !important;
-        }
-
-        .layui-nav-itemed > .layui-nav-child {
-            background: none !important;
-        }
-
-        .layui-nav-tree .layui-nav-item a:hover {
-            background-color: #ecf5ff;
-            color: #333;
-        }
-
-        .layui-nav-tree .layui-nav-bar {
-            background-color: #c0cddc;
-        }
-
-        .layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a, .layui-nav-tree .layui-this, .layui-nav-tree .layui-this > a, .layui-nav-tree .layui-this > a:hover {
-            background-color: #ecf5ff;
-            color: #409eff;
-        }
-
-        .mod-photo-list {
-            position: relative;
-            *zoom: 1;
-        }
-
-        .mod-photo-list-ul {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        .mod-photo-li {
-            width: 164px;
-            height: 154px;
-            margin: 0 15px 15px 0;
-            float: left;
-            border: 1px solid #ecf5ff
-
-
-        }
-
-        .mod-photo-item {
-
-        }
-
-        .mod-photo-item .item-bd {
-            position: relative;
-            *zoom: 1;
-            z-index: 2;
-        }
-
-        .mod-photo-item .item-cover {
-            display: block;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background-color: #DEDEDE;
-            width: 164px;
-            height: 124px;
-        }
-
-        .mod-photo-item .item-cover .pic {
-            width: 208px;
-            height: 123px;
-            margin: 0px -22px;
-            opacity: 1;
-        }
-
-        .mod-photo-item .item-ft {
-            position: relative;
-            z-index: 1;
-            background-color: #ecf5ff;
-            *zoom: 1;
-        }
-
-        .mod-photo-item .item-ft .item-tit {
-            padding: 5px 0;
-            height: 20px;
-            line-height: 20px;
-            padding-left: 10px;
-            font-size: 12px;
-            text-align: left;
-            border-width: 1px;
-        }
-
-        .mod-photo-item .item-ft .item-tit span {
-            display: inline-block;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .mod-photo-item .item-ft .item-tit span {
-            display: inline-block;
-            width: 94%;
-        }
-
-        .empty-data {
-            width: 100%;
-            text-align: center;
-        }
-
-        .mod-photo-li .photo-active-box {
-            position: absolute;
-            z-index: 1;
-            top: 0;
-            right: 0;
-            display: none;
-        }
-
-        .mod-photo-li .photo-active-box:after {
-            content: '';
-            display: block;
-            position: absolute;
-            top: 0px;
-            right: 0;
-            border: 15px solid;
-            border-color: transparent;
-            border-top-color: #FF5722;
-            border-right-color: #FF5722;
-        }
-
-        .mod-photo-li .photo-active-box span.active-index {
-            position: absolute;
-            top: 1px;
-            right: 1px;
-            color: #fff;
-            z-index: 2;
-            font-style: normal;
-            line-height: 1;
-        }
-
-        .mod-photo-li:hover, .mod-photo-li.is_active {
-            border-color: #FF5722;
-        }
-
-        .mod-photo-li.is_active .photo-active-box {
-            display: block;
-        }
-        .page{
-            float: right;
-        }
-    </style>
+    <link type="text/css" rel="stylesheet" href="/static/manage/css/photo.css"/>
     <!-- [if lt IE 9]-->
     <script type="text/javascript" src="/static/ac/lib/html5shiv.min.js"></script>
     <script type="text/javascript" src="/static/ac/lib/respond.min.js"></script>
@@ -253,6 +24,9 @@
             <header class="album-header">
                 <button type="button" class="layui-btn layui-btn-normal" id="imgUploadCover"><i class="layui-icon"></i>上传图片
                 </button>
+                @if(intval($select_num)>0)
+                    <span class="padding-left-xs">已选中<span id="active_num" class="text-red padding-left-xs">0</span>/{{$select_num}}</span>
+                @endif
             </header>
             <main class="album-main">
                 <div class="mod-photo-list">
@@ -297,7 +71,7 @@
     $(function () {
         ALBUM = {
             album_id: 0,
-            limit: 12,
+            limit: 20,
             select_num:{{$select_num}},
             file_type: '{{$file_type}}',
             album_menu:<?php echo json_encode($menus);?>,
@@ -393,8 +167,12 @@
                         that.removeClass('is_active')
                     }
                     //父窗口富文本框文件管理存在的情况下，将选中的图片传给父富文本框
-                    if(top.window.tinyMceFilemanager){
-                        top.window.tinyMceFilemanager.pic_arr=ALBUM.activeFileArr;
+                    if (top.window.tinyMceFilemanager) {
+                        top.window.tinyMceFilemanager.pic_arr = ALBUM.activeFileArr;
+                    }
+                    //有选中数量限制，做提示处理
+                    if (ALBUM.select_num > 0) {
+                        $('#active_num').text(ALBUM.activeFileArr.length)
                     }
 
                 });
@@ -433,7 +211,7 @@
                     folder: 'article',
                     _token: ALBUM.csrf_token
                 },
-                size: 1024 * 2 ,//限制文件大小，单位 KB
+                size: 1024 * 2,//限制文件大小，单位 KB
                 exts: 'jpg|jpeg|png|gif', //只允许上传压缩文件
                 done: function (res) {
                     if (res.code === 200) {
