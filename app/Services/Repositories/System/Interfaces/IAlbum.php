@@ -14,4 +14,10 @@ use JoyceZ\LaravelLib\Repositories\Interfaces\BaseInterface;
 interface IAlbum extends BaseInterface
 {
 
+    /**
+     * 获取树形专辑数据
+     * @return array
+     */
+    public function getAlbumTree(): array;
+
 }
