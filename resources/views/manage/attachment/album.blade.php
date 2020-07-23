@@ -8,6 +8,7 @@
     <title>图片、视频、文档 - 专辑管理</title>
     <link type="text/css" rel="stylesheet" href="/static/ac/lib/layui/css/layui.css"/>
     <link type="text/css" rel="stylesheet" href="/static/manage/css/common.css"/>
+    <link type="text/css" rel="stylesheet" href="/static/manage/css/photo_menu.css"/>
     <link type="text/css" rel="stylesheet" href="/static/manage/css/photo.css"/>
     <!-- [if lt IE 9]-->
     <script type="text/javascript" src="/static/ac/lib/html5shiv.min.js"></script>
@@ -130,7 +131,11 @@
                         ALBUM.laytpl($("#albumList").html()).render(res.data, function (data) {
                             $("#albumImg").html(data);
                         });
-
+                        //重置数据，清除已选中相片
+                        if (ALBUM.select_num > 0) {
+                            ALBUM.activeFileArr.length=0;
+                            $('#active_num').text(0)
+                        }
                         if (res.data.total > 0) {
                             ALBUM.laypage.render({
                                 elem: 'paged',
@@ -174,7 +179,6 @@
                     if (ALBUM.select_num > 0) {
                         $('#active_num').text(ALBUM.activeFileArr.length)
                     }
-
                 });
             },
             doDelActiveArrIdx(id) {//删除图片
