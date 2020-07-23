@@ -78,8 +78,11 @@ Route::group([
             $router->post('slide/update/{id}', 'Slide@update')->name('manage.slide.update');
             $router->post('slide/modifySort', 'Slide@modifySort')->name('manage.slide.modifySort');
             $router->post('slide/destroy/{id}', 'Slide@destroy')->name('manage.slide.destroy');
-
+            //附件管理
             $router->get('attachment/index', 'Attachment@index')->name('manage.attachment.index');
+            $router->post('attachment/store', 'Attachment@store')->name('manage.attachment.store');
+            $router->post('attachment/update', 'Attachment@update')->name('manage.attachment.update');
+            $router->post('attachment/destroy', 'Attachment@destroy')->name('manage.attachment.destroy');
         });
 
     });
