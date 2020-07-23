@@ -99,10 +99,14 @@ class AlbumFileRepo extends BaseRepository implements IAlbumFile
                 $date = explode('至', $params['created_time']);
                 $query->where('created_at', '>=', strtotime(trim($date[0])))->where('created_at', '<=', strtotime(trim($date[1])));
             }
-            $query->where('file_type', isset($params['file_type']) ? (in_array($params['file_type'], AlbumFileTypeEnum::FILE_TYPE) ? $params['file_type'] : 'image') : 'image');
-            $query->where('album_id', $params['album_id']);
+            if (isset($params['file_type']) && trim($params['file_type']) !== '') {
+                $query->where('file_type', in_array($params['file_type'], AlbumFileTypeEnum::FILE_TYPE) ? $params['file_type'] : 'image');
+            }
+            if (isset($params['album_id']) && intval($params['album_id']) > 0) {
+                $query->where('album_id', $params['album_id']);
+            }
         })
-            ->select(['file_id', 'file_name', 'file_path', 'file_ext', 'file_type', 'mime_type'])
+            ->select(['file_id', 'file_name', 'file_path', 'file_ext', 'file_type', 'mime_type','file_size'])
             ->orderBy('created_at', 'desc')
             ->paginate(isset($params['page_size']) ? $params['page_size'] : config('student.paginate.page_size'));
         return $lists->toArray();
