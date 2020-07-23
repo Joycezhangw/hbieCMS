@@ -1,0 +1,9 @@
+.layui-nav{position:relative;margin:0;padding-left:0;border-right:1px solid #e6e6e6;background-color:#fff;color:#333;list-style:none}
+.layui-nav .layui-nav-item a{color:#333}
+.layui-nav .layui-nav-more{position:absolute;top:50%;right:3px;overflow:hidden;margin-top:-3px;width:0;height:0;border-color:#333 transparent transparent;border-style:solid dashed dashed;border-width:6px;content:'';cursor:pointer;-webkit-transition:all .2s;transition:all .2s;border-top-color:#333}
+.layui-nav .layui-nav-mored,.layui-nav-itemed>a .layui-nav-more{margin-top:-9px;border-color:transparent transparent #333;border-style:dashed dashed solid}
+.layui-nav-itemed>a,.layui-nav-tree .layui-nav-title a,.layui-nav-tree .layui-nav-title a:hover{color:#333!important}
+.layui-nav-itemed>.layui-nav-child{background:0 0!important}
+.layui-nav-tree .layui-nav-item a:hover{background-color:#ecf5ff;color:#333}
+.layui-nav-tree .layui-nav-bar{background-color:#c0cddc}
+.layui-nav-tree .layui-nav-child dd.layui-this,.layui-nav-tree .layui-nav-child dd.layui-this a,.layui-nav-tree .layui-this,.layui-nav-tree .layui-this>a,.layui-nav-tree .layui-this>a:hover{background-color:#ecf5ff;color:#409eff}
