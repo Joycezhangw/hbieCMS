@@ -51,6 +51,23 @@ Route::group([
             $router->post('rule/modifyFiled', 'AdminRule@modifyFiled')->name('manage.adminRule.modifyFiled');
             $router->post('rule/destroy/{id}', 'AdminRule@destroy')->name('manage.adminRule.destroy');
 
+            //会员管理
+            $router->get('member/index', 'Member@index')->name('manage.member.index');
+            $router->get('member/create', 'Member@create')->name('manage.member.create');
+            $router->get('member/edit', 'Member@edit')->name('manage.member.edit');
+            $router->post('member/store', 'Member@store')->name('manage.member.store');
+            $router->post('member/update/{id}', 'Member@update')->name('manage.member.update');
+            $router->post('member/resetPwd', 'Member@resetPwd')->name('manage.member.resetPwd');
+            $router->post('member/modifyFiled', 'Member@modifyFiled')->name('manage.member.modifyFiled');
+            //用户组
+            $router->get('group/index', 'MemberGroup@index')->name('manage.memberGroup.index');
+            $router->get('group/create', 'MemberGroup@create')->name('manage.memberGroup.create');
+            $router->get('group/edit/{id}', 'MemberGroup@edit')->name('manage.memberGroup.edit');
+            $router->post('group/store', 'MemberGroup@store')->name('manage.memberGroup.store');
+            $router->post('group/update/{id}', 'MemberGroup@update')->name('manage.memberGroup.update');
+            $router->post('group/modifyFiled', 'MemberGroup@modifyFiled')->name('manage.memberGroup.modifyFiled');
+
+
             //栏目管理
             $router->get('channel/index', 'Channel@index')->name('manage.channel.index');
             $router->get('channel/create', 'Channel@create')->name('manage.channel.create');
