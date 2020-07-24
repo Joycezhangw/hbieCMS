@@ -35,22 +35,22 @@ class MemberTableSeeder extends Seeder
             'updated_at' => time()
         ]);
 
-
+        $salt = \Illuminate\Support\Str::random(6);
         //添加超级管理员
         $manageId = \Illuminate\Support\Facades\DB::table('uc_member')->insertGetId([
             'username' => 'admin',
             'nickname' => '超级管理员',
             'realname' => '超级管理员',
-            'password' => bcrypt('123456'),
+            'password' => bcrypt('123456' . $salt),
             'user_mobile' => '',
-            'user_salt' => '',
+            'user_salt' => $salt,
             'user_email' => '',
             'user_avatar' => '',
             'user_state' => 1,
             'user_type' => 'system',
             'is_super' => 1,
             'reg_date' => time(),
-            'group_id' => $group_id,
+            'group_id' => $group_id,// 10001,
             'reg_ip' => \JoyceZ\LaravelLib\Helpers\StrHelper::ip2long(),
             'last_login_ip' => \JoyceZ\LaravelLib\Helpers\StrHelper::ip2long(),
             'last_login_time' => time(),
