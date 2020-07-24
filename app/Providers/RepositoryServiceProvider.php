@@ -22,6 +22,10 @@ use App\Services\Repositories\System\Interfaces\IAlbum;
 use App\Services\Repositories\System\Interfaces\IAlbumFile;
 use App\Services\Repositories\System\Interfaces\ISlide;
 use App\Services\Repositories\System\SlideRepo;
+use App\Services\Repositories\UCenter\Interfaces\IMember;
+use App\Services\Repositories\UCenter\Interfaces\IMemberGroup;
+use App\Services\Repositories\UCenter\MemberGroupRepo;
+use App\Services\Repositories\UCenter\MemberRepo;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -44,5 +48,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ISlide::class, SlideRepo::class);//幻灯片
         $this->app->bind(IManageLog::class, ManageLogRepo::class);//管理员日志
         $this->app->bind(IManageRole::class, ManageRoleRepo::class);//管理员角色
+        $this->app->bind(IMember::class, MemberRepo::class);//用户管理
+        $this->app->bind(IMemberGroup::class, MemberGroupRepo::class);//用户组管理
     }
 }
