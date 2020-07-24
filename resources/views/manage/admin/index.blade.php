@@ -124,9 +124,6 @@
                     dataType: 'JSON',
                     success: function (res) {
                         layer.msg(res.message);
-                        if (res.code == 200) {
-                            obj.del();
-                        }
                     }
                 });
             }
