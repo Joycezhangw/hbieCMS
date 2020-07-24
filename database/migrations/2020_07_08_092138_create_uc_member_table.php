@@ -23,7 +23,7 @@ class CreateUcMemberTable extends Migration
             $table->char('user_salt', 6)->default('')->comment('密码加密盐');
             $table->char('user_email', 180)->default('')->index('idx_member_user_email')->comment('email');
             $table->string('user_avatar')->default('')->comment('头像');
-            $table->unsignedTinyInteger('user_state')->default(1)->comment('用户状态[1:正常,0:停用]');
+            $table->unsignedTinyInteger('user_state')->default(1)->index('idx_member_user_state')->comment('用户状态[1:正常,0:停用]');
             $table->rememberToken();
             $table->bigInteger('reg_ip')->default(0)->comment('注册ip');
             $table->unsignedTinyInteger('is_super')->default(0)->comment('是否超级管理员[1 是 0 否]');
