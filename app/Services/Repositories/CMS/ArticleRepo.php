@@ -39,7 +39,18 @@ class ArticleRepo extends BaseRepository implements IArticle
             if (isset($params['channel_id']) && intval($params['channel_id']) > 0) {
                 $query->where('channel_id', $params['channel_id']);
             }
-        })->paginate(isset($params['page_size']) ? $params['page_size'] : config('student.paginate.page_size'));
+        })
+            ->select([
+                'post_id',
+                'post_title',
+                'post_source',
+                'post_pic',
+                'post_status',
+                'is_hot',
+                'is_home_rec',
+                'created_at',
+            ])
+            ->paginate(isset($params['page_size']) ? $params['page_size'] : config('student.paginate.page_size'));
         return $lists->toArray();
     }
 
@@ -129,7 +140,7 @@ class ArticleRepo extends BaseRepository implements IArticle
         $posts = $this->model->whereIn('channel_id', $channelIds)
             ->where(['is_home_rec' => 1, 'post_status' => 1])
             ->orderBy('created_at', 'desc')
-            ->get(['post_id', 'post_title', 'channel_id', 'manage_username', 'author_username','is_hot', 'post_source','post_tags', 'post_pic', 'post_desc', 'post_like', 'post_dislike', 'post_comment','post_view', 'post_fav', 'created_at']);
+            ->get(['post_id', 'post_title', 'channel_id', 'manage_username', 'author_username', 'is_hot', 'post_source', 'post_tags', 'post_pic', 'post_desc', 'post_like', 'post_dislike', 'post_comment', 'post_view', 'post_fav', 'created_at']);
         $articles = [];
         foreach ($posts as $post) {
             $articles[$post->channel_id][] = Format::formatReturnDataByOneDim($post->toArray());
