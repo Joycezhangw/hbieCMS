@@ -32,6 +32,9 @@ class Format
         if (isset($params['post_pic'])) {
             $params['post_pic_url'] = asset(Storage::url($params['post_pic']));
         }
+        if (isset($params['user_avatar'])) {
+            $params['user_avatar_url'] = self::buildAvatarUrl($params['user_avatar']);
+        }
         if (isset($params['slide_pic'])) {
             $params['slide_pic_url'] = asset(Storage::url($params['slide_pic']));
         }
@@ -56,6 +59,33 @@ class Format
             $data[] = static::formatReturnDataByOneDim($item);
         }
         return $data;
+    }
+
+    /**
+     * 生成图片url地址
+     * @param string $img
+     * @param string $default
+     * @return string
+     */
+    public static function buildAvatarUrl(string $img = '', string $default = '')
+    {
+        if (!empty ($img)) {
+            if (preg_match('/(http:\/\/)|(https:\/\/)/i', $img)) {
+                return $img; // 直接粘贴地址
+            } else {
+                return asset(Storage::url($img));
+            }
+        } else {
+            if (empty ($default)) {
+                return asset('/static/images/default-avatar.png');
+            } else {
+                if (preg_match('/(http:\/\/)|(https:\/\/)/i', $default)) {
+                    return $default; // 直接粘贴地址
+                } else {
+                    return asset(Storage::url($default));
+                }
+            }
+        }
     }
 
 }
