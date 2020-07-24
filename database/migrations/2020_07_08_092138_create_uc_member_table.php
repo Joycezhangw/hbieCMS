@@ -21,7 +21,7 @@ class CreateUcMemberTable extends Migration
             $table->string('password')->default('')->comment('密码');
             $table->string('user_mobile', 20)->default('')->comment('手机号');
             $table->char('user_salt', 6)->default('')->comment('密码加密盐');
-            $table->char('user_email', 180)->default('')->comment('email');
+            $table->char('user_email', 180)->default('')->index('idx_member_user_email')->comment('email');
             $table->string('user_avatar')->default('')->comment('头像');
             $table->unsignedTinyInteger('user_state')->default(1)->comment('用户状态[1:正常,0:停用]');
             $table->rememberToken();
@@ -36,7 +36,7 @@ class CreateUcMemberTable extends Migration
 
             $table->unique('username', 'uk_member_username');
             $table->unique('user_mobile', 'uk_member_user_mobile');
-            $table->unique('user_email', 'uk_member_user_email');
+//            $table->unique('user_email', 'uk_member_user_email');
         });
         //表注释
         \Illuminate\Support\Facades\DB::statement("ALTER TABLE `uc_member` comment '用户'");
