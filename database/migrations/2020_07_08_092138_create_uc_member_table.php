@@ -29,7 +29,7 @@ class CreateUcMemberTable extends Migration
             $table->unsignedTinyInteger('is_super')->default(0)->comment('是否超级管理员[1 是 0 否]');
             $table->unsignedInteger('group_id')->default(0)->comment('用户组');
             $table->enum('user_type', ['system', 'special', 'member'])->index('idx_member_user_type')->default('member')->comment('用户类型');
-            $table->unsignedInteger('reg_date')->default(0)->comment('注册时间');
+            $table->unsignedInteger('reg_date')->default(0)->index('idx_member_reg_date')->comment('注册时间');
             $table->bigInteger('last_login_ip')->default(0)->comment('上次登录的IP(程序转换成数值类型)');
             $table->unsignedInteger('last_login_time')->default(0)->comment('上次登录时间');
             $table->unsignedInteger('updated_at')->default(0)->comment('更新时间');
