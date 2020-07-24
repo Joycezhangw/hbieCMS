@@ -21,6 +21,7 @@
                 <th width="1%"></th>
                 <th width="10%">规则名</th>
                 <th width="10%" class="text-center">所属项目模块</th>
+                <th width="10%" class="text-center">路由</th>
                 <th width="10%" class="text-center">是否是菜单</th>
                 <th width="10%">排序</th>
                 <th width="12%">操作</th>
@@ -40,6 +41,7 @@
                         </td>
                         <td>{{$v1['module_name']}}</td>
                         <td class="text-center">{{$v1['module']}}</td>
+                        <td class="text-center"><span class="layui-badge layui-bg-blue">{{$v1['module_route']}}</span></td>
                         <td class="text-center"><i
                                 class="layui-icon @if(intval($v1['is_menu'])===1) text-green layui-icon-ok @else text-red layui-icon-close @endif"></i>
                         </td>
@@ -70,6 +72,7 @@
                                     @endif
                                     {{$v2['module_name']}}</td>
                                 <td class="text-center">{{$v2['module']}}</td>
+                                <td class="text-center"><span class="layui-badge layui-bg-blue">{{$v2['module_route']}}</span></td>
                                 <td class="text-center"><i
                                         class="layui-icon @if(intval($v2['is_menu'])===1) text-green layui-icon-ok @else text-red layui-icon-close @endif"></i>
                                 </td>
@@ -101,6 +104,7 @@
                                             @endif
                                             {{$v3['module_name']}}</td>
                                         <td class="text-center">{{$v3['module']}}</td>
+                                        <td class="text-center"><span class="layui-badge layui-bg-blue">{{$v3['module_route']}}</span></td>
                                         <td class="text-center"><i
                                                 class="layui-icon @if(intval($v3['is_menu'])===1) text-green layui-icon-ok @else text-red layui-icon-close @endif"></i>
                                         </td>
@@ -128,6 +132,7 @@
                                                 <td style="padding-left: 120px;">
                                                     {{$v4['module_name']}}</td>
                                                 <td class="text-center">{{$v4['module']}}</td>
+                                                <td class="text-center"><span class="layui-badge layui-bg-blue">{{$v4['module_route']}}</span></td>
                                                 <td class="text-center"><i
                                                         class="layui-icon @if(intval($v4['is_menu'])===1) text-green layui-icon-ok @else text-red layui-icon-close @endif"></i>
                                                 </td>
