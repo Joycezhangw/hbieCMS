@@ -16,7 +16,7 @@ class CreateSysWebLogErrorTable extends Migration
         Schema::create('sys_web_log_error', function (Blueprint $table) {
             $table->bigIncrements('error_id');
             $table->string('message',5000)->default('')->comment('错误信息');
-            $table->string('source_module',20)->default('')->comment('来源模块');
+            $table->string('source_module',20)->default('')->index('idx_web_log_error_source_module')->comment('来源模块');
             $table->string('source')->default('')->comment('来源');
             $table->unsignedInteger('lineno')->default(0)->comment('行号');
             $table->unsignedInteger('colno')->default(0)->comment('列数');
