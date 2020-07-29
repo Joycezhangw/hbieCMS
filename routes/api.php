@@ -23,4 +23,7 @@ Route::group([
 ], function (Router $router) {
     $router->get('/index', 'Index@index');
     $router->get('article/detail', 'Article@detail');
+
+    //记录前端bug
+    $router->post('logs/error','LogError@error');
 });

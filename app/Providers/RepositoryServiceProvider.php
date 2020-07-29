@@ -21,7 +21,9 @@ use App\Services\Repositories\System\AlbumRepo;
 use App\Services\Repositories\System\Interfaces\IAlbum;
 use App\Services\Repositories\System\Interfaces\IAlbumFile;
 use App\Services\Repositories\System\Interfaces\ISlide;
+use App\Services\Repositories\System\Interfaces\IWebLogError;
 use App\Services\Repositories\System\SlideRepo;
+use App\Services\Repositories\System\WebLogErrorRepo;
 use App\Services\Repositories\UCenter\Interfaces\IMember;
 use App\Services\Repositories\UCenter\Interfaces\IMemberGroup;
 use App\Services\Repositories\UCenter\MemberGroupRepo;
@@ -50,5 +52,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(IManageRole::class, ManageRoleRepo::class);//管理员角色
         $this->app->bind(IMember::class, MemberRepo::class);//用户管理
         $this->app->bind(IMemberGroup::class, MemberGroupRepo::class);//用户组管理
+        $this->app->bind(IWebLogError::class, WebLogErrorRepo::class);//前端错误日志
     }
 }

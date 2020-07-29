@@ -13,6 +13,35 @@
     <script type="text/javascript" src="/static/ac/lib/html5shiv.min.js"></script>
     <script type="text/javascript" src="/static/ac/lib/respond.min.js"></script>
     <!-- [endif] -->
+    <script>
+        var MaxErrorReportLimit = 100;
+        // 简单的将错误采集上报到 /api/logs/error
+        window.onerror = function(message, source, lineno, colno, error) {
+            // 同一个页面最多上报100次错误，防止某个循环错误页面一直打开，不断的报错
+            if (MaxErrorReportLimit-- < 0) return;
+            try {
+                var msg = {
+                    message: message,
+                    source: source,
+                    lineno: lineno,
+                    colno: colno,
+                    stack: error && error.stack,
+                    href: window.location.href,
+                };
+                msg = JSON.stringify(msg);
+                // 用于 macaca E2E 自动化测试
+                // window.__macaca_latest_error = msg;
+                var req = new XMLHttpRequest();
+                req.open('post', '/api/logs/error', true);
+                req.setRequestHeader('Content-Type', 'application/json');
+                req.send(msg);
+
+                // 此处还需 记录错误堆栈,根据当前登录的用户记录
+
+            } catch (err) {
+                console.log('report error', err);
+            }
+        };</script>
 </head>
 <body>
 <div class="hb-logo">
