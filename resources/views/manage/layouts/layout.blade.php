@@ -22,6 +22,7 @@
             try {
                 var msg = {
                     message: message,
+                    source_module:'manage',
                     source: source,
                     lineno: lineno,
                     colno: colno,

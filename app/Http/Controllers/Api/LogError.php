@@ -24,6 +24,7 @@ class LogError extends Controller
         $params = $request->all();
         $webLogErrorRepo->doCreate([
             'message' => FiltersHelper::stringSpecialHtmlFilter($params['message']),
+            'source_module'=>FiltersHelper::stringFilter($params['source_module']),
             'source' => FiltersHelper::stringSpecialHtmlFilter($params['source']),
             'lineno' => $params['lineno'],
             'colno' => $params['colno'],

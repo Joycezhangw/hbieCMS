@@ -33,6 +33,7 @@ class WebLogError extends Model
     protected $fillable = [
         'error_id',
         'message',
+        'source_module',
         'source',
         'lineno',
         'colno',
