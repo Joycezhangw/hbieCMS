@@ -46,10 +46,13 @@ class Login extends Controller
     public function logout(Request $request)
     {
         $user = Auth::guard('admin')->user();
-        //监听退出登录，并记录日志
-        event(new ManageAction($user->manage_id, $user->username, $request->url(), '退出登录', [], $request->getClientIp(), $request->userAgent()));
+        if($user) {
+            //监听退出登录，并记录日志
+            event(new ManageAction($user->manage_id, $user->username, $request->url(), '退出登录', [], $request->getClientIp(), $request->userAgent()));
+        }
         Auth::guard('admin')->logout();
-        $request->session()->invalidate();
+        $request->session()->forget('admin');
+        $request->session()->regenerate();
         return redirect('manage/login');
     }
 
