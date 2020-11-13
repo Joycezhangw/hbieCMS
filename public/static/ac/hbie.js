@@ -7,6 +7,33 @@
         return e
     };
 
+    HBIE.parse_str = function (str) {
+        var value = str.split("&"), vars = {}, param;
+        for (var i = 0; i < value.length; i++) {
+            param = value[i].split("=");
+            vars[param[0]] = param[1];
+        }
+        return vars;
+    };
+
+
+    HBIE.buildUrl = function (url, vars) {
+        /* 解析参数 */
+        if (typeof vars === "string") {
+            vars = this.parse_str(vars);
+        } else if (!$.isPlainObject(vars)) {
+            vars = {};
+        }
+        if (vars) {
+            var param_str = $.param(vars);
+            if ('' !== param_str) {
+                url += ((url).indexOf('?') !== -1 ? '&' : '?') + param_str;
+            }
+        }
+        return url;
+    };
+
+
     HBIE.string = {
         RegExps: {
             trim: /^\s+|\s+$/g,
