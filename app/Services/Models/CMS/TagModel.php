@@ -5,7 +5,12 @@ namespace App\Services\Models\CMS;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tag extends Model
+/**
+ * 内容标签
+ * Class TagModel
+ * @package App\Services\Models\CMS
+ */
+class TagModel extends Model
 {
     /**
      * 表名
@@ -46,13 +51,13 @@ class Tag extends Model
      */
     public static function doSaveTag(string $name,int $iid)
     {
-        $tag = Tag::firstOrCreate(['tag_name' => $name]);
+        $tag = TagModel::firstOrCreate(['tag_name' => $name]);
         if ($tag) {
             $tag_id = $tag->tag_id;
-            if (!PostTag::where(['tag_id' => $tag_id, 'post_id' => $iid])->first()) {
+            if (!PostTagModel::where(['tag_id' => $tag_id, 'post_id' => $iid])->first()) {
                 $tag->increment('post_num');
             }
-            PostTag::firstOrCreate(['tag_id' => $tag_id, 'post_id' => $iid]);
+            PostTagModel::firstOrCreate(['tag_id' => $tag_id, 'post_id' => $iid]);
         }
     }
 }

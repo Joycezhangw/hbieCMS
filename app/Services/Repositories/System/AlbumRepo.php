@@ -4,14 +4,14 @@ declare (strict_types=1);
 namespace App\Services\Repositories\System;
 
 
-use App\Services\Models\System\Album;
+use App\Services\Models\System\AlbumModel;
 use App\Services\Repositories\System\Interfaces\IAlbum;
 use JoyceZ\LaravelLib\Helpers\TreeHelper;
 use JoyceZ\LaravelLib\Repositories\BaseRepository;
 
 class AlbumRepo extends BaseRepository implements IAlbum
 {
-    public function __construct(Album $model)
+    public function __construct(AlbumModel $model)
     {
         parent::__construct($model);
     }

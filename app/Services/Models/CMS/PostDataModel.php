@@ -5,7 +5,12 @@ namespace App\Services\Models\CMS;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PostData extends Model
+/**
+ * 内容富文本西悉尼
+ * Class PostDataModel
+ * @package App\Services\Models\CMS
+ */
+class PostDataModel extends Model
 {
     protected $table = 'hb_cms_post_data';
 

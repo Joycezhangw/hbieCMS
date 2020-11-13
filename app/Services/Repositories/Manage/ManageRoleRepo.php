@@ -4,7 +4,7 @@ declare (strict_types=1);
 namespace App\Services\Repositories\Manage;
 
 
-use App\Services\Models\Manage\ManageRole;
+use App\Services\Models\Manage\ManageRoleModel;
 use App\Services\Repositories\Manage\Interfaces\IManageRole;
 use JoyceZ\LaravelLib\Helpers\FiltersHelper;
 use JoyceZ\LaravelLib\Helpers\StrHelper;
@@ -13,11 +13,11 @@ use JoyceZ\LaravelLib\Repositories\BaseRepository;
 /**
  * 后台管理员角色接口实现
  * Class ManageRoleRepo
- * @package App\Services\Repositories\Manage
+ * @package App\Services\Repositories\ManageModel
  */
 class ManageRoleRepo extends BaseRepository implements IManageRole
 {
-    public function __construct(ManageRole $model)
+    public function __construct(ManageRoleModel $model)
     {
         parent::__construct($model);
     }

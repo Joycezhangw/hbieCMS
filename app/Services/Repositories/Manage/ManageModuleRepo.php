@@ -4,9 +4,9 @@ declare (strict_types=1);
 namespace App\Services\Repositories\Manage;
 
 
-use App\Services\Models\Manage\Manage;
-use App\Services\Models\Manage\ManageModule;
-use App\Services\Models\Manage\ManageRole;
+use App\Services\Models\Manage\ManageModel;
+use App\Services\Models\Manage\ManageModuleModel;
+use App\Services\Models\Manage\ManageRoleModel;
 use App\Services\Repositories\Manage\Interfaces\IManageModule;
 use JoyceZ\LaravelLib\Helpers\FiltersHelper;
 use JoyceZ\LaravelLib\Helpers\ResultHelper;
@@ -16,7 +16,7 @@ use JoyceZ\LaravelLib\Repositories\BaseRepository;
 class ManageModuleRepo extends BaseRepository implements IManageModule
 {
 
-    public function __construct(ManageModule $model)
+    public function __construct(ManageModuleModel $model)
     {
         parent::__construct($model);
     }
@@ -38,7 +38,7 @@ class ManageModuleRepo extends BaseRepository implements IManageModule
             foreach ($member['roles'] as $role) {
                 $rolesIds[] = $role['role_id'];
             }
-            $roles = ManageRole::whereIn('role_id', $rolesIds)->with('rules')->get();
+            $roles = ManageRoleModel::whereIn('role_id', $rolesIds)->with('rules')->get();
             $menuList = $authList = [];
             foreach ($roles as $role) {
                 foreach ($role->rules as $rule) {

@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * 用户组
- * Class MemberGroup
+ * Class MemberGroupModel
  * @package App\Services\Models\UCenter
  */
-class MemberGroup extends Model
+class MemberGroupModel extends Model
 {
     /**
      * 表名
@@ -41,6 +41,6 @@ class MemberGroup extends Model
      */
     public function members()
     {
-        return $this->belongsToMany(Member::class);
+        return $this->belongsToMany(MemberModel::class);
     }
 }

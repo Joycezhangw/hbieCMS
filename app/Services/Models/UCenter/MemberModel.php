@@ -9,10 +9,10 @@ use Illuminate\Notifications\Notifiable;
 
 /**
  * 用户
- * Class Member
+ * Class MemberModel
  * @package App\Services\Models\UCenter
  */
-class Member extends Authenticatable
+class MemberModel extends Authenticatable
 {
     use Notifiable;
 
@@ -117,6 +117,6 @@ class Member extends Authenticatable
      */
     public function group()
     {
-        return $this->hasOne(MemberGroup::class);
+        return $this->hasOne(MemberGroupModel::class);
     }
 }

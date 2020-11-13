@@ -4,7 +4,7 @@ declare (strict_types=1);
 namespace App\Services\Repositories\UCenter;
 
 
-use App\Services\Models\UCenter\Member;
+use App\Services\Models\UCenter\MemberModel;
 use App\Services\Repositories\UCenter\Interfaces\IMember;
 use Illuminate\Support\Facades\DB;
 use JoyceZ\LaravelLib\Repositories\BaseRepository;
@@ -17,7 +17,7 @@ use JoyceZ\LaravelLib\Repositories\BaseRepository;
 class MemberRepo extends BaseRepository implements IMember
 {
 
-    public function __construct(Member $model)
+    public function __construct(MemberModel $model)
     {
         parent::__construct($model);
     }

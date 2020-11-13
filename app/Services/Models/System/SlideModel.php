@@ -1,23 +1,29 @@
 <?php
 declare (strict_types=1);
 
-namespace App\Services\Models\CMS;
+namespace App\Services\Models\System;
+
 
 use Illuminate\Database\Eloquent\Model;
 
-class Channel extends Model
+/**
+ * 幻灯片
+ * Class SlideModel
+ * @package App\Services\Models\System
+ */
+class SlideModel extends Model
 {
     /**
      * 表名
      * @var string
      */
-    protected $table = 'hb_cms_channel';
+    protected $table = 'sys_slide';
 
     /**
      * 主键字段
      * @var string
      */
-    protected $primaryKey = 'channel_id';
+    protected $primaryKey = 'slide_id';
 
     /**
      * 指示是否自动维护时间戳
@@ -32,15 +38,14 @@ class Channel extends Model
     protected $dateFormat = 'U';
 
     protected $fillable = [
-        'channel_id',
-        'channel_name',
-        'channel_short_name',
-        'pid',
-        'channel_sort',
+        'slide_id',
+        'slide_name',
+        'slide_pic',
+        'slide_page',
         'is_show',
-        'channel_desc',
+        'slide_sort',
+        'slide_desc',
         'created_at',
         'updated_at'
     ];
-
 }

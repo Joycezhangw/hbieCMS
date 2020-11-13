@@ -5,7 +5,7 @@ namespace App\Services\Repositories\System;
 
 
 use App\Services\Enums\System\AlbumFileTypeEnum;
-use App\Services\Models\System\AlbumFile;
+use App\Services\Models\System\AlbumFileModel;
 use App\Services\Repositories\System\Interfaces\IAlbumFile;
 use Illuminate\Support\Facades\Storage;
 use JoyceZ\LaravelLib\Helpers\ResultHelper;
@@ -13,7 +13,7 @@ use JoyceZ\LaravelLib\Repositories\BaseRepository;
 
 class AlbumFileRepo extends BaseRepository implements IAlbumFile
 {
-    public function __construct(AlbumFile $model)
+    public function __construct(AlbumFileModel $model)
     {
         parent::__construct($model);
     }

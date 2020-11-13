@@ -12,10 +12,10 @@ use Illuminate\Notifications\Notifiable;
  * 管理员
  *
  * @author joyecZhang <zhangwei762@163.com>
- * Class Manage
- * @package App\Services\Models\Manage
+ * Class ManageModel
+ * @package App\Services\Models\ManageModel
  */
-class Manage extends Authenticatable
+class ManageModel extends Authenticatable
 {
     use Notifiable;
 
@@ -134,7 +134,7 @@ class Manage extends Authenticatable
      */
     public function roles()
     {
-        return $this->belongsToMany(ManageRole::class, 'hb_manage_has_role', 'manage_id', 'role_id');
+        return $this->belongsToMany(ManageRoleModel::class, 'hb_manage_has_role', 'manage_id', 'role_id');
     }
 
 }

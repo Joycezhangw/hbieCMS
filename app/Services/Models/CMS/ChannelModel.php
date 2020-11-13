@@ -1,22 +1,29 @@
 <?php
+declare (strict_types=1);
 
-namespace App\Services\Models\System;
+namespace App\Services\Models\CMS;
 
 use Illuminate\Database\Eloquent\Model;
 
-class WebLogError extends Model
+/**
+ * 内容栏目
+ * Class ChannelModel
+ * @package App\Services\Models\CMS
+ */
+class ChannelModel extends Model
 {
+
     /**
      * 表名
      * @var string
      */
-    protected $table = 'sys_web_log_error';
+    protected $table = 'hb_cms_channel';
 
     /**
      * 主键字段
      * @var string
      */
-    protected $primaryKey = 'error_id';
+    protected $primaryKey = 'channel_id';
 
     /**
      * 指示是否自动维护时间戳
@@ -31,15 +38,15 @@ class WebLogError extends Model
     protected $dateFormat = 'U';
 
     protected $fillable = [
-        'error_id',
-        'message',
-        'source_module',
-        'source',
-        'lineno',
-        'colno',
-        'stack',
-        'href',
+        'channel_id',
+        'channel_name',
+        'channel_short_name',
+        'pid',
+        'channel_sort',
+        'is_show',
+        'channel_desc',
         'created_at',
         'updated_at'
     ];
+
 }

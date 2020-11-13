@@ -5,7 +5,7 @@ namespace App\Services\Repositories\Manage;
 
 
 use App\Events\ManageAction;
-use App\Services\Models\Manage\Manage;
+use App\Services\Models\Manage\ManageModel;
 use App\Services\Repositories\Manage\Interfaces\IManage;
 use Illuminate\Support\Facades\Auth;
 use JoyceZ\LaravelLib\Helpers\ResultHelper;
@@ -15,7 +15,7 @@ use JoyceZ\LaravelLib\Repositories\BaseRepository;
 class ManageRepo extends BaseRepository implements IManage
 {
 
-    public function __construct(Manage $model)
+    public function __construct(ManageModel $model)
     {
         parent::__construct($model);
     }

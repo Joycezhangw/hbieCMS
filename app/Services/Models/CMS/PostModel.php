@@ -5,7 +5,12 @@ namespace App\Services\Models\CMS;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+/**
+ * 内容
+ * Class PostModel
+ * @package App\Services\Models\CMS
+ */
+class PostModel extends Model
 {
     /**
      * 表名
@@ -67,6 +72,6 @@ class Post extends Model
      */
     public function content()
     {
-        return $this->hasOne(PostData::class, 'post_id', 'post_id');
+        return $this->hasOne(PostDataModel::class, 'post_id', 'post_id');
     }
 }

@@ -4,7 +4,7 @@ declare (strict_types=1);
 namespace App\Services\Repositories\CMS;
 
 
-use App\Services\Models\CMS\Channel;
+use App\Services\Models\CMS\ChannelModel;
 use App\Services\Repositories\CMS\Interfaces\IChannel;
 use JoyceZ\LaravelLib\Repositories\BaseRepository;
 
@@ -17,7 +17,7 @@ use JoyceZ\LaravelLib\Repositories\BaseRepository;
  */
 class ChannelRepo extends BaseRepository implements IChannel
 {
-    public function __construct(Channel $model)
+    public function __construct(ChannelModel $model)
     {
         parent::__construct($model);
     }

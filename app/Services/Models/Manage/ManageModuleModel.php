@@ -5,7 +5,12 @@ namespace App\Services\Models\Manage;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ManageModule extends Model
+/**
+ * 管理后台菜单栏目
+ * Class ManageModuleModel
+ * @package App\Services\Models\Manage
+ */
+class ManageModuleModel extends Model
 {
     /**
      * 表名

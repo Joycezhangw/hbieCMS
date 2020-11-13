@@ -5,7 +5,7 @@ declare (strict_types=1);
 namespace App\Services\Repositories\System;
 
 
-use App\Services\Models\System\WebLogError;
+use App\Services\Models\System\WebLogErrorModel;
 use App\Services\Repositories\System\Interfaces\IWebLogError;
 use JoyceZ\LaravelLib\Repositories\BaseRepository;
 
@@ -16,7 +16,7 @@ use JoyceZ\LaravelLib\Repositories\BaseRepository;
  */
 class WebLogErrorRepo extends BaseRepository implements IWebLogError
 {
-    public function __construct(WebLogError $model)
+    public function __construct(WebLogErrorModel $model)
     {
         parent::__construct($model);
     }

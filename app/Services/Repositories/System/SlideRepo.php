@@ -4,13 +4,13 @@ declare (strict_types=1);
 namespace App\Services\Repositories\System;
 
 
-use App\Services\Models\System\Slide;
+use App\Services\Models\System\SlideModel;
 use App\Services\Repositories\System\Interfaces\ISlide;
 use JoyceZ\LaravelLib\Repositories\BaseRepository;
 
 class SlideRepo extends BaseRepository implements ISlide
 {
-    public function __construct(Slide $model)
+    public function __construct(SlideModel $model)
     {
         parent::__construct($model);
     }

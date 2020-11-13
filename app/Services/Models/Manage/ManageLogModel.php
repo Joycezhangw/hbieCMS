@@ -5,7 +5,12 @@ namespace App\Services\Models\Manage;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ManageLog extends Model
+/**
+ * 管理员操作日志
+ * Class ManageLogModel
+ * @package App\Services\Models\Manage
+ */
+class ManageLogModel extends Model
 {
     /**
      * 表名

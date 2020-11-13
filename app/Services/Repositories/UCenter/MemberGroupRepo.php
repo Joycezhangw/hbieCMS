@@ -4,7 +4,7 @@ declare (strict_types=1);
 namespace App\Services\Repositories\UCenter;
 
 
-use App\Services\Models\UCenter\MemberGroup;
+use App\Services\Models\UCenter\MemberGroupModel;
 use App\Services\Repositories\UCenter\Interfaces\IMemberGroup;
 use JoyceZ\LaravelLib\Repositories\BaseRepository;
 
@@ -15,7 +15,7 @@ use JoyceZ\LaravelLib\Repositories\BaseRepository;
  */
 class MemberGroupRepo extends BaseRepository implements IMemberGroup
 {
-    public function __construct(MemberGroup $model)
+    public function __construct(MemberGroupModel $model)
     {
         parent::__construct($model);
     }

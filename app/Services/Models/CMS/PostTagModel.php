@@ -5,7 +5,12 @@ namespace App\Services\Models\CMS;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PostTag extends Model
+/**
+ * 内容关联标签
+ * Class PostTagModel
+ * @package App\Services\Models\CMS
+ */
+class PostTagModel extends Model
 {
     protected $table='hb_cms_post_tag';
 

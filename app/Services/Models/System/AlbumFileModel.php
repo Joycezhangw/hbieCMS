@@ -6,7 +6,12 @@ namespace App\Services\Models\System;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AlbumFile extends Model
+/**
+ * 相册附件详情
+ * Class AlbumFileModel
+ * @package App\Services\Models\System
+ */
+class AlbumFileModel extends Model
 {
     /**
      * 表名

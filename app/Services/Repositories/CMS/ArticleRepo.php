@@ -4,10 +4,10 @@ declare (strict_types=1);
 namespace App\Services\Repositories\CMS;
 
 
-use App\Services\Models\CMS\Channel;
-use App\Services\Models\CMS\Post;
-use App\Services\Models\CMS\PostData;
-use App\Services\Models\CMS\Tag;
+use App\Services\Models\CMS\ChannelModel;
+use App\Services\Models\CMS\PostModel;
+use App\Services\Models\CMS\PostDataModel;
+use App\Services\Models\CMS\TagModel;
 use App\Services\Repositories\CMS\Interfaces\IArticle;
 use App\Utility\Format;
 use JoyceZ\LaravelLib\Helpers\FiltersHelper;
@@ -16,7 +16,7 @@ use JoyceZ\LaravelLib\Repositories\BaseRepository;
 
 class ArticleRepo extends BaseRepository implements IArticle
 {
-    public function __construct(Post $model)
+    public function __construct(PostModel $model)
     {
         parent::__construct($model);
     }
@@ -77,11 +77,11 @@ class ArticleRepo extends BaseRepository implements IArticle
         ]);
         if ($post) {
             $postId = $post->post_id;
-            PostData::create(['post_id' => $postId, 'content' => FiltersHelper::stringFilter($params['content'])]);
+            PostDataModel::create(['post_id' => $postId, 'content' => FiltersHelper::stringFilter($params['content'])]);
             if (isset($params['post_tags'])) {
                 if ($params['post_tags']) {
                     foreach ($params['post_tags'] as $tag) {
-                        Tag::doSaveTag($tag, $postId);
+                        TagModel::doSaveTag($tag, $postId);
                     }
                 }
             }
@@ -110,11 +110,11 @@ class ArticleRepo extends BaseRepository implements IArticle
             'post_desc' => FiltersHelper::stringFilter($params['post_desc'])
         ], $articleId);
         if ($post) {
-            PostData::updateOrCreate(['post_id' => $articleId], ['content' => FiltersHelper::stringFilter($params['content'])]);
+            PostDataModel::updateOrCreate(['post_id' => $articleId], ['content' => FiltersHelper::stringFilter($params['content'])]);
             if (isset($params['post_tags'])) {
                 if ($params['post_tags']) {
                     foreach ($params['post_tags'] as $tag) {
-                        Tag::doSaveTag($tag, $articleId);
+                        TagModel::doSaveTag($tag, $articleId);
                     }
                 }
             }
@@ -129,7 +129,7 @@ class ArticleRepo extends BaseRepository implements IArticle
      */
     public function getHomeListData(): array
     {
-        $channels = Channel::where('is_show', 1)->orderBy('channel_sort', 'asc')->get(['channel_id', 'channel_name', 'channel_short_name']);
+        $channels = ChannelModel::where('is_show', 1)->orderBy('channel_sort', 'asc')->get(['channel_id', 'channel_name', 'channel_short_name']);
         if (!$channels) {
             return [];
         }

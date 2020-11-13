@@ -6,7 +6,12 @@ namespace App\Services\Models\Manage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class ManageRole extends Model
+/**
+ * 管理员角色
+ * Class ManageRoleModel
+ * @package App\Services\Models\Manage
+ */
+class ManageRoleModel extends Model
 {
     /**
      * 表名
@@ -36,6 +41,6 @@ class ManageRole extends Model
      */
     public function rules(): BelongsToMany
     {
-        return $this->belongsToMany(ManageModule::class, 'hb_manage_role_has_module', 'role_id', 'module_id');
+        return $this->belongsToMany(ManageModuleModel::class, 'hb_manage_role_has_module', 'role_id', 'module_id');
     }
 }
