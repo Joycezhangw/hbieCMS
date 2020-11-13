@@ -37,6 +37,9 @@ class ManageRepo extends BaseRepository implements IManage
     public function doLogin(string $username, string $password, string $captcha, string $clientIp): array
     {
         $getCaptcha = cache('adminCaptcha');
+        if(!$getCaptcha){
+            return ResultHelper::returnFormat('验证码错误！', -1);
+        }
         if (empty($captcha) || (strtolower($captcha) != strtolower($getCaptcha))) {
             return ResultHelper::returnFormat('验证码错误！', -1);
         }
