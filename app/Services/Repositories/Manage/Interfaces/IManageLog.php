@@ -6,6 +6,11 @@ namespace App\Services\Repositories\Manage\Interfaces;
 
 use JoyceZ\LaravelLib\Repositories\Interfaces\BaseInterface;
 
+/**
+ * 管理员操作日志
+ * Interface IManageLog
+ * @package App\Services\Repositories\Manage\Interfaces
+ */
 interface IManageLog extends BaseInterface
 {
     /**

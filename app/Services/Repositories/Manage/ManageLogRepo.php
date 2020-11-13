@@ -8,6 +8,11 @@ use App\Services\Models\Manage\ManageLogModel;
 use App\Services\Repositories\Manage\Interfaces\IManageLog;
 use JoyceZ\LaravelLib\Repositories\BaseRepository;
 
+/**
+ * 实现管理员接口
+ * Class ManageLogRepo
+ * @package App\Services\Repositories\Manage
+ */
 class ManageLogRepo extends BaseRepository implements IManageLog
 {
     public function __construct(ManageLogModel $model)

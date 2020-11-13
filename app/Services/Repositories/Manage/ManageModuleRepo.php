@@ -13,6 +13,11 @@ use JoyceZ\LaravelLib\Helpers\ResultHelper;
 use JoyceZ\LaravelLib\Helpers\TreeHelper;
 use JoyceZ\LaravelLib\Repositories\BaseRepository;
 
+/**
+ * 实现后台菜单
+ * Class ManageModuleRepo
+ * @package App\Services\Repositories\Manage
+ */
 class ManageModuleRepo extends BaseRepository implements IManageModule
 {
 

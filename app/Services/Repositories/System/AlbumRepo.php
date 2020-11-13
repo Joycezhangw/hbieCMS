@@ -9,6 +9,11 @@ use App\Services\Repositories\System\Interfaces\IAlbum;
 use JoyceZ\LaravelLib\Helpers\TreeHelper;
 use JoyceZ\LaravelLib\Repositories\BaseRepository;
 
+/**
+ * 实现附件专辑
+ * Class AlbumRepo
+ * @package App\Services\Repositories\System
+ */
 class AlbumRepo extends BaseRepository implements IAlbum
 {
     public function __construct(AlbumModel $model)

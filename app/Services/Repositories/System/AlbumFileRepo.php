@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Storage;
 use JoyceZ\LaravelLib\Helpers\ResultHelper;
 use JoyceZ\LaravelLib\Repositories\BaseRepository;
 
+/**
+ * 实现附件文件内容
+ * Class AlbumFileRepo
+ * @package App\Services\Repositories\System
+ */
 class AlbumFileRepo extends BaseRepository implements IAlbumFile
 {
     public function __construct(AlbumFileModel $model)

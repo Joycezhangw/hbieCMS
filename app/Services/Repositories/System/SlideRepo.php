@@ -8,6 +8,11 @@ use App\Services\Models\System\SlideModel;
 use App\Services\Repositories\System\Interfaces\ISlide;
 use JoyceZ\LaravelLib\Repositories\BaseRepository;
 
+/**
+ * 幻灯片
+ * Class SlideRepo
+ * @package App\Services\Repositories\System
+ */
 class SlideRepo extends BaseRepository implements ISlide
 {
     public function __construct(SlideModel $model)

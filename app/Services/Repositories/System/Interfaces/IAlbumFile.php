@@ -6,6 +6,11 @@ namespace App\Services\Repositories\System\Interfaces;
 
 use JoyceZ\LaravelLib\Repositories\Interfaces\BaseInterface;
 
+/**
+ * 附件文件内容
+ * Interface IAlbumFile
+ * @package App\Services\Repositories\System\Interfaces
+ */
 interface IAlbumFile extends BaseInterface
 {
 

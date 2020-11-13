@@ -6,6 +6,11 @@ namespace App\Services\Repositories\CMS\Interfaces;
 
 use JoyceZ\LaravelLib\Repositories\Interfaces\BaseInterface;
 
+/**
+ * 文章内容接口
+ * Interface IArticle
+ * @package App\Services\Repositories\CMS\Interfaces
+ */
 interface IArticle extends BaseInterface
 {
 

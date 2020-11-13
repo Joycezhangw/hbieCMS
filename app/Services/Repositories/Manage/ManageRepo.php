@@ -12,6 +12,11 @@ use JoyceZ\LaravelLib\Helpers\ResultHelper;
 use JoyceZ\LaravelLib\Helpers\StrHelper;
 use JoyceZ\LaravelLib\Repositories\BaseRepository;
 
+/**
+ * 管理员
+ * Class ManageRepo
+ * @package App\Services\Repositories\Manage
+ */
 class ManageRepo extends BaseRepository implements IManage
 {
 

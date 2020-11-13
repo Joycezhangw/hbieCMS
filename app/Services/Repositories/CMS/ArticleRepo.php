@@ -14,6 +14,11 @@ use JoyceZ\LaravelLib\Helpers\FiltersHelper;
 use JoyceZ\LaravelLib\Helpers\ResultHelper;
 use JoyceZ\LaravelLib\Repositories\BaseRepository;
 
+/**
+ * 实现文章内容接口
+ * Class ArticleRepo
+ * @package App\Services\Repositories\CMS
+ */
 class ArticleRepo extends BaseRepository implements IArticle
 {
     public function __construct(PostModel $model)
