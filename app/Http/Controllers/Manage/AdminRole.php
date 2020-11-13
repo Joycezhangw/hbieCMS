@@ -4,7 +4,6 @@ declare (strict_types=1);
 namespace App\Http\Controllers\Manage;
 
 
-use App\Services\Models\Manage\ManageRole;
 use App\Services\Repositories\Manage\Interfaces\IManageModule;
 use App\Services\Repositories\Manage\Interfaces\IManageRole;
 use Illuminate\Http\Request;
@@ -35,6 +34,7 @@ class AdminRole extends ManageController
      * 修改角色页面
      * @param int $id
      * @param IManageRole $manageRoleRepo
+     * @param IManageModule $manageModuleRepo
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(int $id, IManageRole $manageRoleRepo,IManageModule $manageModuleRepo)
