@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6520d5838a83b510449a3a70707101f8",
+    "content-hash": "7f7300be694d1c148f4e12668d41670c",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -469,16 +469,16 @@
         },
         {
             "name": "joycezhang/laravellib",
-            "version": "dev-master",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Joycezhangw/laravel-lib.git",
-                "reference": "080884de4114b5f99447ec9c10523730ef6b5f8c"
+                "reference": "097fedb5ce7f0ce7cb01e38e668a1f508d5338e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Joycezhangw/laravel-lib/zipball/080884de4114b5f99447ec9c10523730ef6b5f8c",
-                "reference": "080884de4114b5f99447ec9c10523730ef6b5f8c",
+                "url": "https://api.github.com/repos/Joycezhangw/laravel-lib/zipball/097fedb5ce7f0ce7cb01e38e668a1f508d5338e9",
+                "reference": "097fedb5ce7f0ce7cb01e38e668a1f508d5338e9",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -515,7 +515,7 @@
                 "miniprogram",
                 "poster"
             ],
-            "time": "2020-07-07T09:08:59+00:00"
+            "time": "2020-11-13T07:12:36+00:00"
         },
         {
             "name": "laravel/framework",
@@ -4236,6 +4236,7 @@
                 "faker",
                 "fixtures"
             ],
+            "abandoned": true,
             "time": "2019-12-12T13:22:17+00:00"
         },
         {
@@ -5226,6 +5227,7 @@
             "keywords": [
                 "tokenizer"
             ],
+            "abandoned": true,
             "time": "2019-09-17T06:23:10+00:00"
         },
         {
@@ -6199,9 +6201,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "joycezhang/laravellib": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
