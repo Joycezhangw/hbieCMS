@@ -18,8 +18,10 @@ use App\Services\Repositories\Manage\ManageRepo;
 use App\Services\Repositories\Manage\ManageRoleRepo;
 use App\Services\Repositories\System\AlbumFileRepo;
 use App\Services\Repositories\System\AlbumRepo;
+use App\Services\Repositories\System\DistrictRepo;
 use App\Services\Repositories\System\Interfaces\IAlbum;
 use App\Services\Repositories\System\Interfaces\IAlbumFile;
+use App\Services\Repositories\System\Interfaces\IDistrict;
 use App\Services\Repositories\System\Interfaces\ISlide;
 use App\Services\Repositories\System\Interfaces\IWebLogError;
 use App\Services\Repositories\System\SlideRepo;
@@ -53,5 +55,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(IMember::class, MemberRepo::class);//用户管理
         $this->app->bind(IMemberGroup::class, MemberGroupRepo::class);//用户组管理
         $this->app->bind(IWebLogError::class, WebLogErrorRepo::class);//前端错误日志
+        $this->app->bind(IDistrict::class, DistrictRepo::class);//行政区域划分
     }
 }
