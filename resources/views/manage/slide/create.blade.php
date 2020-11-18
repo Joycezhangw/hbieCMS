@@ -41,7 +41,7 @@
                 <div class="hb-upload__img">
                     <div class="hb-upload__img--box" id="imgUploadCover">
                         <div class="hb-upload-default">
-                            <img src="/static/images/upload_img.png"/>
+                            <img src="/static/manage/images/upload_img.png"/>
                             <p>点击上传</p>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
 @section('javascript')
     <script>
         var SAVE_URL = "{{route('manage.slide.store')}}", INDEX_URL = "{{route('manage.slide.index')}}",
-            HB_UPLOAD_URL = "{{route('manage/upload/upload')}}", CSRF_TOKEN = "{{csrf_token()}}";
+            HB_UPLOAD_URL = "{{route('manage.upload.upload')}}", CSRF_TOKEN = "{{csrf_token()}}";
     </script>
     <script type="text/javascript" src="/static/manage/js/save_slide.js"></script>
 @endsection
