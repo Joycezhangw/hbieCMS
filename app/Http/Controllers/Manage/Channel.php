@@ -8,18 +8,22 @@ use App\Services\Repositories\CMS\Interfaces\IChannel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use JoyceZ\LaravelLib\Helpers\ResultHelper;
+use JoyceZ\LaravelLib\Helpers\TreeHelper;
 
 class Channel extends ManageController
 {
     public function index(IChannel $channelRepo)
     {
-        $channels = $channelRepo->all();
+        $channelListRet = $channelRepo->all([],['*'],'channel_sort','asc');
+        $channelList=$channelRepo->parseDataRows($channelListRet->toArray());
+        $channels = TreeHelper::listToTree($channelList, 0, 'channel_id');
         return $this->view(compact('channels'));
     }
 
-    public function create()
+    public function create(IChannel $channelRepo)
     {
-        return $this->view();
+        $channels = $channelRepo->all(['pid'=> 0]);
+        return $this->view(compact('channels'));
     }
 
     // 表单验证规则
@@ -47,6 +51,8 @@ class Channel extends ManageController
             return ResultHelper::returnFormat($validator->getMessageBag()->first(), -1);
         }
         $params['is_show'] = isset($params['is_show']) ? 1 : 0;
+        $params['is_allow_content'] = isset($params['is_allow_content']) ? 1 : 0;
+        $params['is_notice'] = isset($params['is_notice']) ? 1 : 0;
         if ($channelRepo->doCreate($params)) {
             return ResultHelper::returnFormat('添加栏目成功', 200);
         } else {
@@ -57,16 +63,18 @@ class Channel extends ManageController
     public function edit(int $id, IChannel $channelRepo)
     {
         if (empty($id)) {
-            abort(490, '权限菜单编号错误');
+            abort(490, '栏目编号错误');
         }
         if (intval($id) <= 0) {
-            abort(490, '权限菜单编号错误');
+            abort(490, '栏目编号错误');
         }
-        $channel = $channelRepo->getByPkId($id);
-        if (!$channel) {
-            abort(490, '菜单不存在');
+        $channelRet = $channelRepo->getByPkId($id);
+        if (!$channelRet) {
+            abort(490, '栏目不存在');
         }
-        return $this->view(compact('channel'));
+        $channels = $channelRepo->all(['pid'=> 0]);
+        $channel=$channelRepo->parseDataRow($channelRet->toArray());
+        return $this->view(compact('channel','channels'));
     }
 
     public function update(Request $request, int $id, IChannel $channelRepo)
@@ -80,7 +88,10 @@ class Channel extends ManageController
         $channel = $channelRepo->getByPkId($id);
         if ($channel) {
             $params['is_show'] = isset($params['is_show']) ? 1 : 0;
+            $params['is_allow_content'] = isset($params['is_allow_content']) ? 1 : 0;
+            $params['is_notice'] = isset($params['is_notice']) ? 1 : 0;
             unset($params['_token']);
+            unset($params['file']);
             $channelRepo->doUpdateByPkId($params, $id);
             return ResultHelper::returnFormat('更新栏目成功', 200);
         } else {

@@ -17,9 +17,13 @@ class CreateHbCmsChannelTable extends Migration
             $table->increments('channel_id');
             $table->string('channel_name',60)->default('')->comment('栏目名称');
             $table->string('channel_short_name',20)->default('')->comment('栏目简称');
-            $table->unsignedInteger('pid')->default(0)->comment('上级栏目');
+            $table->unsignedInteger('pid')->default(0)->index('idx_cms_channel_pid')->comment('上级栏目');
+            $table->string('page_path')->default('')->comment('小程序端指定页面');
+            $table->string('channel_icon')->default('')->comment('图标');
             $table->unsignedInteger('channel_sort')->default(0)->comment('排序');
             $table->unsignedTinyInteger('is_show')->default(1)->comment('是否显示[1 是, 0 否]');
+            $table->unsignedTinyInteger('is_allow_content')->default(1)->comment('是否允许发布内容[1 是, 0 否]');
+            $table->unsignedTinyInteger('is_notice')->default(0)->comment('通知公告[1 是, 0 否]');
             $table->string('channel_desc',512)->default('')->comment('栏目描述');
             $table->unsignedInteger('created_at')->default(0)->comment('创建时间');
             $table->unsignedInteger('updated_at')->default(0)->comment('更新时间');
