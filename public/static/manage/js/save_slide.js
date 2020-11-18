@@ -6,15 +6,17 @@ $(function () {
         upload.render({
             elem: '#imgUploadCover',
             url: HB_UPLOAD_URL,
+            accept: 'image',
+            acceptMime: 'image/*',
+            exts:'jpg|jpeg|PNG|png',
             data: {
                 file_type: 'image',
                 folder: 'slide',
                 _token: CSRF_TOKEN
             },
             done: function (res) {
-                console.log(res)
                 if (res.code === 200) {
-                    $("#imgUploadCover").html("<img src=" + res.data.file_url + " >");
+                    $("#imgUploadCover").html("<img src=" + res.data.file_path_url + " >");
                     $("input[name='slide_pic']").val(res.data.file_path);
                 }
                 return layer.msg(res.message);
