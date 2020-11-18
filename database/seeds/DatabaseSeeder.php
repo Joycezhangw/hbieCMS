@@ -14,5 +14,6 @@ class DatabaseSeeder extends Seeder
          $this->call(SysAlbumTableSeeder::class);
          $this->call(ManageTableSeeder::class);
          $this->call(ManageModuleTableSeeder::class);
+         $this->call(SysDistrictTableSeeder::class);
     }
 }
