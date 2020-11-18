@@ -23,6 +23,7 @@ $(function () {
             elem: '#imgUploadCover',
             url: HB_UPLOAD_URL,
             accept: 'image',
+            acceptMime: 'image/png',
             exts:'PNG|png',
             data: {
                 file_type: 'image',
