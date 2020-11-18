@@ -19,7 +19,7 @@ class Login extends Controller
      * 登录页面
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index()
     {
         return view('manage.login.index');
     }
@@ -46,7 +46,7 @@ class Login extends Controller
     public function logout(Request $request)
     {
         $user = Auth::guard('admin')->user();
-        if($user) {
+        if ($user) {
             //监听退出登录，并记录日志
             event(new ManageAction($user->manage_id, $user->username, $request->url(), '退出登录', [], $request->getClientIp(), $request->userAgent()));
         }
