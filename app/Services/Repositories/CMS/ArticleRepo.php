@@ -9,7 +9,8 @@ use App\Services\Models\CMS\PostModel;
 use App\Services\Models\CMS\PostDataModel;
 use App\Services\Models\CMS\TagModel;
 use App\Services\Repositories\CMS\Interfaces\IArticle;
-use App\Utility\Format;
+use Illuminate\Support\Facades\Storage;
+use JoyceZ\LaravelLib\Helpers\DateHelper;
 use JoyceZ\LaravelLib\Helpers\FiltersHelper;
 use JoyceZ\LaravelLib\Helpers\ResultHelper;
 use JoyceZ\LaravelLib\Repositories\BaseRepository;
@@ -74,7 +75,8 @@ class ArticleRepo extends BaseRepository implements IArticle
             'post_source' => FiltersHelper::stringFilter($params['post_source']),
             'channel_id' => intval($params['channel_id']),
             'post_tags' => $params['post_tags'] ? implode(',', $params['post_tags']) : '',
-            'post_pic' => $params['post_pic'],
+            'post_pic' => $params['post_pic'] ? $params['post_pic'] : '',
+            'post_video' => $params['post_video'] ? $params['post_video'] : '',
             'post_status' => $params['post_status'],
             'is_home_rec' => $params['is_home_rec'],
             'is_hot' => $params['is_hot'],
@@ -108,7 +110,8 @@ class ArticleRepo extends BaseRepository implements IArticle
             'post_source' => FiltersHelper::stringFilter($params['post_source']),
             'channel_id' => intval($params['channel_id']),
             'post_tags' => $params['post_tags'] ? implode(',', $params['post_tags']) : '',
-            'post_pic' => $params['post_pic'],
+            'post_pic' => $params['post_pic'] ? $params['post_pic'] : '',
+            'post_video' => $params['post_video'] ? $params['post_video'] : '',
             'post_status' => $params['post_status'],
             'is_home_rec' => $params['is_home_rec'],
             'is_hot' => $params['is_hot'],
@@ -148,13 +151,31 @@ class ArticleRepo extends BaseRepository implements IArticle
             ->get(['post_id', 'post_title', 'channel_id', 'manage_username', 'author_username', 'is_hot', 'post_source', 'post_tags', 'post_pic', 'post_desc', 'post_like', 'post_dislike', 'post_comment', 'post_view', 'post_fav', 'created_at']);
         $articles = [];
         foreach ($posts as $post) {
-            $articles[$post->channel_id][] = Format::formatReturnDataByOneDim($post->toArray());
+            $articles[$post->channel_id][] = $this->parseDataRow($post->toArray());
         }
 
         foreach ($channels as $channel) {
             $channel->articles = isset($articles[$channel->channel_id]) ? $articles[$channel->channel_id] : [];
         }
         return $channels->toArray();
+    }
+
+    public function parseDataRow(array $row): array
+    {
+        if (isset($row['post_pic'])) {
+            $row['post_pic_url'] = !empty($row['post_pic']) ? asset(Storage::url($row['post_pic'])) : '';
+        }
+        if (isset($row['post_video'])) {
+            $row['post_video_url'] = !empty($row['post_video']) ? asset(Storage::url($row['post_video'])) : '';
+        }
+        if (isset($row['created_at'])) {
+            $row['created_at_txt'] = DateHelper::formatParseTime((int)$row['created_at']);
+            $row['created_at_ago'] = DateHelper::formatDateLongAgo((int)$row['created_at']);
+        }
+        if (isset($row['post_tags'])) {
+            $row['post_tags_arr'] = $row['post_tags'] ? explode(',', $row['post_tags']) : [];
+        }
+        return $row;
     }
 
 

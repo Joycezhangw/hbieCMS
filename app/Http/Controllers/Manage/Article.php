@@ -29,7 +29,7 @@ class Article extends ManageController
                 }
             }
             $ret = $articleRepo->getArticlePageLists($request->all());
-            $list = Format::formatReturnDataByManyDim($ret['data']);
+            $list = $articleRepo->parseDataRows($ret['data']);
             return ResultHelper::returnFormat('success', 200, ['total' => $ret['total'], 'list' => $list]);
         } else {
             $channels = $channelRepo->all();

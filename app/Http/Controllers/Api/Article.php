@@ -24,7 +24,7 @@ class Article extends Controller
             return ResultHelper::returnFormat('文章不存在', -1);
         }
         $articleData->content;
-        $article = Format::formatReturnDataByOneDim($articleData->toArray());
+        $article = $articleRepo->parseDataRows($articleData->toArray());
         return ResultHelper::returnFormat('success', 200, compact('article'));
     }
 

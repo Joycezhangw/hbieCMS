@@ -30,9 +30,6 @@
                        lay-verify="required"
                        class="layui-input" autocomplete="off">
             </div>
-            <div class="hb-word-aux">
-                <p>内容来源，比如：福建留学人员创业园</p>
-            </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">是否显示：</label>
@@ -62,20 +59,41 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label"><span class="required">*</span>内容封面图片：</label>
+            <label class="layui-form-label">内容封面图片：</label>
             <div class="layui-input-block">
                 <input type="hidden" name="post_pic" value="" lay-verify="post_pic">
                 <div class="hb-upload__img">
                     <div class="hb-upload__img--box" id="imgUploadCover">
                         <div class="hb-upload-default">
-                            <img src="/static/images/upload_img.png"/>
+                            <img src="/static/manage/images/upload_img.png"/>
                             <p>点击上传</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="hb-word-aux">
-                <p>建议图片尺寸：650px * 366px。统一比例为：16:9。图片格式：jpg、png、jpeg。</p>
+                <p>建议图片尺寸：650px * 366px，统一比例为：16:9，1MB以内。图片格式：jpg、png、jpeg。</p>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label ">内容视频：</label>
+            <div class="layui-input-block">
+                <input type="hidden" class="layui-input"
+                       name="post_video"
+                       value="">
+                <div class="hb-upload__img hb-upload__video">
+                    <div class="hb-upload__img--box" id="postUploadVideo">
+                        <div class="hb-upload-default">
+                            <img src="/static/manage/images/upload_img.png"/>
+                            <p>点击上传</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hb-word-aux">
+                <p>1、视频格式：mp4,3gp,m3u8,web </p>
+                <p>2、编码格式：H.264,HEVC,MPEG-4 </p>
+                <p>3、视频时长：10分钟，20MB以内 </p>
             </div>
         </div>
         <div class="layui-form-item">

@@ -62,24 +62,51 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label"><span class="required">*</span>内容封面图片：</label>
+            <label class="layui-form-label">内容封面图片：</label>
             <div class="layui-input-block">
                 <input type="hidden" name="post_pic" value="{{$article['post_pic']}}" lay-verify="post_pic">
                 <div class="hb-upload__img">
                     <div class="hb-upload__img--box" id="imgUploadCover">
                         @if($article['post_pic']=='')
-                        <div class="hb-upload-default">
-                            <img src="/static/images/upload_img.png"/>
-                            <p>点击上传</p>
-                        </div>
-                            @else
+                            <div class="hb-upload-default">
+                                <img src="/static/manage/images/upload_img.png"/>
+                                <p>点击上传</p>
+                            </div>
+                        @else
                             <img src="{{$article['post_pic_url']}}">
                         @endif
                     </div>
                 </div>
             </div>
             <div class="hb-word-aux">
-                <p>建议图片尺寸：650px * 366px。统一比例为：16:9。图片格式：jpg、png、jpeg。</p>
+                <p>建议图片尺寸：650px * 366px，统一比例为：16:9，1MB以内。图片格式：jpg、png、jpeg。</p>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label ">内容视频：</label>
+            <div class="layui-input-block">
+                <input type="hidden" class="layui-input"
+                       name="post_video"
+                       value="">
+                <div class="hb-upload__img hb-upload__video">
+                    <div class="hb-upload__img--box" id="postUploadVideo">
+                        @if($article['post_video_url']=='')
+                            <div class="hb-upload-default">
+                                <img src="/static/manage/images/upload_img.png"/>
+                                <p>点击上传</p>
+                            </div>
+                        @else
+                            <video controls="controls" id="video-box" src="{{$article['post_video_url']}}">
+                                <source src="{{$article['post_video_url']}}" type="video/mp4" id="v-video">
+                            </video>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="hb-word-aux">
+                <p>1、视频格式：mp4,3gp,m3u8,web </p>
+                <p>2、编码格式：H.264,HEVC,MPEG-4 </p>
+                <p>3、视频时长：10分钟，20MB以内 </p>
             </div>
         </div>
         <div class="layui-form-item">

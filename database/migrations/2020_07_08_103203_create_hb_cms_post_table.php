@@ -15,8 +15,8 @@ class CreateHbCmsPostTable extends Migration
     {
         Schema::create('hb_cms_post', function (Blueprint $table) {
             $table->bigIncrements('post_id');
-            $table->string('post_title',80)->default('')->comment('文章标题');
-            $table->unsignedInteger('channel_id')->default(0)->comment('栏目id');
+            $table->string('post_title',80)->default('')->index('idx_post_title')->comment('文章标题');
+            $table->unsignedInteger('channel_id')->default(0)->index('idx_channel_id')->comment('栏目id');
             $table->string('channel_ids_path',512)->default('')->comment('栏目id路径');
             $table->string('channel_name_path',1024)->default('')->comment('栏目名称路径');
             $table->unsignedInteger('manage_id')->default(0)->comment('管理员发布者id');
@@ -26,6 +26,7 @@ class CreateHbCmsPostTable extends Migration
             $table->string('post_source',128)->default('')->comment('来源');
             $table->string('post_tags',1512)->default('')->comment('TAG标签值,利于搜索,值之间用应用逗号隔开');
             $table->string('post_pic')->default('')->comment('文章封面图片');
+            $table->string('post_video')->default('')->comment('文章视频');
             $table->string('post_desc',512)->default('')->comment('简短的文章描述');
             $table->unsignedInteger('post_like')->default(0)->comment('点赞数量');
             $table->unsignedInteger('post_dislike')->default(0)->comment('点踩数量');

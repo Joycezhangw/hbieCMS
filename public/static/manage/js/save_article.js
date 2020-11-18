@@ -82,6 +82,28 @@ $(function () {
                 return layer.msg(res.message);
             }
         });
+        upload.render({
+            elem: '#postUploadVideo',
+            url: HB_UPLOAD_URL,
+            accept:'video',
+            exts:'mp4|3gp|m3u8|webm',
+            data: {
+                file_type: 'video',
+                folder: 'video',
+                ext:'mp4,3gp,m3u8,webm',
+                _token: CSRF_TOKEN
+            },
+            done: function (res) {
+                if (res.code === 200) {
+                    var video='<video controls="controls" id="video-box" src="'+res.data.file_path_url+'">\n' +
+                        '<source src="'+res.data.file_path_url+'" type="video/mp4" id="v-video" >\n' +
+                        '</video>';
+                    $("#postUploadVideo").html(video);
+                    $("input[name='post_video']").val(res.data.file_path);
+                }
+                return layer.msg(res.message);
+            }
+        });
         //自定义验证规则
         form.verify({
             title: function (value) {
@@ -94,14 +116,9 @@ $(function () {
                     return '请选择内容所在栏目'
                 }
             },
-            post_pic: function (value) {
-                if (value.length < 1) {
-                    return '请上传内容封面图';
-                }
-            },
             post_desc: function (value) {
-                if (value.length < 20) {
-                    return '内容描述至少得20个字符~'
+                if (value.length < 10) {
+                    return '内容描述至少得10个字符~'
                 }
             },
             post_content: function (value) {
