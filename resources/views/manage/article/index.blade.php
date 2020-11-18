@@ -30,7 +30,8 @@
                                 <select name="channel_id">
                                     <option value="">请选择栏目</option>
                                     @foreach($channels as $channel)
-                                        <option value="{{$channel->channel_id}}">{{$channel->channel_name}}</option>
+                                        <option
+                                            value="{{$channel['channel_id']}}">{!! $channel['html'] !!}{{$channel['channel_name']}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -106,18 +107,18 @@
                 url: '{{route('manage.article.index')}}',
                 cols: [[
                     {field: 'post_id', width: '5%', title: '内容ID'},
-                    {field: 'post_title', width: '18%', title: '内容标题'},
-                    {field: 'post_source', width: '18%', title: '来源'},
-                    {field: 'post_pic_url', width: '10%', title: '封面图', templet: '#post_pic'},
+                    {field: 'post_title', title: '内容标题'},
+                    {field: 'post_source',  title: '来源'},
+                    {field: 'post_pic_url',  title: '封面图', templet: '#post_pic'},
                     {
-                        field: 'post_status', width: '6%', title: '是否显示', templet:'#switchShow'
+                        field: 'post_status', title: '是否显示', templet:'#switchShow'
                     },
                     {
-                        field: 'is_hot', width: '6%', title: '是否热点', templet: '#switchHot'
+                        field: 'is_hot',  title: '是否热点', templet: '#switchHot'
                     },
-                    {field: 'is_home_rec', width: '10%', title: '是否推荐首页', templet: '#switchHomeRec'},
-                    {field: 'created_at_txt', width: '10%', title: '发布时间'},
-                    {title: '操作', width: '15%', unresize: 'false', toolbar: '#operation'}
+                    {field: 'is_home_rec',  title: '是否推荐首页', templet: '#switchHomeRec'},
+                    {field: 'created_at_txt',  title: '发布时间'},
+                    {title: '操作',  unresize: 'false', toolbar: '#operation'}
                 ]]
             });
             /**

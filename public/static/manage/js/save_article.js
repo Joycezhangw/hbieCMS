@@ -68,6 +68,8 @@ $(function () {
         upload.render({
             elem: '#imgUploadCover',
             url: HB_UPLOAD_URL,
+            accept: 'image',
+            acceptMime: 'image/*',
             data: {
                 file_type: 'image',
                 folder: 'article',
@@ -129,10 +131,11 @@ $(function () {
             }
         });
         form.on('submit(save)', function (data) {
-            data.field.post_tags = HB_TAGS;
-            data.field.content = getContent();
             if (repeat_flag) return false;
             repeat_flag = true;
+            data.field.post_tags = HB_TAGS;
+            data.field.content = getContent();
+            console.log(data.field);
             $.ajax({
                 url: SAVE_URL,
                 data: data.field,

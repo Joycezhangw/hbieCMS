@@ -1,5 +1,15 @@
 @extends('manage.layouts.layout')
 @section('content')
+    <style>
+        .hb-upload__video {
+            width: 250px;
+            height: 250px;
+        }
+        .hb-upload__video #video-box{
+            width: 230px;
+            height: 230px;
+        }
+    </style>
     <form class="layui-form hb-form">
         <div class="layui-form-item">
             <label class="layui-form-label"><span class="required">*</span>内容标题：</label>
@@ -18,7 +28,8 @@
                 <select name="channel_id" lay-verify="channel">
                     <option value="0">请选择栏目</option>
                     @foreach($channels as $channel)
-                        <option value="{{$channel->channel_id}}" @if(intval($article['channel_id'])===$channel->channel_id) selected  @endif>{{$channel->channel_name}}</option>
+                        <option
+                            value="{{$channel['channel_id']}}" @if(intval($article['channel_id'])===$channel['channel_id']) selected  @endif>{!! $channel['html'] !!}{{$channel['channel_name']}}</option>
                     @endforeach
                 </select>
             </div>
@@ -26,8 +37,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">来源：</label>
             <div class="layui-input-block hb-len-long">
-                <input name="post_source" type="text" placeholder="请输入内容来源"  maxlength="128"
-                       lay-verify="required" value="{{$article['post_source']}}"
+                <input name="post_source" type="text" placeholder="请输入内容来源"  maxlength="128" value="{{$article['post_source']}}"
                        class="layui-input" autocomplete="off">
             </div>
             <div class="hb-word-aux">

@@ -9,6 +9,7 @@ use App\Services\Repositories\CMS\Interfaces\IChannel;
 use App\Utility\Format;
 use Illuminate\Http\Request;
 use JoyceZ\LaravelLib\Helpers\ResultHelper;
+use JoyceZ\LaravelLib\Helpers\TreeHelper;
 
 class Article extends ManageController
 {
@@ -32,7 +33,8 @@ class Article extends ManageController
             $list = $articleRepo->parseDataRows($ret['data']);
             return ResultHelper::returnFormat('success', 200, ['total' => $ret['total'], 'list' => $list]);
         } else {
-            $channels = $channelRepo->all();
+            $channelsList = $channelRepo->all(['is_allow_content' => 1], ['channel_id', 'channel_name', 'pid', 'channel_short_name']);
+            $channels = TreeHelper::listToTreeOne($channelsList->toArray(), 0, '', 'channel_id');
             return $this->view(compact('channels'));
         }
     }
@@ -44,7 +46,8 @@ class Article extends ManageController
      */
     public function create(IChannel $channelRepo)
     {
-        $channels = $channelRepo->all();
+        $channelsList = $channelRepo->all(['is_allow_content' => 1], ['channel_id', 'channel_name', 'pid', 'channel_short_name']);
+        $channels = TreeHelper::listToTreeOne($channelsList->toArray(), 0, '', 'channel_id');
         return $this->view(compact('channels'));
     }
 
@@ -83,9 +86,10 @@ class Article extends ManageController
         if (!$articleData) {
             abort(490, '内容不存在');
         }
-        $channels = $channelRepo->all();
+        $channelsList = $channelRepo->all(['is_allow_content' => 1], ['channel_id', 'channel_name', 'pid', 'channel_short_name']);
+        $channels = TreeHelper::listToTreeOne($channelsList->toArray(), 0, '', 'channel_id');
         $articleData->content;
-        $article = Format::formatReturnDataByOneDim($articleData->toArray());
+        $article = $articleRepo->parseDataRow($articleData->toArray());
         return $this->view(compact('article', 'channels'));
     }
 
