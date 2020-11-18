@@ -25,6 +25,8 @@ class CreateSysDistrictTable extends Migration
             $table->decimal('longitude',11,8)->default(0.0)->comment('经度');
             $table->unique('district_id','uk_sys_district_id');
         });
+        //表注释
+        \Illuminate\Support\Facades\DB::statement("ALTER TABLE `sys_district` comment '行政区域划分'");
     }
 
     /**
