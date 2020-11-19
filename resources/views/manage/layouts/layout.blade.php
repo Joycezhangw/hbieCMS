@@ -105,6 +105,10 @@
                             </li>
                         @endforeach
                     </ul>
+                    <div class="sidebar-switch open">
+                        <span></span>
+                        <i class="layui-icon layui-icon-shrink-right"></i>
+                    </div>
                 </div>
             </div>
         @endif
@@ -141,6 +145,27 @@
         var element = layui.element;
         element.render('breadcrumb');
         element.init();
+    });
+    $(function(){
+        function sidebarFun() {
+            var sideThat = $('.layui-side'), sidebarSwitch = $('.sidebar-switch'), sideH = sideThat.height(),
+                sideW = sideThat.width(),layuiBody=$('.layui-body');
+            sidebarSwitch.css('top', sideH / 2);
+            sidebarSwitch.click(function(){
+                if($(this).hasClass('open')){
+                    sideThat.animate({'width': '0px'}, 100);
+                    layuiBody.animate({'left': '10px'}, 100);
+                    sidebarSwitch.removeClass('open');
+                    sidebarSwitch.children('i').attr('class','layui-icon layui-icon-spread-left');
+                }else{
+                    sideThat.animate({'width': sideW}, 100);
+                    layuiBody.animate({'left': sideW}, 100);
+                    sidebarSwitch.addClass('open');
+                    sidebarSwitch.children('i').attr('class','layui-icon layui-icon-shrink-right');
+                }
+            });
+        }
+        sidebarFun();
     })
 </script>
 @yield('javascript')
