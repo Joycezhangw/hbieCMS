@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Manage;
 
 
 use App\Services\Repositories\Manage\Interfaces\IManageLog;
-use App\Utility\Format;
 use Illuminate\Http\Request;
 use JoyceZ\LaravelLib\Helpers\ResultHelper;
 
@@ -28,7 +27,7 @@ class AdminLog extends ManageController
                 }
             }
             $ret = $manageLogRepo->getPageLists($request->all());
-            $list = Format::formatReturnDataByManyDim($ret['data']);
+            $list = $manageLogRepo->parseDataRows($ret['data']);
             return ResultHelper::returnFormat('success', 200, ['total' => $ret['total'], 'list' => $list]);
         } else {
             return $this->view();

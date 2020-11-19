@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Manage;
 
 use App\Services\Repositories\UCenter\Interfaces\IMember;
 use App\Services\Repositories\UCenter\Interfaces\IMemberGroup;
-use App\Utility\Format;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use JoyceZ\LaravelLib\Helpers\ResultHelper;
@@ -24,7 +23,7 @@ class Member extends ManageController
                 }
             }
             $ret = $memberRepo->getPageList($request->all());
-            $list = Format::formatReturnDataByManyDim($ret['data']);
+            $list = $memberRepo->parseDataRows($ret['data']);
             return ResultHelper::returnFormat('success', 200, ['total' => $ret['total'], 'list' => $list]);
         }
         $groups = $memberGroupRepo->getAllList();

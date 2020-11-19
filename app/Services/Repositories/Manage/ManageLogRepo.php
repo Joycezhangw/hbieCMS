@@ -6,6 +6,7 @@ namespace App\Services\Repositories\Manage;
 
 use App\Services\Models\Manage\ManageLogModel;
 use App\Services\Repositories\Manage\Interfaces\IManageLog;
+use JoyceZ\LaravelLib\Helpers\DateHelper;
 use JoyceZ\LaravelLib\Repositories\BaseRepository;
 
 /**
@@ -36,10 +37,19 @@ class ManageLogRepo extends BaseRepository implements IManageLog
                 $query->where('created_at', '>=', strtotime(trim($date[0])))->where('created_at', '<=', strtotime(trim($date[1])));
             }
         })
-            ->select(['log_id','manage_username','log_title','log_url','log_ip','useragent','created_at'])
-            ->orderBy('created_at','desc')
+            ->select(['log_id', 'manage_username', 'log_title', 'log_url', 'log_ip', 'useragent', 'created_at'])
+            ->orderBy('created_at', 'desc')
             ->paginate(isset($params['page_size']) ? $params['page_size'] : config('student.paginate.page_size'));
         return $lists->toArray();
+    }
+
+    public function parseDataRow(array $row): array
+    {
+        if (isset($row['created_at'])) {
+            $row['created_at_txt'] = DateHelper::formatParseTime((int)$row['created_at']);
+            $row['created_at_ago'] = DateHelper::formatDateLongAgo((int)$row['created_at']);
+        }
+        return $row;
     }
 
 

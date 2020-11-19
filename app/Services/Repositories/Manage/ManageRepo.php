@@ -8,6 +8,7 @@ use App\Events\ManageAction;
 use App\Services\Models\Manage\ManageModel;
 use App\Services\Repositories\Manage\Interfaces\IManage;
 use Illuminate\Support\Facades\Auth;
+use JoyceZ\LaravelLib\Helpers\DateHelper;
 use JoyceZ\LaravelLib\Helpers\ResultHelper;
 use JoyceZ\LaravelLib\Helpers\StrHelper;
 use JoyceZ\LaravelLib\Repositories\BaseRepository;
@@ -140,6 +141,15 @@ class ManageRepo extends BaseRepository implements IManage
             return true;
         }
         return false;
+    }
+
+    public function parseDataRow(array $row): array
+    {
+        if (isset($row['reg_date'])) {
+            $row['reg_date_txt'] = DateHelper::formatParseTime((int)$row['reg_date']);
+            $row['reg_date_ago'] = DateHelper::formatDateLongAgo((int)$row['reg_date']);
+        }
+        return $row;
     }
 
 

@@ -7,6 +7,7 @@ namespace App\Services\Repositories\UCenter;
 use App\Services\Models\UCenter\MemberModel;
 use App\Services\Repositories\UCenter\Interfaces\IMember;
 use Illuminate\Support\Facades\DB;
+use JoyceZ\LaravelLib\Helpers\DateHelper;
 use JoyceZ\LaravelLib\Repositories\BaseRepository;
 
 /**
@@ -55,6 +56,15 @@ class MemberRepo extends BaseRepository implements IMember
             ->paginate(isset($params['page_size']) ? $params['page_size'] : config('student.paginate.page_size'));
 //        dd(DB::getQueryLog());
         return $lists->toArray();
+    }
+
+    public function parseDataRow(array $row): array
+    {
+        if (isset($row['reg_date'])) {
+            $row['reg_date_txt'] = DateHelper::formatParseTime((int)$row['reg_date']);
+            $row['reg_date_ago'] = DateHelper::formatDateLongAgo((int)$row['reg_date']);
+        }
+        return $row;
     }
 
 

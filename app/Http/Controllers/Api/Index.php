@@ -17,7 +17,7 @@ class Index extends Controller
     {
         $channels = $articleRepo->getHomeListData();
         $slideData = $slideRepo->all(['is_show' => 1], ['slide_id', 'slide_name', 'slide_pic', 'slide_page'], 'slide_sort');
-        $slider =  Format::formatReturnDataByManyDim($slideData->toArray());
+        $slider =  $slideRepo->parseDataRows($slideData->toArray());
         return ResultHelper::returnFormat('success', 200, compact('slider','channels'));
     }
 

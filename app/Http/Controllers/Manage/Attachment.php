@@ -7,7 +7,6 @@ namespace App\Http\Controllers\Manage;
 use App\Services\Enums\System\AlbumFileTypeEnum;
 use App\Services\Repositories\System\Interfaces\IAlbum;
 use App\Services\Repositories\System\Interfaces\IAlbumFile;
-use App\Utility\Format;
 use Illuminate\Http\Request;
 use JoyceZ\LaravelLib\Helpers\FiltersHelper;
 use JoyceZ\LaravelLib\Helpers\ResultHelper;
@@ -42,13 +41,13 @@ class Attachment extends ManageController
     /**
      * 获取附件列表
      * @param Request $request
-     * @param IAlbumFile $albumFile
+     * @param IAlbumFile $albumFileRepo
      * @return array|mixed
      */
-    public function albumFile(Request $request, IAlbumFile $albumFile)
+    public function albumFile(Request $request, IAlbumFile $albumFileRepo)
     {
-        $ret = $albumFile->getPageLists($request->all());
-        $list = Format::formatReturnDataByManyDim($ret['data']);
+        $ret = $albumFileRepo->getPageLists($request->all());
+        $list = $albumFileRepo->parseDataRows($ret['data']);
         return ResultHelper::returnFormat('success', 200, ['total' => $ret['total'], 'list' => $list]);
     }
 

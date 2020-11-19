@@ -6,6 +6,9 @@ namespace App\Services\Repositories\System;
 
 use App\Services\Models\System\SlideModel;
 use App\Services\Repositories\System\Interfaces\ISlide;
+use App\Utility\Format;
+use Illuminate\Support\Facades\Storage;
+use JoyceZ\LaravelLib\Helpers\DateHelper;
 use JoyceZ\LaravelLib\Repositories\BaseRepository;
 
 /**
@@ -39,6 +42,18 @@ class SlideRepo extends BaseRepository implements ISlide
         })->paginate(isset($params['page_size']) ? $params['page_size'] : config('student.paginate.page_size'));
 //        dd(DB::getQueryLog());
         return $lists->toArray();
+    }
+
+    public function parseDataRow(array $row): array
+    {
+        if (isset($row['slide_pic'])) {
+            $row['slide_pic_url'] = Format::buildPictureUrl($row['slide_pic']);
+        }
+        if (isset($row['created_at'])) {
+            $row['created_at_txt'] = DateHelper::formatParseTime((int)$row['created_at']);
+            $row['created_at_ago'] = DateHelper::formatDateLongAgo((int)$row['created_at']);
+        }
+        return $row;
     }
 
 

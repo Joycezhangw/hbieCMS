@@ -111,10 +111,18 @@ class AlbumFileRepo extends BaseRepository implements IAlbumFile
                 $query->where('album_id', $params['album_id']);
             }
         })
-            ->select(['file_id', 'file_name', 'file_path', 'file_ext', 'file_type', 'mime_type','file_size'])
+            ->select(['file_id', 'file_name', 'file_path', 'file_ext', 'file_type', 'mime_type', 'file_size'])
             ->orderBy('created_at', 'desc')
             ->paginate(isset($params['page_size']) ? $params['page_size'] : config('student.paginate.page_size'));
         return $lists->toArray();
+    }
+
+    public function parseDataRow(array $row): array
+    {
+        if (isset($row['file_path'])) {
+            $row['file_path_url'] = asset(Storage::url($row['file_path']));
+        }
+        return $row;
     }
 
 

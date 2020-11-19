@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Manage;
 
 use App\Services\Repositories\Manage\Interfaces\IManage;
 use App\Services\Repositories\Manage\Interfaces\IManageRole;
-use App\Utility\Format;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use JoyceZ\LaravelLib\Helpers\ResultHelper;
@@ -24,7 +23,7 @@ class Admin extends ManageController
                 }
             }
             $ret = $manageRepo->getManagePageLists($request->all());
-            $list = Format::formatReturnDataByManyDim($ret['data']);
+            $list = $manageRepo->parseDataRows($ret['data']);
             return ResultHelper::returnFormat('success', 200, ['total' => $ret['total'], 'list' => $list]);
         } else {
             return $this->view();
