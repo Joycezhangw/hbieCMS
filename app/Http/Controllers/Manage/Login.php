@@ -12,6 +12,7 @@ use Gregwar\Captcha\PhraseBuilder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use JoyceZ\LaravelLib\Helpers\ResultHelper;
 
 class Login extends Controller
 {
@@ -77,6 +78,25 @@ class Login extends Controller
         $builder->build($width = 110, $height = 38, $font = null);
         cache(['adminCaptcha' => $builder->getPhrase()], 60 * 10);
         return response($builder->output())->header('Content-type', 'image/jpeg');
+    }
+
+    /**
+     * 重置密码
+     * @param Request $request
+     * @param IManage $manageRepo
+     * @return array
+     */
+    public function resetPwd(Request $request, IManage $manageRepo)
+    {
+        $admin = $manageRepo->getByPkId($request->admin['manage_id']);
+        if (!$admin) {
+            return ResultHelper::returnFormat('该用户不存在', -1);
+        }
+        $admin->password = bcrypt($request->post('new_pass'));
+        if ($admin->save()) {
+            return ResultHelper::returnFormat('重置密码成功', 200);
+        }
+        return ResultHelper::returnFormat('服务器繁忙，请稍后再试', -1);
     }
 
 }

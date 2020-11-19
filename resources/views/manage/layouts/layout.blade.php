@@ -16,13 +16,13 @@
     <script>
         var MaxErrorReportLimit = 100;
         // 简单的将错误采集上报到 /api/logs/error
-        window.onerror = function(message, source, lineno, colno, error) {
+        window.onerror = function (message, source, lineno, colno, error) {
             // 同一个页面最多上报100次错误，防止某个循环错误页面一直打开，不断的报错
             if (MaxErrorReportLimit-- < 0) return;
             try {
                 var msg = {
                     message: message,
-                    source_module:'manage',
+                    source_module: 'manage',
                     source: source,
                     lineno: lineno,
                     colno: colno,
@@ -70,9 +70,9 @@
                     {{$admin_user['username']}} <span class="layui-nav-more"></span>
                 </a>
                 <dl class="layui-nav-child layui-anim layui-anim-upbit">
-{{--                    <dd class="hb-reset-pass" onclick="resetPassword();">--}}
-{{--                        <a href="javascript:;">修改密码</a>--}}
-{{--                    </dd>--}}
+                    <dd class="hb-reset-pass J-resetPassword">
+                        <a href="javascript:;">修改密码</a>
+                    </dd>
                     <dd>
                         <a href="{{route('manage.logout')}}" class="login-out">退出登录</a>
                     </dd>
@@ -136,32 +136,159 @@
         </div>
     </div>
 </div>
+<!-- 重置密码弹框html -->
+<div class="layui-form" id="reset_pass" style="display: none;">
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span class="required">*</span>原密码</label>
+        <div class="layui-input-block">
+            <input type="password" id="old_pass" name="old_pass" required class="layui-input hb-len-mid" maxlength="18"
+                   autocomplete="off" readonly onfocus="this.removeAttribute('readonly');"
+                   onblur="this.setAttribute('readonly',true);">
+            <span class="required"></span>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span class="required">*</span>新密码</label>
+        <div class="layui-input-block">
+            <input type="password" id="new_pass" name="new_pass" required class="layui-input hb-len-mid" maxlength="18"
+                   autocomplete="off" readonly onfocus="this.removeAttribute('readonly');"
+                   onblur="this.setAttribute('readonly',true);">
+            <span class="required"></span>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span class="required">*</span>确认新密码</label>
+        <div class="layui-input-block">
+            <input type="password" id="repeat_pass" name="repeat_pass" required class="layui-input hb-len-mid"
+                   maxlength="18" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');"
+                   onblur="this.setAttribute('readonly',true);">
+            <span class="required"></span>
+        </div>
+    </div>
+
+    <div class="hb-form-row">
+        <button class="layui-btn hb-bg-color J-repass">确定</button>
+        <button class="layui-btn layui-btn-primary J-closePass">返回</button>
+    </div>
+</div>
 <script type="text/javascript" src="/static/ac/lib/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="/static/ac/lib/layui/layui.js"></script>
 <script type="text/javascript" src="/static/ac/hbie.js"></script>
 <script>
-    layui.use(['layer', 'upload', 'element'], function() {});
+    layui.use(['layer', 'upload', 'element'], function () {
+    });
     layui.use('element', function () {
         var element = layui.element;
         element.render('breadcrumb');
         element.init();
     });
-    $(function(){
+    $(function () {
+        var resetPwdIndex;
+
+        function resetPassword() {
+            resetPwdIndex = layer.open({
+                type: 1,
+                title: "重置密码",
+                content: $('#reset_pass'),
+                offset: 'auto',
+                area: ['650px']
+            });
+
+            setTimeout(function () {
+                $(".hb-reset-pass").removeClass('layui-this');
+            }, 1000);
+        }
+
+        var repeat_flag = false;
+
+        function repass() {
+            var old_pass = $("#old_pass").val();
+            var new_pass = $("#new_pass").val();
+            var repeat_pass = $("#repeat_pass").val();
+
+            if (old_pass == '') {
+                $("#old_pass").focus();
+                layer.msg("原密码不能为空");
+                return;
+            }
+
+            if (new_pass == '') {
+                $("#new_pass").focus();
+                layer.msg("密码不能为空");
+                return;
+            } else if ($("#new_pass").val().length < 6) {
+                $("#new_pass").focus();
+                layer.msg("密码不能少于6位数");
+                return;
+            }
+            if (repeat_pass == '') {
+                $("#repeat_pass").focus();
+                layer.msg("密码不能为空");
+                return;
+            } else if ($("#repeat_pass").val().length < 6) {
+                $("#repeat_pass").focus();
+                layer.msg("密码不能少于6位数");
+                return;
+            }
+            if (new_pass != repeat_pass) {
+                $("#repeat_pass").focus();
+                layer.msg("两次密码输入不一样，请重新输入");
+                return;
+            }
+
+            if (repeat_flag) return;
+            repeat_flag = true;
+
+            $.ajax({
+                type: "POST",
+                dataType: 'JSON',
+                url: "{{route('manage.login.resetPwd')}}",
+                data: {"old_pass": old_pass, "new_pass": new_pass, _token: "{{csrf_token()}}"},
+                success: function (res) {
+                    layer.msg(res.message);
+                    repeat_flag = false;
+
+                    if (res.code == 200) {
+                        layer.close(resetPwdIndex);
+                        location.href = "{{route('manage.logout')}}";
+                        // location.reload();
+                    }
+                }
+            });
+        }
+
+        function closePass() {
+            layer.close(resetPwdIndex);
+        }
+
+        $('.J-resetPassword').on('click', function () {
+            resetPassword();
+        });
+        $('.J-repass').on('click', function () {
+            repass();
+        });
+        $('.J-closePass').on('click', function () {
+            closePass();
+        });
+
+
         function sidebarFun() {
             var sideThat = $('.layui-side'), sidebarSwitch = $('.sidebar-switch'), sideH = sideThat.height(),
-                sideW = sideThat.width(),layuiBody=$('.layui-body');
+                sideW = sideThat.width(), layuiBody = $('.layui-body');
             sidebarSwitch.css('top', sideH / 2);
-            sidebarSwitch.click(function(){
-                if($(this).hasClass('open')){
+            sidebarSwitch.click(function () {
+                if ($(this).hasClass('open')) {
                     sideThat.animate({'width': '0px'}, 100);
                     layuiBody.animate({'left': '10px'}, 100);
                     sidebarSwitch.removeClass('open');
-                    sidebarSwitch.children('i').attr('class','layui-icon layui-icon-spread-left');
-                }else{
+                    sidebarSwitch.children('i').attr('class', 'layui-icon layui-icon-spread-left');
+                } else {
                     sideThat.animate({'width': sideW}, 100);
                     layuiBody.animate({'left': sideW}, 100);
                     sidebarSwitch.addClass('open');
-                    sidebarSwitch.children('i').attr('class','layui-icon layui-icon-shrink-right');
+                    sidebarSwitch.children('i').attr('class', 'layui-icon layui-icon-shrink-right');
                 }
             });
         }

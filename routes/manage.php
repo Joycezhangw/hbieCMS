@@ -17,6 +17,8 @@ Route::group([
         'middleware' => 'rbac.admin',
     ], function (Router $router) {
         $router->get('index', 'Index@index')->name('manage.index.index');
+        //修改密码
+        $router->post('login/resetPwd', 'Login@resetPwd')->name('manage.login.resetPwd');
         //上传附件
         $router->post('upload/upload', 'Upload@doUpload')->name('manage.upload.upload');
         $router->get('attachment/album', 'Attachment@album')->name('manage.attachment.album');
