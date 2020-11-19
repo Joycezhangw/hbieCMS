@@ -90,7 +90,7 @@
                             <li class="layui-nav-item @if($item['module_id']===$parent_module_id) layui-nav-itemed @endif @if($item['module_route']===$current_route) layui-this @endif">
                                 @if(count($item['children'])<=0)
                                     <a class="layui-menu-tips"
-                                       href="{{route($item['module_route'])}}">{{$item['module_name']}}</a>
+                                       href="{{$item['module_route']!=''?route($item['module_route']):'javascript:;'}}">{{$item['module_name']}}</a>
                                 @else
                                     <a class="layui-menu-tips" href="javascript:;">{{$item['module_name']}}<span
                                             class="layui-nav-more"></span></a>
