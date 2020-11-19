@@ -42,7 +42,7 @@
             <div class="mod-photo-item">
                 <div class="item-bd">
                     <a href="javascript:;" class="item-cover">
-                        <img src="@{{ item.file_path_url }}" class="pic" alt="@{{item.file_name}}">
+                        <img src="@{{ fileIcon(item) }}" class="pic" alt="@{{item.file_name}}">
                     </a>
                     <div class="photo-active-box">
                         <span class="active-index layui-icon layui-icon-ok"></span>
@@ -66,6 +66,23 @@
 @endsection
 @section('javascript')
     <script>
+        function fileIcon(data){
+            var isExcel=['application/vnd.ms-excel','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.ms-excel'];
+            var isWord=['application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+            var isPdf=['application/pdf'];
+            var isVideo=['video/mp4'];
+            if(isExcel.indexOf(data.mime_type)>=0){
+                return '/static/images/excel.png'
+            }else if(isWord.indexOf(data.mime_type)>=0){
+                return '/static/images/word.png'
+            }else if(isPdf.indexOf(data.mime_type)>=0){
+                return '/static/images/pdf.png'
+            }else if(isVideo.indexOf(data.mime_type)>=0){
+                return '/static/images/video.png'
+            }else{
+                return data.file_path_url
+            }
+        }
         var ALBUM = {
             album_id: 0,
             limit: 20,
