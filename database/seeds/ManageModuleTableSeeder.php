@@ -61,5 +61,16 @@ class ManageModuleTableSeeder extends Seeder
         DB::insert("INSERT INTO `hb_manage_module` VALUES ('10047', '幻灯片排序', 'manage', 'Slide', 'modifySort', '10042', '4', 'manage.slide.modifySort', '0', '0', '', '', '1594367111', '1594367111');");
         DB::insert("INSERT INTO `hb_manage_module` VALUES ('10048', '删除幻灯片', 'manage', 'Slide', 'destroy', '10042', '4', 'manage.slide.destroy', '0', '0', '', '', '1594367111', '1594367111');");
         DB::insert("INSERT INTO `hb_manage_module` VALUES ('10049', '列表快捷更新', 'manage', 'Slide', 'modifyFiled', '10042', '4', 'manage.slide.modifyFiled', '0', '0', '', '', '1594367111', '1594367111');");
+        DB::insert("INSERT INTO `hb_manage_module` VALUES ('10050', '首页金刚区', 'manage', 'MpPages', 'index', '10041', '3', 'manage.mpPages.index', '1', '0', '', '', '1605752258', '1605752258');");
+        DB::insert("INSERT INTO `hb_manage_module` VALUES ('10051', '创建页面', 'manage', 'MpPages', 'create', '10050', '4', 'manage.mpPages.create', '0', '0', '', '', '1605752303', '1605752303');");
+        DB::insert("INSERT INTO `hb_manage_module` VALUES ('10052', '修改页面', 'manage', 'MpPages', 'edit', '10050', '4', 'manage.mpPages.edit', '0', '0', '', '', '1605752333', '1605752333');");
+        DB::insert("INSERT INTO `hb_manage_module` VALUES ('10053', '提交数据', 'manage', 'MpPages', 'store', '10050', '4', 'manage.mpPages.store', '0', '0', '', '', '1605752373', '1605752373');");
+        DB::insert("INSERT INTO `hb_manage_module` VALUES ('10054', '更新数据', 'manage', 'MpPages', 'update', '10050', '4', 'manage.mpPages.update', '0', '0', '', '', '1605752402', '1605752402');");
+        DB::insert("INSERT INTO `hb_manage_module` VALUES ('10055', '删除数据', 'manage', 'MpPages', 'destroy', '10050', '4', 'manage.mpPages.destroy', '0', '0', '', '', '1605752437', '1605752437');");
+        DB::insert("INSERT INTO `hb_manage_module` VALUES ('10056', '更新排序', 'manage', 'MpPages', 'modifySort', '10050', '4', 'manage.mpPages.modifySort', '0', '0', '', '', '1605752470', '1605752470');");
+        DB::insert("INSERT INTO `hb_manage_module` VALUES ('10057', '附件管理', 'manage', 'Attachment', 'index', '10018', '2', 'manage.attachment.index', '1', '0', '', '', '1605754788', '1605754788');");
+        DB::insert("INSERT INTO `hb_manage_module` VALUES ('10058', '创建专辑', 'manage', 'Attachment', 'store', '10057', '3', 'manage.attachment.store', '0', '0', '', '', '1605754863', '1605754863');");
+        DB::insert("INSERT INTO `hb_manage_module` VALUES ('10059', '修改专辑', 'manage', 'Attachment', 'update', '10057', '3', 'manage.attachment.update', '0', '0', '', '', '1605754895', '1605754895');");
+        DB::insert("INSERT INTO `hb_manage_module` VALUES ('10060', '删除专辑', 'manage', 'Attachment', 'destroy', '10057', '3', 'manage.attachment.destroy', '0', '0', '', '', '1605754922', '1605754922');");
     }
 }
