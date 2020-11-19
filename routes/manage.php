@@ -100,6 +100,15 @@ Route::group([
             $router->post('attachment/store', 'Attachment@store')->name('manage.attachment.store');
             $router->post('attachment/update', 'Attachment@update')->name('manage.attachment.update');
             $router->post('attachment/destroy', 'Attachment@destroy')->name('manage.attachment.destroy');
+
+            //首页金刚区域九宫格管理
+            $router->get('mpPages/index', 'MpPages@index')->name('manage.mpPages.index');
+            $router->get('mpPages/create', 'MpPages@create')->name('manage.mpPages.create');
+            $router->get('mpPages/edit/{id}', 'MpPages@edit')->name('manage.mpPages.edit');
+            $router->post('mpPages/store', 'MpPages@store')->name('manage.mpPages.store');
+            $router->post('mpPages/update/{id}', 'MpPages@update')->name('manage.mpPages.update');
+            $router->post('mpPages/modifySort', 'MpPages@modifySort')->name('manage.mpPages.modifySort');
+            $router->post('mpPages/destroy/{id}', 'MpPages@destroy')->name('manage.mpPages.destroy');
         });
 
     });
