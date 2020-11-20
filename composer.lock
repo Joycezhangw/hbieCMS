@@ -707,16 +707,16 @@
         },
         {
             "name": "joycezhang/laravellib",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Joycezhangw/laravel-lib.git",
-                "reference": "097fedb5ce7f0ce7cb01e38e668a1f508d5338e9"
+                "reference": "b46a5f4c6321ba1b2915df7c2cdef9be5d27d2ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Joycezhangw/laravel-lib/zipball/097fedb5ce7f0ce7cb01e38e668a1f508d5338e9",
-                "reference": "097fedb5ce7f0ce7cb01e38e668a1f508d5338e9",
+                "url": "https://api.github.com/repos/Joycezhangw/laravel-lib/zipball/b46a5f4c6321ba1b2915df7c2cdef9be5d27d2ad",
+                "reference": "b46a5f4c6321ba1b2915df7c2cdef9be5d27d2ad",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -753,7 +753,7 @@
                 "miniprogram",
                 "poster"
             ],
-            "time": "2020-11-13T07:12:36+00:00"
+            "time": "2020-11-20T09:30:41+00:00"
         },
         {
             "name": "laravel/framework",
