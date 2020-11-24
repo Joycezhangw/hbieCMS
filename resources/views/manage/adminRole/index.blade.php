@@ -41,7 +41,7 @@
                                 @if(intval($role->is_default)==1)
                                     不可编辑
                                 @else
-                                    <a href="{{route('manage.adminRole.edit',$role->role_id)}}"
+                                    <a href="{{route('manage.adminRole.edit',$role->role_id)}}" target="_blank"
                                        class="layui-btn">编辑</a>
                                 @endif
                             </div>

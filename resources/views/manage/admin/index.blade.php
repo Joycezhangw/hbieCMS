@@ -104,7 +104,7 @@
             table.tool(function (obj) {
                 var data = obj.data;
                 if (obj.event === 'edit') {
-                    location.href = '{{route("manage.admin.edit")}}?id=' + data.manage_id;
+                    window.open('{{route("manage.admin.edit")}}?id=' + data.manage_id);
                 } else if (obj.event === 'reset') {
                     layer.confirm('你真的要将用户“' + data.username + '”密码重置为：123456', function (index) {
                         resetPwd(data)

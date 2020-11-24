@@ -41,7 +41,7 @@
                                 @if(intval($group['is_default'])==1)
                                     不可操作
                                 @else
-                                    <a href="{{route('manage.memberGroup.edit',$group['group_id'])}}"
+                                    <a href="{{route('manage.memberGroup.edit',$group['group_id'])}}" target="_blank"
                                        class="layui-btn">编辑</a>
                                 @endif
                             </div>

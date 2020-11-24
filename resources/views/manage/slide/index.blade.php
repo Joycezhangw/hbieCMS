@@ -102,7 +102,7 @@
                 var data = obj.data;
                 switch (obj.event) {
                     case 'edit': //编辑
-                        location.href = '{{route("manage.slide.edit")}}?id=' + data.slide_id;
+                        window.open('{{route("manage.slide.edit")}}?id=' + data.slide_id);
                         break;
                 }
             });

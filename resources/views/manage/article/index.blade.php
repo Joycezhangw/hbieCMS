@@ -128,7 +128,7 @@
                 var data = obj.data;
                 switch (obj.event) {
                     case 'edit': //编辑
-                        location.href = '{{route("manage.article.edit")}}?id=' + data.post_id;
+                        window.open('{{route("manage.article.edit")}}?id=' + data.post_id);
                         break;
                 }
             });
