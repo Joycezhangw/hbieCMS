@@ -54,7 +54,19 @@ class ManageModuleRepo extends BaseRepository implements IManageModule
                 }
             }
         }
-        $sideBar = TreeHelper::listToTreeMulti($menuList, 0, 'module_id');
+        $sideBarArr = TreeHelper::listToTreeMulti($menuList, 0, 'module_id');
+        $sideBar = [];
+        //第一个子级菜单未必是顶级菜单预设路由，需将第一个子级路由加入到顶级菜单的路由中
+        foreach ($sideBarArr as $item) {
+            if (isset($item['children']) && count($item['children']) > 0 ) {
+                if(count($item['children'][0]['children']) > 0){
+                    $item['module_route'] = $item['children'][0]['children'][0]['module_route'];
+                }else{
+                    $item['module_route'] = $item['children'][0]['module_route'];
+                }
+            }
+            $sideBar[] = $item;
+        }
         return compact('sideBar', 'authList');
     }
 
