@@ -32,6 +32,10 @@ class ManageController extends Controller
         $current_route = request()->route()->getName();
         //根据路由别名获取数据库最新一条数据。注意：上级沿用下级的路由值时，下级的数据信息要比上级数据信息大。否在会出现错误
         $route = $manageModuleRepo->getLastModuleByRoute($current_route);
+        //当访问页面没有加入到权限列表中，就提示 404
+        if (!isset($route['module_id'])){
+            abort(404, '页面不存在');
+        }
         //根据当前路由，获取他全部上级路由数据
         $menuParent = TreeHelper::getParents($moduleList['authList'], $route['module_id'], 'module_id');
 
