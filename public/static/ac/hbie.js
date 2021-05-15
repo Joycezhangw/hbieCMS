@@ -147,7 +147,7 @@
     };
     HBIE.validate = {
         rules: {}
-    }
+    };
     HBIE.Table = function (options) {
         if (!options) return;
         var _self = this;
@@ -162,13 +162,15 @@
         options.request = options.request || {
             limitName: 'page_size' //每页数据量的参数名，默认：limit
         };
+        options.response = options.response || {
+            statusName: 'code', statusCode: 200, msgName: 'message', countName: 'count', dataName: 'data'
+        };
         if (options.page === undefined) {
             options.page = {
                 layout: ['count', 'limit', 'prev', 'page', 'next'],
                 limit: 10
             };
         }
-
         options.text = options.text || {
             none: '<div class="hb-empty hb-empty-normal">\n' +
                 '    <div class="hb-empty-image">\n' +
