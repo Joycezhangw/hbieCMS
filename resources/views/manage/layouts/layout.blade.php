@@ -45,14 +45,13 @@
         };</script>
 </head>
 <body>
-<div class="hb-logo">
-    <span>laravelCMS</span>
-    <span>
-		&nbsp;
-	</span>
-</div>
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
+        <div class="hb-logo">
+            <div class="logo-box">
+                CMS
+            </div>
+        </div>
         <!-- 一级菜单 -->
         <ul class="layui-nav layui-layout-left">
             @foreach($menu_list as $key=>$item)
