@@ -60,17 +60,37 @@
     </div>
 </div>
 <script type="text/javascript" src="/static/ac/lib/jquery/jquery.min.js"></script>
+<!-- 引入 CDN Crypto.js 开始 AES加密 注意引入顺序 -->
+<script src="/static/ac/lib/crypto-js/core.js"></script>
+<script src="/static/ac/lib/crypto-js/enc-base64.js"></script>
+<script src="/static/ac/lib/crypto-js/md5.js"></script>
+<script src="/static/ac/lib/crypto-js/evpkdf.js"></script>
+<script src="/static/ac/lib/crypto-js/cipher-core.js"></script>
+<script src="/static/ac/lib/crypto-js/aes.js"></script>
+<script src="/static/ac/lib/crypto-js/pad-zeropadding.js"></script>
+<script src="/static/ac/lib/crypto-js/mode-ecb.js"></script>
+<script src="/static/ac/lib/crypto-js/enc-utf8.js"></script>
+<script src="/static/ac/lib/crypto-js/enc-hex.js"></script>
+<!-- 引入 CDN Crypto.js 结束 -->
 <script type="text/javascript" src="/static/ac/lib/layui/layui.js"></script>
 <script type="text/javascript">
     var form, LOGIN_REPEAT_FLAG = false;
     layui.use('form', function () {
         form = layui.form;
         form.render();
+        function encrypt(word, key, iv) {
+            return CryptoJS.AES.encrypt(word, CryptoJS.enc.Latin1.parse(key), {
+                iv: CryptoJS.enc.Latin1.parse(iv),
+                mode: CryptoJS.mode.CBC,
+                adding: CryptoJS.pad.ZeroPadding
+            }).toString();
+        }
 
         /* 登录 */
         form.on('submit(login)', function (data) {
             if (LOGIN_REPEAT_FLAG) return;
             LOGIN_REPEAT_FLAG = true;
+            data.field.password = encrypt(data.field.password, '{{$key}}', '{{$iv}}');
             $.ajax({
                 type: "POST",
                 dataType: "JSON",

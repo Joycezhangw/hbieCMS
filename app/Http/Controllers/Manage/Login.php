@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Manage;
 use App\Events\ManageAction;
 use App\Http\Controllers\Controller;
 use App\Services\Repositories\Manage\Interfaces\IManage;
+use App\Utility\CryptoJS;
 use Gregwar\Captcha\CaptchaBuilder;
 use Gregwar\Captcha\PhraseBuilder;
 use Illuminate\Http\Request;
@@ -16,13 +17,18 @@ use JoyceZ\LaravelLib\Helpers\ResultHelper;
 
 class Login extends Controller
 {
+    protected $iv = 'BKwsl6WGZR8CzV2N';
+    protected $key = '3OXdRYG3v3neV502Yr0PbObt';
+
     /**
      * 登录页面
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
-        return view('manage.login.index');
+        $iv = $this->iv;
+        $key = $this->key;
+        return view('manage.login.index', compact('iv', 'key'));
     }
 
     /**
@@ -36,6 +42,7 @@ class Login extends Controller
         $username = $request->post('username');
         $password = $request->post('password');
         $captcha = $request->post('captcha');
+        $password = CryptoJS::opensslDecrypt($password, $this->key, $this->iv);
         return response($manageRepo->doLogin($username, $password, $captcha, $request->ip()));
     }
 
