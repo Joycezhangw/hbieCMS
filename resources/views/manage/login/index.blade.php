@@ -59,7 +59,7 @@
         <p>技术支持<a href="javascript:;">&nbsp;xxxx</a></p>
     </div>
 </div>
-<script type="text/javascript" src="/static/ac/lib/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/static/ac/lib/jquery/jquery.min.js"></script> 
 <!-- 引入 CDN Crypto.js 开始 AES加密 注意引入顺序 -->
 <script src="/static/ac/lib/crypto-js/core.js"></script>
 <script src="/static/ac/lib/crypto-js/enc-base64.js"></script>

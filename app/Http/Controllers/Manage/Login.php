@@ -17,8 +17,6 @@ use JoyceZ\LaravelLib\Helpers\ResultHelper;
 
 class Login extends Controller
 {
-    protected $iv = 'BKwsl6WGZR8CzV2N';
-    protected $key = '3OXdRYG3v3neV502Yr0PbObt';
 
     /**
      * 登录页面
@@ -26,8 +24,8 @@ class Login extends Controller
      */
     public function index()
     {
-        $iv = $this->iv;
-        $key = $this->key;
+        $iv =  CryptoJS::OPENSSL_IV;
+        $key = CryptoJS::OPENSSL_KEY;
         return view('manage.login.index', compact('iv', 'key'));
     }
 
@@ -42,7 +40,7 @@ class Login extends Controller
         $username = $request->post('username');
         $password = $request->post('password');
         $captcha = $request->post('captcha');
-        $password = CryptoJS::opensslDecrypt($password, $this->key, $this->iv);
+        $password = CryptoJS::opensslDecrypt($password);
         return response($manageRepo->doLogin($username, $password, $captcha, $request->ip()));
     }
 
