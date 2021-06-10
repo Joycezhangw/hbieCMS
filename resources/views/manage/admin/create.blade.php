@@ -56,8 +56,108 @@
     </form>
 @endsection
 @section('javascript')
+    <!-- 引入 CDN Crypto.js 开始 AES加密 注意引入顺序 -->
+    <script src="/static/ac/lib/crypto-js/core.js"></script>
+    <script src="/static/ac/lib/crypto-js/enc-base64.js"></script>
+    <script src="/static/ac/lib/crypto-js/md5.js"></script>
+    <script src="/static/ac/lib/crypto-js/evpkdf.js"></script>
+    <script src="/static/ac/lib/crypto-js/cipher-core.js"></script>
+    <script src="/static/ac/lib/crypto-js/aes.js"></script>
+    <script src="/static/ac/lib/crypto-js/pad-zeropadding.js"></script>
+    <script src="/static/ac/lib/crypto-js/mode-ecb.js"></script>
+    <script src="/static/ac/lib/crypto-js/enc-utf8.js"></script>
+    <script src="/static/ac/lib/crypto-js/enc-hex.js"></script>
+    <!-- 引入 CDN Crypto.js 结束 -->
     <script>
         var SAVE_URL = "{{route('manage.admin.store')}}", INDEX_URL = "{{route('manage.admin.index')}}";
+        $(function () {
+            layui.use(['form'], function () {
+                var form = layui.form, repeat_flag = false;//防重复标识
+                function checkPassword(str){
+                    var reg1 = /[!@#$%^&*()_?<>{}~]{1}/;
+                    var reg2 = /([a-zA-Z0-9!@#$%^&*()_?<>{}~]){8,18}/;
+                    var reg3 = /[a-z]+/;
+                    var reg4 = /[0-9]+/;
+                    var reg5 = /[A-Z]+/;
+                    if(reg1.test(str) && reg2.test(str) && reg3.test(str) && reg4.test(str) && reg5.test(str)){
+                        return true;
+                    }else if(!reg1.test(str)){
+                        // alert("需包含一个特殊字符");
+                        return false;
+                    }else if(!reg2.test(str)){
+                        // alert("长度在8-18位");
+                        return false;
+                    }else if(!reg3.test(str)){
+                        // alert("需含有字母");
+                        return false;
+                    }else if(!reg4.test(str)){
+                        // alert("需含有数字");
+                        return false;
+                    }else if(!reg5.test(str)){
+                        // alert("需含有一个大写字母");
+                        return false;
+                    }
+                }
+                function encrypt(word, key, iv) {
+                    return CryptoJS.AES.encrypt(word, CryptoJS.enc.Latin1.parse(key), {
+                        iv: CryptoJS.enc.Latin1.parse(iv),
+                        mode: CryptoJS.mode.CBC,
+                        adding: CryptoJS.pad.ZeroPadding
+                    }).toString();
+                }
+                //自定义验证规则
+                form.verify({
+                    username: function (value) {
+                        if (value.length < 5) {
+                            return '用户名至少得5个字符啊~';
+                        }
+                        if (!HBIE.string.isUserName(value)) {
+                            return '用户名格式必须为字母、数字、下划线，5-16位组成。'
+                        }
+                    },
+                    realname: function (value) {
+                        if (value.length < 2) {
+                            return '真实姓名至少得2个字符~'
+                        }
+                        if (!HBIE.string.isRealName(value)) {
+                            return '真实姓名只能是中文或者英文'
+                        }
+                    },
+                    password:function (value) {
+                        if (value.length < 8 || value.length>18) {
+                            return '密码长度在8-18位'
+                        }
+                        if(!checkPassword(value)){
+                            return '长度在8-18位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符'
+                        }
+                    }
+                });
+                form.on('submit(save)', function (data) {
+                    if (repeat_flag) return false;
+                    repeat_flag = true;
+                    data.field.password = encrypt(data.field.password, '{{$key}}', '{{$iv}}');
+                    $.ajax({
+                        url: SAVE_URL,
+                        data: data.field,
+                        dataType: 'json',
+                        type: 'post',
+                        success: function (data) {
+                            layer.msg(data.message);
+                            if (data.code === 200) {
+                                location.href = INDEX_URL;
+                            } else {
+                                repeat_flag = false;
+                            }
+                        }, error(err) {
+                            repeat_flag = false;
+                        }
+                    });
+                    return false;
+                });
+            })
+        })
+        function back() {
+            location.href = INDEX_URL;
+        }
     </script>
-    <script type="text/javascript" src="/static/manage/js/save_admin.js"></script>
 @endsection

@@ -45,7 +45,47 @@
 @endsection
 @section('javascript')
     <script>
-        var SAVE_URL = "{{route('manage.admin.update',$admin->manage_id)}}", INDEX_URL = "{{route('manage.admin.index')}}";
-        </script>
-    <script type="text/javascript" src="/static/manage/js/save_admin.js"></script>
+        var SAVE_URL = "{{route('manage.admin.update',$admin->manage_id)}}", INDEX_URL = "{{route('manage.admin.index')}}",
+            CSRF_TOKEN = "{{csrf_token()}}";
+        $(function () {
+            layui.use(['form'], function () {
+                var form = layui.form, repeat_flag = false;//防重复标识
+                //自定义验证规则
+                form.verify({
+                    realname: function (value) {
+                        if (parseInt(value) < 3) {
+                            return '真实姓名至少得3个字符~'
+                        }
+                        if (!HBIE.string.isRealName(value)) {
+                            return '真实姓名只能是中文或者英文'
+                        }
+                    }
+                });
+                form.on('submit(save)', function (data) {
+                    if (repeat_flag) return false;
+                    repeat_flag = true;
+                    $.ajax({
+                        url: SAVE_URL,
+                        data: data.field,
+                        dataType: 'json',
+                        type: 'post',
+                        success: function (data) {
+                            layer.msg(data.message);
+                            if (data.code === 200) {
+                                location.href = INDEX_URL;
+                            } else {
+                                repeat_flag = false;
+                            }
+                        }, error(err) {
+                            repeat_flag = false;
+                        }
+                    });
+                    return false;
+                });
+            })
+        })
+        function back() {
+            location.href = INDEX_URL;
+        }
+    </script>
 @endsection

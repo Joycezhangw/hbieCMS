@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Manage;
 
 use App\Services\Repositories\Manage\Interfaces\IManage;
 use App\Services\Repositories\Manage\Interfaces\IManageRole;
+use App\Utility\CryptoJS;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use JoyceZ\LaravelLib\Helpers\ResultHelper;
@@ -34,7 +35,9 @@ class Admin extends ManageController
     public function create(IManageRole $manageRoleRepo)
     {
         $roles = $manageRoleRepo->all(['is_default' => 0], ['role_id', 'role_title']);
-        return $this->view(compact('roles'));
+        $iv =  CryptoJS::OPENSSL_IV;
+        $key = CryptoJS::OPENSSL_KEY;
+        return $this->view(compact('roles','iv','key'));
     }
 
     //修改管理员页面
@@ -67,7 +70,7 @@ class Admin extends ManageController
             'username' => [
                 'required', 'min:5', 'max:16', 'unique:hb_manage', 'regex:/^[a-zA-Z0-9_]{5,16}$/'
             ],
-            'realname' => ['required', 'min:2', 'not_regex:/^[a-zA-Z\u4e00-\u9fa5]+$/'],
+            'realname' => ['required', 'min:2'],
             "roles" => "required|array|min:1",
         ];
         $ruleMessage = [
@@ -78,7 +81,7 @@ class Admin extends ManageController
             'username.regex' => '用户名格式必须为字母、数字、下划线，5-16位组成。',
             'realname.required' => '请输入真实姓名',
             'realname.min' => '真实姓名至少2个字符',
-            'realname.not_regex' => '真实姓名只能由中英文组成',
+//            'realname.not_regex' => '真实姓名只能由中英文组成',
             'roles.required' => '请选择角色',
             'roles.array' => '管理员角色格式错误',
             'roles.min' => '至少要选择一个角色',
@@ -87,6 +90,8 @@ class Admin extends ManageController
         if ($validator->fails()) {
             return ResultHelper::returnFormat($validator->getMessageBag()->first(), -1);
         }
+        $password = CryptoJS::opensslDecrypt($request->password);
+        $request->password=$password;
         if ($manageRepo->doCreateAdmin($request)) {
             return ResultHelper::returnFormat('创建用户成功', 200);
         } else {
