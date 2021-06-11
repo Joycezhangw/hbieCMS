@@ -7,6 +7,7 @@ namespace App\Services\Repositories\Manage;
 use App\Events\ManageAction;
 use App\Services\Models\Manage\ManageModel;
 use App\Services\Repositories\Manage\Interfaces\IManage;
+use App\Traits\ThrottlesLogin;
 use Illuminate\Support\Facades\Auth;
 use JoyceZ\LaravelLib\Helpers\DateHelper;
 use JoyceZ\LaravelLib\Helpers\ResultHelper;
@@ -20,6 +21,7 @@ use JoyceZ\LaravelLib\Repositories\BaseRepository;
  */
 class ManageRepo extends BaseRepository implements IManage
 {
+    use ThrottlesLogin;
 
     public function __construct(ManageModel $model)
     {
@@ -38,7 +40,7 @@ class ManageRepo extends BaseRepository implements IManage
     public function doLogin(string $username, string $password, string $captcha, string $clientIp): array
     {
         $getCaptcha = cache('adminCaptcha');
-        if(!$getCaptcha){
+        if (!$getCaptcha) {
             return ResultHelper::returnFormat('验证码错误！', -1);
         }
         if (empty($captcha) || (strtolower($captcha) != strtolower($getCaptcha))) {
@@ -50,27 +52,39 @@ class ManageRepo extends BaseRepository implements IManage
         if (empty($password)) {
             return ResultHelper::returnFormat('密码不能为空！', -1);
         }
-        $loginResult = Auth::guard('admin')->attempt(['username' => $username, 'password' => $password]);
-        if ($loginResult) {
-            $user = Auth::guard('admin')->user();
-            if (intval($user['manage_status']) !== 1) {
-                //被禁用用户，直接退出登录
-                Auth::guard('admin')->logout();
-                return ResultHelper::returnFormat('用户被禁用！', -1);
-            }
-            // 更新登录信息
-            $data['last_login_ip'] = StrHelper::ip2long($clientIp);
-            $data['last_login_time'] = time();
-            $this->model->where('manage_id', $user->manage_id)->update($data);
-            // 监听登录，并记录日志
-            event(new ManageAction($user->manage_id, $user->username, request()->url(), '登录', [], $clientIp, request()->userAgent()));
-            return ResultHelper::returnFormat('登录成功！', 200);
+        if ($this->hasTooManyLoginAttempts('manage_' . $username, $clientIp)) {
+            $LockTimer = $this->sendLockoutResponse('manage_' . $username, $clientIp);
+            return ResultHelper::returnFormat('密码重试次数太多，请过' . $LockTimer['minutes'] . '分钟后重新登录！', -501);
         } else {
+            $loginResult = Auth::guard('admin')->attempt(['username' => $username, 'password' => $password]);
+            if ($loginResult) {
+                $user = Auth::guard('admin')->user();
+                if (intval($user['manage_status']) !== 1) {
+                    //被禁用用户，直接退出登录
+                    Auth::guard('admin')->logout();
+                    return ResultHelper::returnFormat('用户被禁用！', -1);
+                }
+                // 更新登录信息
+                $data['last_login_ip'] = StrHelper::ip2long($clientIp);
+                $data['last_login_time'] = time();
+                $this->model->where('manage_id', $user->manage_id)->update($data);
+                // 监听登录，并记录日志
+                event(new ManageAction($user->manage_id, $user->username, request()->url(), '登录', [], $clientIp, request()->userAgent()));
+                return ResultHelper::returnFormat('登录成功！', 200);
+            } else {
 
-            // 清除验证码
-            cache(['adminCaptcha' => null], 60 * 10);
-
-            return ResultHelper::returnFormat('用户名或密码错误！', -1);
+                // 清除验证码
+                cache(['adminCaptcha' => null], 60 * 10);
+                $this->incrementLoginAttempts('manage_' . $username, $clientIp);
+                $retriesLeft = $this->retriesLeft('manage_' . $username, $clientIp);
+                if ($retriesLeft === 0) {
+                    $LockTimer = $this->sendLockoutResponse('manage_' . $username, $clientIp);
+                    return ResultHelper::returnFormat('密码重试次数太多，请过' . $LockTimer['minutes'] . '分钟后重新登录！', -501);
+                } else {
+                    return ResultHelper::returnFormat('用户名或密码错误！', -1);
+                    return ResultHelper::returnFormat('密码错误，您还有' . $retriesLeft . '次尝试机会！', -501);
+                }
+            }
         }
     }
 
