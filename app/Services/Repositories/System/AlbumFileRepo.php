@@ -33,8 +33,22 @@ class AlbumFileRepo extends BaseRepository implements IAlbumFile
         $file = $request->file('file');
         $md5 = md5_file($file->getRealPath());
         $name = $file->getClientOriginalName();
-        $ext = $file->getClientOriginalExtension();
+        // getClientOriginalExtension 对恶意渗透无效，只要将html的扩展名修改成jpg，还是能绕开验证
+//        $ext = $file->getClientOriginalExtension();
+        $ext = strtolower($file->guessExtension());
+        //getClientMimeType 对恶意渗透无效，只要将html的扩展名修改成jpg，还是能绕开验证
         $mimeType = $file->getClientMimeType();
+        $fileTypes = ['jpg','jpeg','gif','bmp','png','doc','docx','xls','xlsx','ppt','pptx','pdf','mp4','3gp','m3u8','webm'];
+        if (!in_array($ext, $fileTypes)) {
+            return ResultHelper::returnFormat('上传的文件格式有误', -1);
+        }
+        $allowedMimeType = [
+            'image/gif', 'image/jpeg', 'image/png', 'image/webp',
+            'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'application/vnd.ms-powerpoint', 'application/pdf',
+            'video/mpeg', 'video/mp4', 'video/webm', 'video/ogg', 'video/3gpp'];
+        if (!in_array($mimeType, $allowedMimeType)) {
+            return ResultHelper::returnFormat('请上传正确的文件格式', -1);
+        }
 
         $hasFile = $this->model->where('file_md5', $md5)->where('original_name', $name)->where('file_ext', $ext)->first();
 
